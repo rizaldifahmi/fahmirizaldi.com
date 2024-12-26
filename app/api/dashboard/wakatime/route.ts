@@ -1,3 +1,5 @@
+import { headers } from 'next/headers';
+
 import {
   getAllTimeSinceToday,
   getLastSevenDaysStats,
@@ -15,20 +17,23 @@ export const GET = async () => {
     const lastSevenDaysStats = await getLastSevenDaysStats();
     const allTimeSinceToday = await getAllTimeSinceToday();
 
-    return response<APISingleResponse<CodingActivityStats>>(
-      {
+    const res = new Response(
+      JSON.stringify({
         data: {
           ...lastSevenDaysStats,
           all_time_since_today: allTimeSinceToday,
         },
-      },
-      200,
+      }),
       {
+        status: 200,
         headers: {
+          'Content-Type': 'application/json',
           'Cache-Control': 'no-store, max-age=0',
         },
-      },
+      }
     );
+
+    return res;
   } catch (error) {
     return response<APIErrorResponse>({
       message: error instanceof Error ? error.message : 'Internal Server Error',

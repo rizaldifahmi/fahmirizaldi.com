@@ -12,17 +12,6 @@ const ALL_TIME_SINCE_TODAY_ENDPOINT =
   'https://wakatime.com/api/v1/users/current/all_time_since_today';
 const STATS_ENDPOINT = 'https://wakatime.com/api/v1/users/current/stats';
 
-const ALLOWED_LANGUAGES = [
-  'TypeScript',
-  'JavaScript',
-  'Kotlin',
-  'PHP',
-  'Vue.js',
-  'React.js',
-  'Java',
-  'Ruby',
-];
-
 const EXCLUDED_LANGUAGES = [
   'Image (svg)',
   'MDX',
@@ -37,48 +26,91 @@ const EXCLUDED_LANGUAGES = [
   'Git',
 ];
 
-const generateBasicAuthorizationBase64 = (): string =>
-  `Basic ${Buffer.from(env.WAKATIME_API_KEY ?? '').toString('base64')}`;
+const generateBasicAuthorizationBase64 = (): string => {
+  const apiKey = env.WAKATIME_API_KEY;
+  if (!apiKey) {
+    throw new Error('WAKATIME_API_KEY is not configured');
+  }
+  return `Basic ${Buffer.from(apiKey).toString('base64')}`;
+};
 
 export const getAllTimeSinceToday =
   async (): Promise<WakaTimeAllTimeSinceToday> => {
     try {
+      console.log('[WakaTime] Fetching all time stats...');
+      const auth = generateBasicAuthorizationBase64();
+      console.log('[WakaTime] Authorization header generated');
+
       const response = await fetcher<
         WakaTimeResponse<WakaTimeAllTimeSinceToday>
       >(ALL_TIME_SINCE_TODAY_ENDPOINT, {
         method: 'GET',
         headers: {
-          Authorization: generateBasicAuthorizationBase64(),
+          Authorization: auth,
         },
       });
 
+      if (!response?.data) {
+        console.error('[WakaTime] No data in response:', response);
+        throw new Error('No data received from WakaTime API');
+      }
+
+      console.log('[WakaTime] All time stats received:', JSON.stringify(response.data, null, 2));
       return response.data;
     } catch (error) {
+      console.error('[WakaTime] All time stats error:', error);
       throw error;
     }
   };
 
 export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
   try {
+    console.log('[WakaTime] Fetching last 7 days stats...');
+    const auth = generateBasicAuthorizationBase64();
+    console.log('[WakaTime] Authorization header generated');
+
     const response = await fetcher<WakaTimeResponse<WakaTimeStats>>(
       `${STATS_ENDPOINT}/last_7_days`,
       {
         method: 'GET',
         headers: {
-          Authorization: generateBasicAuthorizationBase64(),
+          Authorization: auth,
         },
       },
     );
 
+    if (!response?.data) {
+      console.error('[WakaTime] No data in response:', response);
+      throw new Error('No data received from WakaTime API');
+    }
+
+    console.log('[WakaTime] Last 7 days stats received:', JSON.stringify(response.data, null, 2));
     const data = response.data;
-    return {
-      ...data,
+    
+    // Keep original data for totals and averages
+    const {
+      human_readable_daily_average_including_other_language,
+      human_readable_total_including_other_language,
+      total_seconds_including_other_language,
+      daily_average_including_other_language,
+      ...filteredData
+    } = data;
+    
+    const result = {
+      ...filteredData,
+      human_readable_daily_average_including_other_language,
+      human_readable_total_including_other_language,
+      total_seconds_including_other_language,
+      daily_average_including_other_language,
       languages: data.languages?.filter(
         (lang) => !EXCLUDED_LANGUAGES.includes(lang.name)
       ),
     };
+
+    console.log('[WakaTime] Processed stats:', JSON.stringify(result, null, 2));
+    return result;
   } catch (error) {
-    console.error('WakaTime Stats Error:', error);
+    console.error('[WakaTime] Last 7 days stats error:', error);
     throw error;
   }
 };
