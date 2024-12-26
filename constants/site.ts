@@ -22,10 +22,7 @@ interface Site {
   keywords?: string[];
 }
 
-export const BASE_URL =
-  env.NODE_ENV === 'production'
-    ? 'https://fahmirizaldi.com'
-    : 'http://localhost:3000';
+export const BASE_URL = env.NEXT_PUBLIC_APP_URL;
 
 export const SITE: Site = {
   url: BASE_URL,
