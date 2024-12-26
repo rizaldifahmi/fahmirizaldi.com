@@ -23,6 +23,20 @@ const ALLOWED_LANGUAGES = [
   'Ruby',
 ];
 
+const EXCLUDED_LANGUAGES = [
+  'Image (svg)',
+  'MDX',
+  'Java Properties',
+  'Markdown',
+  'SVG',
+  'Properties',
+  'Text',
+  'Git Config',
+  'YAML',
+  'JSON',
+  'Git',
+];
+
 const generateBasicAuthorizationBase64 = (): string =>
   `Basic ${Buffer.from(env.WAKATIME_API_KEY ?? '').toString('base64')}`;
 
@@ -57,14 +71,14 @@ export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
     );
 
     const data = response.data;
-
     return {
       ...data,
-      languages: data?.languages
-        ?.filter((lang) => ALLOWED_LANGUAGES.includes(lang.name))
-        ?.map((lang) => lang),
+      languages: data.languages?.filter(
+        (lang) => !EXCLUDED_LANGUAGES.includes(lang.name)
+      ),
     };
   } catch (error) {
+    console.error('WakaTime Stats Error:', error);
     throw error;
   }
 };

@@ -6,7 +6,11 @@ const useStats = <T>(stats: 'engagements' | 'wakatime' | 'github') => {
   const { data, isLoading } = useRequest<
     APISingleResponse<T>,
     APIErrorResponse
-  >(`/api/dashboard/${stats}`);
+  >(`/api/dashboard/${stats}`, undefined, {
+    revalidateOnFocus: true,
+    refreshInterval: 60000, // Refresh every minute
+    dedupingInterval: 30000,
+  });
 
   const _stats = data?.data;
 
