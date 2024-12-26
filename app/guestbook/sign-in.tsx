@@ -4,12 +4,12 @@ import { GitHub, Google } from '@/components/shared/icons';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const SignIn = () => {
+const SignIn = ({ message = 'Kindly login to start a conversation.' }: { message?: string }) => {
   return (
     <div className={cn('flex flex-col border-t border-muted')}>
       <div className={cn('space-y-3 p-4')}>
         <p className={cn('text-center text-sm')}>
-          Kindly login to start a conversation.
+          {message}
         </p>
         <div className={cn('grid grid-cols-2 gap-2', 'md:gap-4')}>
           <Button

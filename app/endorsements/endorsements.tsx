@@ -63,7 +63,7 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
                 Your information, including name and profile picture, will only be used
                 to display your identity as an endorser.
               </p>
-              <SignIn />
+              <SignIn message="Kindly login to give endorsements for skills." />
             </div>
           )}
         </div>
