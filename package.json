@@ -16,7 +16,6 @@
     "clean": "rimraf .next && rimraf dist && rimraf out && rimraf .contentlayer",
     "lint": "next lint",
     "check-types": "tsc --noEmit --pretty",
-    "prepare": "husky",
     "prisma:generate": "npx prisma generate",
     "prisma:studio": "npx prisma studio",
     "prisma:seed": "npx ts-node prisma/seed.ts"

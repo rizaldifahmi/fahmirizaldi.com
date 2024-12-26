@@ -21,7 +21,7 @@ const useEndorsements = ({
 
   const addEndorsement = async (skillId: string) => {
     try {
-      const response = await fetch('api/endorsements', {
+      const response = await fetch('/api/endorsements', {
         method: 'POST',
         body: JSON.stringify({ skillId }),
       });

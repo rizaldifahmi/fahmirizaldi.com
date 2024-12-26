@@ -3,23 +3,27 @@
 import db from '@/lib/db';
 import type { Guestbook } from '@/types/guestbook';
 
-export const getGuestbookEntries = async (): Promise<Guestbook[]> => {
+export const getGuestbookEntries = async () => {
   const entries = await db.guestbook.findMany({
-    orderBy: { created_at: 'asc' },
-    select: { id: true, body: true, created_at: true, user: true },
+    include: {
+      user: true,
+    },
+    orderBy: {
+      created_at: 'desc',
+    },
   });
 
-  return (entries ?? []).map<Guestbook>(({ id, body, created_at, user }) => ({
-    id: id.toString(),
-    body,
-    createdAt: created_at.toISOString(),
+  return (entries ?? []).map((entry) => ({
+    id: entry.id.toString(),
+    body: entry.body,
+    createdAt: entry.created_at.toISOString(),
     user: {
-      id: user!.id!,
-      name: user!.name!,
-      email: user!.email!,
-      image: user!.image!,
+      id: entry.user?.id!,
+      name: entry.user?.name!,
+      email: entry.user?.email!,
+      image: entry.user?.image!,
     },
-  }));
+  })) satisfies Guestbook[];
 };
 
 export const addGuestbookEntry = async ({

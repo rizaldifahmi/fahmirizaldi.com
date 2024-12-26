@@ -21,21 +21,21 @@ export const getEndorsements = async () => {
     },
   });
 
-  return data.map<SkillCategory>(({ name, skills_in_category }) => ({
-    name,
-    skills: skills_in_category.map<Skill>(({ id, name, endorsements }) => ({
-      id: id.toString(),
-      name,
-      users: endorsements
+  return data.map((category) => ({
+    name: category.name,
+    skills: category.skills_in_category.map((skill) => ({
+      id: skill.id.toString(),
+      name: skill.name,
+      users: skill.endorsements
         .filter((endorsement) => endorsement.userId)
-        .map<User>(({ user }) => ({
-          id: user?.id!,
-          name: user?.name!,
-          email: user?.email!,
-          image: user?.image!,
+        .map((endorsement) => ({
+          id: endorsement.user?.id!,
+          name: endorsement.user?.name!,
+          email: endorsement.user?.email!,
+          image: endorsement.user?.image!,
         })),
     })),
-  }));
+  })) satisfies SkillCategory[];
 };
 
 export const isEndorsed = async ({
