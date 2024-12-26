@@ -23,7 +23,7 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
 
   return (
     <>
-      <div className={cn('flex min-h-[50vh] items-center justify-center')}>
+      <div className={cn('flex items-center justify-center py-4')}>
         <div
           className={cn(
             'relative max-w-lg rounded-lg border border-transparent bg-background p-3',
@@ -69,7 +69,7 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
         </div>
       </div>
 
-      <div className={cn('mt-8')}>
+      <div>
         <RenderIf isTrue={endorsements && !error}>
           <div className={cn('flex flex-col')}>
             <h3 className={cn('font-cal text-xl font-bold', 'md:text-2xl')}>

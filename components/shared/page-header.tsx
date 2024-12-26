@@ -22,7 +22,7 @@ const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
 
     return (
       <div
-        className={cn('bg-grid py-16', 'lg:py-20', className)}
+        className={cn('bg-grid py-8', 'lg:py-12', className)}
         {...props}
         ref={ref}
       >
