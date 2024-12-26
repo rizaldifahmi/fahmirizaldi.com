@@ -34,6 +34,40 @@ const generateBasicAuthorizationBase64 = (): string => {
   return `Basic ${Buffer.from(apiKey).toString('base64')}`;
 };
 
+const fetchWithRetry = async <T>(
+  url: string,
+  options: RequestInit,
+  retries = 3
+): Promise<T> => {
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        'Accept': 'application/json',
+        'User-Agent': 'fahmirizaldi.com/4.0.0',
+        'Origin': 'https://fahmirizaldi.com',
+      },
+      next: {
+        revalidate: 0
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    if (retries > 0) {
+      console.log(`[WakaTime] Retrying... ${retries} attempts left`);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return fetchWithRetry(url, options, retries - 1);
+    }
+    throw error;
+  }
+};
+
 export const getAllTimeSinceToday =
   async (): Promise<WakaTimeAllTimeSinceToday> => {
     try {
@@ -41,21 +75,22 @@ export const getAllTimeSinceToday =
       const auth = generateBasicAuthorizationBase64();
       console.log('[WakaTime] Authorization header generated');
 
-      const response = await fetcher<
-        WakaTimeResponse<WakaTimeAllTimeSinceToday>
-      >(ALL_TIME_SINCE_TODAY_ENDPOINT, {
-        method: 'GET',
-        headers: {
-          Authorization: auth,
-        },
-      });
+      const response = await fetchWithRetry<WakaTimeResponse<WakaTimeAllTimeSinceToday>>(
+        ALL_TIME_SINCE_TODAY_ENDPOINT,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: auth,
+          },
+        }
+      );
 
       if (!response?.data) {
         console.error('[WakaTime] No data in response:', response);
         throw new Error('No data received from WakaTime API');
       }
 
-      console.log('[WakaTime] All time stats received:', JSON.stringify(response.data, null, 2));
+      console.log('[WakaTime] All time stats received');
       return response.data;
     } catch (error) {
       console.error('[WakaTime] All time stats error:', error);
@@ -69,14 +104,14 @@ export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
     const auth = generateBasicAuthorizationBase64();
     console.log('[WakaTime] Authorization header generated');
 
-    const response = await fetcher<WakaTimeResponse<WakaTimeStats>>(
+    const response = await fetchWithRetry<WakaTimeResponse<WakaTimeStats>>(
       `${STATS_ENDPOINT}/last_7_days`,
       {
         method: 'GET',
         headers: {
           Authorization: auth,
         },
-      },
+      }
     );
 
     if (!response?.data) {
@@ -84,7 +119,7 @@ export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
       throw new Error('No data received from WakaTime API');
     }
 
-    console.log('[WakaTime] Last 7 days stats received:', JSON.stringify(response.data, null, 2));
+    console.log('[WakaTime] Last 7 days stats received');
     const data = response.data;
     
     // Keep original data for totals and averages
@@ -107,7 +142,7 @@ export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
       ),
     };
 
-    console.log('[WakaTime] Processed stats:', JSON.stringify(result, null, 2));
+    console.log('[WakaTime] Processed stats');
     return result;
   } catch (error) {
     console.error('[WakaTime] Last 7 days stats error:', error);
