@@ -11,7 +11,7 @@ import Endorsements from './endorsements';
 export const metadata: Metadata = seo({
   title: 'Endorsements',
   description:
-    'Kindly consider supporting my technical skills and capabilities by providing an endorsement based on your firsthand experience collaborating with me.',
+    'I invite you to share your experience working with me through an endorsement. Your perspective on my technical abilities and professional contributions would be deeply valued.',
   url: ROUTES.endorsements,
 });
 
@@ -22,7 +22,7 @@ const EndorsementsPage = async () => {
     <>
       <PageHeader
         title="Endorsements"
-        description="Kindly consider supporting my technical skills and capabilities by providing an endorsement based on your firsthand experience collaborating with me. Your valued endorsement is highly appreciated and will contribute significantly to showcasing my proficiency."
+        description="I invite you to share your experience working with me through an endorsement. Your perspective on my technical abilities and professional contributions would be deeply valued. Each endorsement helps build a comprehensive picture of my expertise in the tech industry."
       />
       <Container>
         <Endorsements fallbackData={endorsements} />
