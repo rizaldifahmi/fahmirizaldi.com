@@ -70,7 +70,7 @@ const Badge = ({ skill, user, currentUserId, onEndorse }: BadgeProps) => {
     setState(STATE.LOADING);
 
     if (!isLoggedIn) {
-      await signIn();
+      await signIn('github');
       return;
     }
 

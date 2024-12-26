@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 import Link from '@/components/shared/link';
@@ -11,6 +11,7 @@ import useEndorsements from '@/hooks/use-endorsements';
 import { cn } from '@/lib/utils';
 import type { SkillCategory } from '@/types/skill';
 
+import SignIn from '../guestbook/sign-in';
 import Badge from './badge';
 
 const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
@@ -61,19 +62,7 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
               Your information, including your name and profile picture, will
               only be utilized to properly display your identity as an endorser.
             </p>
-            <Button
-              variant="secondary"
-              size="sm"
-              disabled={isAuthenticating}
-              className={cn('mt-4')}
-              onClick={async (e) => {
-                e.preventDefault();
-                setIsAuthenticating(true);
-                await signIn();
-              }}
-            >
-              {isAuthenticating ? <Spinner /> : 'Login to endorse'}
-            </Button>
+            <SignIn />
           </div>
         )}
       </div>
