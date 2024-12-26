@@ -39,12 +39,12 @@ const Hero = () => {
               'md:text-xl',
             )}
           >
-            I like to build{' '}
+            I craft{' '}
             <FlipWords
-              words={['interactive', 'amazing', 'fantastic', 'beautiful']}
+              words={['innovative', 'scalable', 'elegant', 'powerful']}
               className={cn('font-black text-primary')}
             />{' '}
-            things with code. I also talk and write about those things.
+            digital solutions that make an impact.
           </motion.p>
         </div>
 

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import {
   JavaScript,
-  Laravel,
+  CodeIgniter,
   NextJS,
   PHP,
   ReactJS,
@@ -45,9 +45,9 @@ export const CURRENT_TECH = [
     icon: <ReactJS />,
   },
   {
-    title: 'Laravel',
+    title: 'CodeIgniter',
     description: 'Backend development',
-    icon: <Laravel />,
+    icon: <CodeIgniter />,
   },
   {
     title: 'Tailwind CSS',
