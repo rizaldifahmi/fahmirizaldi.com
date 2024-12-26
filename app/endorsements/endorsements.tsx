@@ -23,48 +23,50 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
 
   return (
     <>
-      <div
-        className={cn(
-          'relative max-w-lg rounded-lg border border-transparent bg-background p-3',
-          'after:absolute after:-inset-1 after:-z-10 after:rounded-[calc(8px+3px)] after:bg-rainbow-gradient after:content-[""]',
-        )}
-      >
-        {session?.user ? (
-          <>
-            <p>
-              You are currently logged in as{' '}
-              <span className={cn('font-cal font-bold')}>
-                {session.user.name}
-              </span>
-            </p>
-            {isAuthenticating ? (
-              <Spinner />
-            ) : (
-              <Link
-                href="/api/auth/signout"
-                className={cn('font-semibold underline')}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  setIsAuthenticating(true);
-                  await signOut();
-                }}
-              >
-                Logout
-              </Link>
-            )}
-          </>
-        ) : (
-          <div className={cn('flex flex-col items-start')}>
-            <h2 className={cn('font-cal font-bold')}>
-              Sign in to give endorsements
-            </h2>
-            <p className={cn('text-sm text-muted-foreground')}>
-              Your information, including name and profile picture, will only be used
-              to display your identity as an endorser.
-            </p>
-            <SignIn />
-          </div>
-        )}
+      <div className={cn('flex min-h-[50vh] items-center justify-center')}>
+        <div
+          className={cn(
+            'relative max-w-lg rounded-lg border border-transparent bg-background p-3',
+            'after:absolute after:-inset-1 after:-z-10 after:rounded-[calc(8px+3px)] after:bg-rainbow-gradient after:content-[""]',
+          )}
+        >
+          {session?.user ? (
+            <>
+              <p>
+                You are currently logged in as{' '}
+                <span className={cn('font-cal font-bold')}>
+                  {session.user.name}
+                </span>
+              </p>
+              {isAuthenticating ? (
+                <Spinner />
+              ) : (
+                <Link
+                  href="/api/auth/signout"
+                  className={cn('font-semibold underline')}
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    setIsAuthenticating(true);
+                    await signOut();
+                  }}
+                >
+                  Logout
+                </Link>
+              )}
+            </>
+          ) : (
+            <div className={cn('flex flex-col items-start')}>
+              <h2 className={cn('font-cal font-bold')}>
+                Sign in to give endorsements
+              </h2>
+              <p className={cn('text-sm text-muted-foreground')}>
+                Your information, including name and profile picture, will only be used
+                to display your identity as an endorser.
+              </p>
+              <SignIn />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className={cn('mt-8')}>
