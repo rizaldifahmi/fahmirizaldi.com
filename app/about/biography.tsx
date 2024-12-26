@@ -13,13 +13,13 @@ const Biography = () => {
       <p>
         I'm Fahmi Rizaldi, a Software Engineer with a focus on delivery
         innovative digital solutions that drive business value. I am currently
-        working at <Link href="https://rskgm.bandung.go.id">RSKGM Kota Bandung</Link>, a
-        well-regarded healthcare institution located in{' '}
+        working at <Link href="https://rskgm.bandung.go.id">RSKGM Kota Bandung</Link>
+        , a well-regarded healthcare institution located in{' '}
         <Link href="https://www.google.com/maps/place/Bandung,+Jawa+Barat">
           Bandung, Indonesia
         </Link>
-        , where I have the opportunity to contribute to healthcare technology solutions
-        on a daily basis.
+        , where I have the opportunity to contribute to healthcare technology
+        solutions on a daily basis.
       </p>
       <p>
         I have a wealth of experience in crafting scalable software systems that
@@ -37,14 +37,15 @@ const Biography = () => {
         healthcare organizations.
       </p>
       <p>
-        In my role as a Software Engineer at RSKGM Kota Bandung, I take charge of designing,
-        developing, and maintaining healthcare software systems that meet both technical
-        specifications and medical requirements. I understand the importance of
-        delivering high-quality products that not only meet technical
-        requirements but also provide tangible value to healthcare providers and patients.
-        To achieve this, I work closely with healthcare professionals to understand their
-        unique needs and requirements, and I utilize my technical expertise to deliver
-        customized solutions that enhance healthcare service delivery.
+        In my role as a Software Engineer at RSKGM Kota Bandung, I take charge
+        of designing, developing, and maintaining healthcare software systems
+        that meet both technical specifications and medical requirements. I
+        understand the importance of delivering high-quality products that not
+        only meet technical requirements but also provide tangible value to
+        healthcare providers and patients. To achieve this, I work closely with
+        healthcare professionals to understand their unique needs and
+        requirements, and I utilize my technical expertise to deliver customized
+        solutions that enhance healthcare service delivery.
       </p>
       <p>
         I consider myself a curious and inquisitive person, always eager to

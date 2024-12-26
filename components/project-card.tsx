@@ -87,7 +87,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
               <Tooltip key={`${stack}-${idx}`}>
                 <TooltipTrigger asChild>
                   {cloneElement(stackIcon, {
-                    className: cn('size-5', (stackIcon as any)?.props?.className)
+                    className: cn(
+                      'size-5',
+                      (stackIcon as any)?.props?.className,
+                    ),
                   })}
                 </TooltipTrigger>
                 <TooltipContent>{stack}</TooltipContent>
