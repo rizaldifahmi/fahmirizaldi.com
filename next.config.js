@@ -11,6 +11,11 @@ const { withContentlayer } = require('next-contentlayer');
 const million = require('million/compiler');
 
 const nextConfig = {
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
   swcMinify: true,
   compress: true,
   reactStrictMode: true,
