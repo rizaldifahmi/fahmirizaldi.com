@@ -56,11 +56,11 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
         ) : (
           <div className={cn('flex flex-col items-start')}>
             <h2 className={cn('font-cal font-bold')}>
-              Please log in to provide your valuable endorsements.
+              Sign in to give endorsements
             </h2>
             <p className={cn('text-sm text-muted-foreground')}>
-              Your information, including your name and profile picture, will
-              only be utilized to properly display your identity as an endorser.
+              Your information, including name and profile picture, will only be used
+              to display your identity as an endorser.
             </p>
             <SignIn />
           </div>
