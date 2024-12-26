@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
 
 interface Stack {
   title: string;
-  colorClass: string;
+  description: string;
   icon: JSX.Element;
 }
 
@@ -84,13 +84,12 @@ const CurrentTechStack = () => {
         transition={{ delayChildren: 0.5, staggerChildren: 0.015 }}
         className={cn('flex flex-wrap gap-2')}
       >
-        {CURRENT_TECH.map(({ title, colorClass, icon }) => (
+        {CURRENT_TECH.map(({ title, description, icon }) => (
           <Tooltip key={title}>
             <TooltipTrigger asChild>
               <motion.div
                 className={cn(
                   'size-6 text-muted-foreground transition duration-200',
-                  colorClass,
                 )}
                 variants={animation}
               >
