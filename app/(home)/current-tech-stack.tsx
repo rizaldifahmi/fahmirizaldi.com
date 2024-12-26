@@ -18,12 +18,6 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
-interface Stack {
-  title: string;
-  description: string;
-  icon: JSX.Element;
-}
-
 export const CURRENT_TECH = [
   {
     title: 'TypeScript',
@@ -84,7 +78,7 @@ const CurrentTechStack = () => {
         transition={{ delayChildren: 0.5, staggerChildren: 0.015 }}
         className={cn('flex flex-wrap gap-2')}
       >
-        {CURRENT_TECH.map(({ title, description, icon }) => (
+        {CURRENT_TECH.map(({ title, icon }) => (
           <Tooltip key={title}>
             <TooltipTrigger asChild>
               <motion.div
