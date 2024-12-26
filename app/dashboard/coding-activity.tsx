@@ -84,11 +84,8 @@ const CodingActivity = () => {
       isLoading={isLoading}
       appendix={
         <Link
-          href="https://wakatime.com/@rizaldifahmi"
-          className={cn(
-            'text-sm text-muted-foreground transition-all duration-200',
-            'hover:underline',
-          )}
+          className={cn('text-muted-foreground hover:text-foreground')}
+          href="https://wakatime.com/@fahmirizaldi"
         >
           Last modified:{' '}
           {formattedLastModifiedDate ? (
