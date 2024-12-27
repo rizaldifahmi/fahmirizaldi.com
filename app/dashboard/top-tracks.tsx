@@ -19,7 +19,7 @@ interface TopTracksData {
 }
 
 const TopTracks = () => {
-  const { data, isLoading } = useRequest<APISingleResponse<TopTracksData>, APIErrorResponse>('/api/top-tracks');
+  const { data, isLoading } = useRequest<TopTracksData, APIErrorResponse>('/api/top-tracks');
 
   if (isLoading) {
     return (
@@ -36,7 +36,7 @@ const TopTracks = () => {
     );
   }
 
-  if (!data) {
+  if (!data?.tracks) {
     return null;
   }
 
@@ -50,7 +50,7 @@ const TopTracks = () => {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          {data.data.tracks.map((track, index) => (
+          {data.tracks.map((track, index) => (
             <Track key={track.songUrl} ranking={index + 1} {...track} />
           ))}
         </div>
