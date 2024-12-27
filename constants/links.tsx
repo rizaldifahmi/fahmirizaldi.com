@@ -185,7 +185,7 @@ export const COMMAND_SOCIAL_MEDIA: CommandMenu[] = [
   },
   {
     label: 'X',
-    href: SITE.author.twitter ?? '',
+    href: `https://twitter.com/${SITE.author.twitter?.replace('@', '')}`,
     icon: <Twitter />,
     isExternal: true,
     eventName: 'Social: X',

@@ -34,13 +34,13 @@ export const SITE: Site = {
     name: 'Fahmi Rizaldi',
     url: 'https://fahmirizaldi.com',
     email: 'fahmirizaldi@live.com',
-    linkedIn: 'https://www.linkedin.com/in/rizaldifahmi',
+    linkedIn: 'https://www.linkedin.com/in/fahmirizaldi',
     github: {
       username: 'rizaldifahmi',
       url: 'https://www.github.com/rizaldifahmi',
     },
     avatar: '/media/profile/fahmi.jpg',
-    twitter: '@rizaldifahmi_',
+    twitter: '@fahmirizaidi',
   },
   keywords: [
     'Fahmi Rizaldi',
