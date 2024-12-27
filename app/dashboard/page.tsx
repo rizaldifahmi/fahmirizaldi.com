@@ -8,6 +8,7 @@ import { seo } from '@/lib/meta';
 import CodingActivity from './coding-activity';
 import Engagements from './engagements';
 import GitHubInsights from './github-insights';
+import TopTracks from './top-tracks';
 
 export const metadata: Metadata = seo({
   title: 'Dashboard',
@@ -29,6 +30,7 @@ const DashboardPage = () => {
           <Engagements />
           <CodingActivity />
           <GitHubInsights />
+          <TopTracks />
         </div>
       </Container>
     </>

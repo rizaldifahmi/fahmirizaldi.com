@@ -28,8 +28,15 @@ const GitHubInsights = () => {
     week.contributionDays.map((day) => day.contributionCount),
   );
 
-  const bestContribution = Math.max(...totalContributionList) ?? 0;
-  const averageContribution = totalContributions / totalContributionList.length;
+  const bestContribution = totalContributionList.length > 0 
+    ? Math.max(...totalContributionList) 
+    : 0;
+
+  // Count only days with contributions
+  const daysWithContributions = totalContributionList.filter(count => count > 0).length;
+  const averageContribution = daysWithContributions > 0
+    ? Math.round((totalContributions / daysWithContributions) * 10) / 10
+    : 0;
 
   return (
     <Section
@@ -77,7 +84,7 @@ const GitHubInsights = () => {
               <OverviewCard
                 label="Average"
                 value={averageContribution}
-                unit="per day"
+                unit="per active day"
               />
             </div>
             <div className={cn('p-2')}>

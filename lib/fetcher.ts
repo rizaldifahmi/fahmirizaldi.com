@@ -9,6 +9,10 @@ const fetcher = async <T>(
     return JSON.parse('{}');
   }
 
+  if (!response.ok) {
+    throw new Error('An error occurred while fetching the data.');
+  }
+
   return (await response.json()) as T;
 };
 
