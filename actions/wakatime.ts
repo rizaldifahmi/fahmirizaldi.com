@@ -24,6 +24,7 @@ const EXCLUDED_LANGUAGES = [
   'YAML',
   'JSON',
   'Git',
+  'Bash',
 ];
 
 const generateBasicAuthorizationBase64 = (): string => {
