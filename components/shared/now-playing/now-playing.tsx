@@ -29,7 +29,7 @@ const NowPlaying = () => {
     url && window.open(url, '_blank', 'noopener,noreferrer');
 
   return isMaxMd ? (
-    <NowPlayingCard track={track} onOpenSongUrl={onOpenSongUrl} />
+    <NowPlayingCard track={track} onOpenSongUrl={onOpenSongUrl} devices={devices} />
   ) : (
     <NowPlayingBar
       track={track}

@@ -12,6 +12,7 @@ import GuestbookWidget from '@/components/guestbook-widget';
 import AppProvider from '@/components/providers/app-provider';
 import Footer from '@/components/shared/footer';
 import Header from '@/components/shared/header';
+import NowPlaying from '@/components/shared/now-playing';
 import { Toaster } from '@/components/ui/toaster';
 import { DEFAULT_METADATA, seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
@@ -70,6 +71,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
           <main>{children}</main>
           <GuestbookWidget />
           <Footer />
+          <div className={cn('hidden md:block')}>
+            <NowPlaying />
+          </div>
         </div>
         <Analytics />
         <Toaster />

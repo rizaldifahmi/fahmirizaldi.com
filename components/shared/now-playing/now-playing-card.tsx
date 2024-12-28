@@ -7,19 +7,22 @@ import { cn, trim } from '@/lib/utils';
 import type { NowPlaying } from '@/types/spotify';
 
 import AnimatedBars from '../animated-bars';
-import { Spotify } from '../icons';
+import { DeviceX, Speaker, Spotify } from '../icons';
 import RenderIf from '../render-if';
 
 const NowPlayingCard = ({
   track,
   onOpenSongUrl,
   isExpanded = false,
+  devices = [],
 }: {
   track?: NowPlaying;
   onOpenSongUrl?: (url?: string) => void;
   isExpanded?: boolean;
+  devices?: Array<{ name: string; isActive: boolean }>;
 }) => {
   const [expanded, setExpanded] = useState(isExpanded);
+  const activeDevice = devices.find((device) => device.isActive);
 
   return (
     <div className={cn('-mx-4')}>
@@ -60,6 +63,12 @@ const NowPlayingCard = ({
                   </div>
                 </div>
               </div>
+            </div>
+            <div className={cn('flex items-center gap-1')}>
+              <Speaker className={cn('size-4')} />
+              <span className={cn('text-sm text-white')}>
+                {activeDevice?.name}
+              </span>
             </div>
           </>
         ) : (
