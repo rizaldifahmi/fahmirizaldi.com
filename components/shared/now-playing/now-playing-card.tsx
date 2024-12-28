@@ -21,73 +21,54 @@ const NowPlayingCard = ({
 }) => {
   const [expanded, setExpanded] = useState(isExpanded);
 
-  if (!track?.songUrl) return null;
-
-  const trimmedSongTitle = trim(track.title, 40);
-  const trimmedSongArtist = trim(track.artist);
-
   return (
-    <div
-      className={cn(
-        'fixed bottom-0 z-[999] w-full',
-        !expanded && 'flex justify-end',
-      )}
-    >
-      {!expanded ? (
-        <Button
-          className={cn(
-            'cursor-pointer rounded-full bg-transparent text-spotify transition-all duration-200',
-            'hover:bg-transparent hover:text-spotify',
-          )}
-          onClick={() => setExpanded(!expanded)}
-          size="icon"
-          variant="ghost"
-        >
-          <Spotify className={cn('animate-pulse')} />
-        </Button>
-      ) : (
-        <div
-          className={cn(
-            'flex items-center justify-between rounded-t-lg bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 p-2',
-          )}
-        >
-          <div className={cn('flex items-center gap-3')}>
-            <RenderIf isTrue={Boolean(track.albumImageUrl)}>
-              <Image
-                className={cn('rounded-lg')}
-                unoptimized
-                alt={track.album as string}
-                src={track.albumImageUrl as string}
-                width={60}
-                height={60}
-              />
-            </RenderIf>
-            <div
-              className={cn(
-                'flex flex-col font-cal text-white',
-                'hover:cursor-pointer hover:underline',
-              )}
-              onClick={() => onOpenSongUrl?.(track.songUrl)}
-            >
-              <div className={cn('text-sm font-medium')}>
-                {trimmedSongTitle}
-              </div>
-              <div className={cn('flex items-center gap-2 text-xs')}>
-                <AnimatedBars />
-                <span className={cn('pt-1 text-sm')}>{trimmedSongArtist}</span>
+    <div className={cn('-mx-4')}>
+      <div
+        className={cn(
+          'flex items-center justify-between bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-4 py-1',
+        )}
+      >
+        {track?.songUrl ? (
+          <>
+            <div className={cn('flex items-center gap-2')}>
+              <AnimatedBars />
+              <span className={cn('text-sm text-white')}>Now playing: </span>
+              <div
+                className={cn(
+                  'flex items-center gap-2 transition-all duration-200',
+                )}
+              >
+                <RenderIf isTrue={Boolean(track.albumImageUrl)}>
+                  <Image
+                    src={track.albumImageUrl as string}
+                    alt={track.album as string}
+                    className={cn('rounded-sm')}
+                    width={16}
+                    height={16}
+                    unoptimized
+                  />
+                </RenderIf>
+                <div
+                  className={cn(
+                    'flex gap-1 text-sm text-white',
+                    'hover:cursor-pointer hover:underline',
+                  )}
+                  onClick={() => onOpenSongUrl?.(track.songUrl)}
+                >
+                  <div className={cn('inline-flex')}>
+                    <span>{track.artist}</span> - <span>{track.title}</span>
+                  </div>
+                </div>
               </div>
             </div>
+          </>
+        ) : (
+          <div className={cn('flex items-center gap-2')}>
+            <Spotify className={cn('size-4 fill-spotify')} />
+            <span className={cn('text-sm text-white')}>Not Playing</span>
           </div>
-          <Button
-            size="icon"
-            variant="ghost"
-            className={cn('bg-transparent text-white')}
-            onClick={() => setExpanded(!expanded)}
-          >
-            <ChevronDown />
-          </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

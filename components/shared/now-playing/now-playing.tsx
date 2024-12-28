@@ -13,7 +13,17 @@ const NowPlaying = () => {
   const { track, isLoading: isNowPlayingLoading } = useNowPlaying();
   const { devices, isLoading: isDevicesLoading } = useDevices();
 
-  if (isNowPlayingLoading || isDevicesLoading) return null;
+  console.log('NowPlaying Debug:', {
+    isMaxMd,
+    isNowPlayingLoading,
+    isDevicesLoading,
+    track,
+  });
+
+  if (isNowPlayingLoading || (!isMaxMd && isDevicesLoading)) {
+    console.log('NowPlaying returning null due to loading');
+    return null;
+  }
 
   const onOpenSongUrl = (url?: string) =>
     url && window.open(url, '_blank', 'noopener,noreferrer');

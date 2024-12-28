@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 
 import Container from './container';
 import Link from './link';
+import NowPlaying from './now-playing';
 
 const Footer = () => {
   return (
@@ -29,6 +30,13 @@ const Footer = () => {
             </div>
           ))}
         </nav>
+      </Container>
+      <div className={cn('md:hidden')}>
+        <Container>
+          <NowPlaying />
+        </Container>
+      </div>
+      <Container>
         <div className={cn('flex items-center justify-between gap-4')}>
           <div className={cn('font-medium')}>
             &copy; {new Date().getFullYear()}{' '}

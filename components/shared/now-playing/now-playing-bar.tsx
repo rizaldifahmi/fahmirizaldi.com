@@ -35,7 +35,7 @@ const NowPlayingBar = ({
   const [showDeviceList, setShowDeviceList] = useState(false);
 
   return (
-    <div className={cn('fixed bottom-0 z-[999] w-full')}>
+    <div className={cn('fixed bottom-0 z-[999] w-full bg-background')}>
       <div
         className={cn(
           'flex justify-between bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 px-4 py-1 font-cal text-sm tracking-tight text-white',
