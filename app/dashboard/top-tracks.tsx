@@ -46,7 +46,7 @@ const TopTracks = () => {
         <div>
           <h2 className="text-xl font-bold">Top Tracks</h2>
           <p className="text-neutral-600 dark:text-neutral-400">
-            My most played tracks on Spotify
+            My most played tracks on Spotify in the last 6 months
           </p>
         </div>
         <div className="flex flex-col gap-2">

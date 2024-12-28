@@ -87,7 +87,7 @@ const CodingActivity = () => {
           className={cn('text-muted-foreground hover:text-foreground')}
           href="https://wakatime.com/@fahmirizaldi"
         >
-          Last modified:{' '}
+          Last updated:{' '}
           {formattedLastModifiedDate ? (
             <span>{formattedLastModifiedDate}</span>
           ) : (

@@ -8,8 +8,8 @@ const useStats = <T>(stats: 'engagements' | 'wakatime' | 'github') => {
     APIErrorResponse
   >(`/api/dashboard/${stats}`, undefined, {
     revalidateOnFocus: true,
-    refreshInterval: 60000, // Refresh every minute
-    dedupingInterval: 30000,
+    refreshInterval: 30000, // Refresh every 30 seconds
+    dedupingInterval: 15000, // Allow new requests after 15 seconds
   });
 
   const _stats = data?.data;

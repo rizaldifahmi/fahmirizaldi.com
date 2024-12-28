@@ -49,7 +49,7 @@ export const getNowPlaying = async () => {
 export const getTopTracks = async () => {
   const { access_token } = await getAccessToken();
 
-  return fetch(`${TOP_TRACKS_ENDPOINT}?time_range=short_term&limit=10`, {
+  return fetch(`${TOP_TRACKS_ENDPOINT}?time_range=medium_term&limit=10`, {
     headers: {
       Authorization: `Bearer ${access_token}`
     }

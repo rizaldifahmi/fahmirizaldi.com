@@ -13,6 +13,7 @@ import AppProvider from '@/components/providers/app-provider';
 import Footer from '@/components/shared/footer';
 import Header from '@/components/shared/header';
 import NowPlaying from '@/components/shared/now-playing';
+import ScrollToTop from '@/components/shared/scroll-to-top';
 import { Toaster } from '@/components/ui/toaster';
 import { DEFAULT_METADATA, seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
@@ -74,6 +75,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
           <div className={cn('hidden md:block')}>
             <NowPlaying />
           </div>
+          <ScrollToTop />
         </div>
         <Analytics />
         <Toaster />
