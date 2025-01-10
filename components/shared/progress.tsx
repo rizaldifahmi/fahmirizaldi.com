@@ -10,11 +10,17 @@ import RenderIf from './render-if';
 const Progress = ({
   data,
   className,
+  items,
 }: {
-  data: { name: string; percent?: number };
+  data: { name: string; percent?: number; total_seconds: number };
   className?: string;
+  items?: Array<{ total_seconds: number }>;
 }) => {
-  const { name, percent = 0 } = data;
+  const { name, total_seconds } = data;
+
+  // Recalculate percentage based on total seconds of displayed items
+  const totalSeconds = items?.reduce((acc, curr) => acc + curr.total_seconds, 0) || 0;
+  const percent = totalSeconds > 0 ? (total_seconds / totalSeconds) * 100 : 0;
 
   const variants = {
     initial: { width: 0 },
@@ -25,6 +31,9 @@ const Progress = ({
   };
 
   const isMounted = useMounted();
+
+  // Format percentage: show 1 decimal place if < 1%, otherwise round to integer
+  const formattedPercent = percent < 1 ? percent.toFixed(1) : percent.toFixed(0);
 
   return (
     <RenderIf isTrue={isMounted}>
@@ -47,7 +56,7 @@ const Progress = ({
             &ensp;
           </motion.span>
         </div>
-        <div className={cn('w-8 text-right')}>{percent.toFixed(0)}%</div>
+        <div className={cn('w-8 text-right')}>{formattedPercent}%</div>
       </div>
     </RenderIf>
   );

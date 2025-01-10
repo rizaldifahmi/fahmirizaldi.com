@@ -42,9 +42,6 @@ const CodingActivity = () => {
     formatLastModified();
   }, [data]);
 
-  // TODO: will fix later
-  // const startDate = data?.start ? formatDate(data?.start) : 'N/A';
-  // const endDate = data?.end ? formatDate(data?.end) : 'N/A';
   const dailyAverage =
     data?.human_readable_daily_average_including_other_language ?? 'N/A';
   const thisWeekTotal =
@@ -55,7 +52,6 @@ const CodingActivity = () => {
     ? `${formatDate(bestDayDate)} (${bestDayText})`
     : 'N/A';
   const allTimeSinceToday = data?.all_time_since_today?.text ?? 'N/A';
-
   const languages = data?.languages ?? [];
   const editors = data?.editors ?? [];
 
@@ -98,8 +94,6 @@ const CodingActivity = () => {
     >
       <div className={cn('flex flex-col gap-4')}>
         <div className={cn('grid gap-3 py-2', 'md:grid-cols-2')}>
-          {/* <OverviewCard label="Start Date" value={startDate} /> */}
-          {/* <OverviewCard label="End Date" value={endDate} /> */}
           <OverviewCard label="Daily Coding Average" value={dailyAverage} />
           <OverviewCard label="This Week Coding Time" value={thisWeekTotal} />
           <OverviewCard label="Best Day Coding Time" value={bestDay} />
@@ -131,6 +125,7 @@ const CodingActivity = () => {
                     <li key={item.name}>
                       <Progress
                         data={item}
+                        items={activity.data}
                         className={cn(
                           'bg-gradient-to-r from-pink-400 via-blue-500 to-purple-600',
                         )}

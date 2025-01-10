@@ -11,7 +11,7 @@ import HighlightedProjects from './highlighted-projects';
 import LatestPosts from './latest-posts';
 
 export const metadata: Metadata = seo({
-  title: SITE.title,
+  title: 'Home',
   url: '/',
 });
 

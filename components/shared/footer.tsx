@@ -1,3 +1,5 @@
+'use client';
+
 import { FOOTER_ICON_LINKS, FOOTER_LINKS, SITE } from '@/constants';
 import { cn } from '@/lib/utils';
 
