@@ -1,6 +1,6 @@
 ---
 title: Sistem Absensi Terintegrasi
-description: Sistem absensi modern yang mengintegrasikan fingerprint dan pengenalan wajah dengan manajemen data karyawan, pelaporan real-time, dan sistem HR untuk pencatatan kehadiran yang akurat dan efisien.
+description: Sistem absensi modern yang mengintegrasikan mesin absensi (fingerprint & face recognition) dengan ADMS (Attendance Device Management System) untuk manajemen data karyawan, pelaporan real-time, dan sistem HR untuk pencatatan kehadiran yang akurat dan efisien.
 image: simantap-cover.png
 date: '2023-12-10'
 stacks: ['React.js', 'TypeScript', 'Chakra UI', 'Node.js', 'PostgreSQL', 'Express.js']
@@ -12,10 +12,12 @@ repositoryUrl: #
 
 ## Overview
 
-Sistem Absensi Terintegrasi adalah solusi komprehensif untuk manajemen kehadiran karyawan yang menggabungkan teknologi biometrik dengan sistem informasi HR modern. Sistem ini dirancang untuk meningkatkan akurasi pencatatan kehadiran dan efisiensi pengelolaan data kepegawaian.
+Sistem Absensi Terintegrasi adalah solusi komprehensif untuk manajemen kehadiran karyawan yang menghubungkan mesin absensi biometrik (fingerprint & face recognition) dengan ADMS (Attendance Device Management System). Data absensi dari mesin secara otomatis tersinkronisasi ke sistem melalui ADMS, yang kemudian terintegrasi dengan sistem informasi HR untuk pengelolaan data kepegawaian yang efisien.
 
 Fokus utama pengembangan:
-- **Akurasi**: Multi-factor authentication dengan fingerprint dan face recognition
+- **Integrasi Mesin**: Dukungan berbagai mesin absensi (fingerprint & face recognition)
+- **ADMS**: Sistem manajemen perangkat absensi untuk sinkronisasi data otomatis
+- **Akurasi**: Verifikasi melalui biometrik (sidik jari/wajah)
 - **Integrasi**: Koneksi seamless dengan sistem HR dan penggajian
 - **Keamanan**: Perlindungan data biometrik dan informasi karyawan
 
@@ -25,17 +27,36 @@ Fokus utama pengembangan:
 Dashboard komprehensif untuk HR yang menampilkan statistik kehadiran, tren keterlambatan, dan overview status karyawan secara real-time. Dilengkapi dengan fitur notifikasi dan alert system.
 
 ### Antarmuka Absensi
-Interface modern untuk proses absensi yang menggabungkan pembacaan fingerprint dan pengenalan wajah. Tampilan responsif dengan feedback visual untuk memudahkan proses verifikasi.
+Interface modern untuk proses absensi menggunakan fingerprint. Tampilan responsif dengan feedback visual untuk memudahkan proses verifikasi.
 
 ### Laporan & Analitik
 Sistem pelaporan yang detail dengan visualisasi data interaktif. Mendukung berbagai format laporan dan ekspor data untuk kebutuhan analisis lanjutan.
+
+### Integrasi Mesin & ADMS
+- **Dukungan Multi-Device**:
+  - Kompatibel dengan berbagai merek mesin absensi
+  - Support fingerprint dan face recognition
+  - Konfigurasi mesin yang fleksibel
+  - Monitoring status perangkat
+
+- **ADMS (Attendance Device Management System)**:
+  - Sinkronisasi data otomatis dari mesin ke sistem
+  - Manajemen perangkat terpusat
+  - Pemantauan konektivitas real-time
+  - Backup data otomatis
+  - Penanganan error dan retry mechanism
+
+- **Alur Data**:
+  - Capture data biometrik dari mesin
+  - Pengiriman data melalui ADMS
+  - Validasi dan normalisasi data
+  - Integrasi dengan database pusat
+  - Sinkronisasi dengan sistem HR
 
 ## Fitur Utama
 
 ### Verifikasi Biometrik
 - **Fingerprint Recognition**: Integrasi dengan berbagai mesin fingerprint
-- **Face Recognition**: Sistem pengenalan wajah dengan deep learning
-- **Multi-factor Authentication**: Kombinasi metode verifikasi
 - **Anti-spoofing**: Deteksi pemalsuan biometrik
 
 ### Manajemen Data
@@ -91,12 +112,6 @@ Sistem pelaporan yang detail dengan visualisasi data interaktif. Mendukung berba
 - **JWT**: Autentikasi dan otorisasi
 - **Express-fileupload**: Handling file uploads
 
-### AI/ML Components
-- **TensorFlow**: Model face recognition
-- **OpenCV**: Image processing
-- **scikit-learn**: Data analysis
-- **NumPy**: Komputasi numerik
-
 ## Implementasi Kunci
 
 ### Biometric Processing
@@ -104,11 +119,6 @@ Sistem pelaporan yang detail dengan visualisasi data interaktif. Mendukung berba
    - Minutiae extraction
    - Pattern matching
    - Quality assessment
-
-2. **Face Recognition**:
-   - Deep learning model
-   - Feature extraction
-   - Liveness detection
 
 ### Data Management
 1. **Storage Strategy**:
@@ -135,9 +145,9 @@ Sistem pelaporan yang detail dengan visualisasi data interaktif. Mendukung berba
 ## Tantangan & Solusi
 
 1. **Akurasi Biometrik**:
-   - Peningkatan algoritma recognition
+   - Peningkatan kualitas pembacaan fingerprint
    - Multiple capture attempts
-   - Regular model updates
+   - Kalibrasi perangkat regular
 
 2. **Skalabilitas**:
    - Distributed processing
