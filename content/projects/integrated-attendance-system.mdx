@@ -1,6 +1,6 @@
 ---
-title: Sistem Absensi Terintegrasi
-description: Sistem absensi modern yang mengintegrasikan mesin absensi (fingerprint & face recognition) dengan ADMS (Attendance Device Management System) untuk manajemen data karyawan, pelaporan real-time, dan sistem HR untuk pencatatan kehadiran yang akurat dan efisien.
+title: Integrated Attendance System
+description: A modern attendance system that integrates attendance machines (fingerprint & face recognition) with ADMS (Attendance Device Management System) for employee data management, real-time reporting, and HR systems for accurate and efficient attendance tracking.
 image: simantap-cover.png
 date: '2023-12-10'
 stacks: ['React.js', 'TypeScript', 'Chakra UI', 'Node.js', 'PostgreSQL', 'Express.js']
@@ -12,107 +12,107 @@ repositoryUrl: #
 
 ## Overview
 
-Sistem Absensi Terintegrasi adalah solusi komprehensif untuk manajemen kehadiran karyawan yang menghubungkan mesin absensi biometrik (fingerprint & face recognition) dengan ADMS (Attendance Device Management System). Data absensi dari mesin secara otomatis tersinkronisasi ke sistem melalui ADMS, yang kemudian terintegrasi dengan sistem informasi HR untuk pengelolaan data kepegawaian yang efisien.
+The Integrated Attendance System is a comprehensive solution for employee attendance management that connects biometric attendance machines (fingerprint & face recognition) with ADMS (Attendance Device Management System). Attendance data from the machines automatically synchronizes to the system through ADMS, which then integrates with the HR information system for efficient personnel data management.
 
-Fokus utama pengembangan:
-- **Integrasi Mesin**: Dukungan berbagai mesin absensi (fingerprint & face recognition)
-- **ADMS**: Sistem manajemen perangkat absensi untuk sinkronisasi data otomatis
-- **Akurasi**: Verifikasi melalui biometrik (sidik jari/wajah)
-- **Integrasi**: Koneksi seamless dengan sistem HR dan penggajian
-- **Keamanan**: Perlindungan data biometrik dan informasi karyawan
+Key development focuses:
+- **Machine Integration**: Support for various attendance machines (fingerprint & face recognition)
+- **ADMS**: Attendance device management system for automatic data synchronization
+- **Accuracy**: Verification through biometrics (fingerprint/face)
+- **Integration**: Seamless connection with HR and payroll systems
+- **Security**: Protection of biometric data and employee information
 
 ## Features
 
-### Dashboard HR
-Dashboard komprehensif untuk HR yang menampilkan statistik kehadiran, tren keterlambatan, dan overview status karyawan secara real-time. Dilengkapi dengan fitur notifikasi dan alert system.
+### HR Dashboard
+Comprehensive dashboard for HR displaying attendance statistics, tardiness trends, and real-time employee status overview. Equipped with notification and alert system features.
 
-### Antarmuka Absensi
-Interface modern untuk proses absensi menggunakan fingerprint. Tampilan responsif dengan feedback visual untuk memudahkan proses verifikasi.
+### Attendance Interface
+Modern interface for fingerprint attendance process. Responsive display with visual feedback to facilitate the verification process.
 
-### Laporan & Analitik
-Sistem pelaporan yang detail dengan visualisasi data interaktif. Mendukung berbagai format laporan dan ekspor data untuk kebutuhan analisis lanjutan.
+### Reports & Analytics
+Detailed reporting system with interactive data visualization. Supports various report formats and data export for advanced analysis needs.
 
-### Integrasi Mesin & ADMS
-- **Dukungan Multi-Device**:
-  - Kompatibel dengan berbagai merek mesin absensi
-  - Support fingerprint dan face recognition
-  - Konfigurasi mesin yang fleksibel
-  - Monitoring status perangkat
+### Machine & ADMS Integration
+- **Multi-Device Support**:
+  - Compatible with various attendance machine brands
+  - Support for fingerprint and face recognition
+  - Flexible machine configuration
+  - Device status monitoring
 
 - **ADMS (Attendance Device Management System)**:
-  - Sinkronisasi data otomatis dari mesin ke sistem
-  - Manajemen perangkat terpusat
-  - Pemantauan konektivitas real-time
-  - Backup data otomatis
-  - Penanganan error dan retry mechanism
+  - Automatic data synchronization from machine to system
+  - Centralized device management
+  - Real-time connectivity monitoring
+  - Automatic data backup
+  - Error handling and retry mechanism
 
-- **Alur Data**:
-  - Capture data biometrik dari mesin
-  - Pengiriman data melalui ADMS
-  - Validasi dan normalisasi data
-  - Integrasi dengan database pusat
-  - Sinkronisasi dengan sistem HR
+- **Data Flow**:
+  - Biometric data capture from machines
+  - Data transmission through ADMS
+  - Data validation and normalization
+  - Integration with central database
+  - Synchronization with HR system
 
-## Fitur Utama
+## Main Features
 
-### Verifikasi Biometrik
-- **Fingerprint Recognition**: Integrasi dengan berbagai mesin fingerprint
-- **Anti-spoofing**: Deteksi pemalsuan biometrik
+### Biometric Verification
+- **Fingerprint Recognition**: Integration with various fingerprint machines
+- **Anti-spoofing**: Biometric forgery detection
 
-### Manajemen Data
-- **Employee Database**: Pengelolaan data karyawan terpusat
-- **Attendance Tracking**: Pencatatan kehadiran real-time
-- **Leave Management**: Sistem pengajuan dan approval cuti
-- **Shift Management**: Pengaturan jadwal kerja fleksibel
+### Data Management
+- **Employee Database**: Centralized employee data management
+- **Attendance Tracking**: Real-time attendance recording
+- **Leave Management**: Leave application and approval system
+- **Shift Management**: Flexible work schedule management
 
-### Manajemen Cuti
-- **Pengajuan Digital**: 
-  - Form pengajuan cuti online
-  - Upload dokumen pendukung
-  - Pemilihan jenis cuti (tahunan, sakit, melahirkan, dll)
-  - Pengaturan tanggal cuti dengan kalender interaktif
+### Leave Management
+- **Digital Application**: 
+  - Online leave application form
+  - Supporting document upload
+  - Leave type selection (annual, sick, maternity, etc.)
+  - Interactive calendar for date selection
 
-- **Workflow Approval**:
-  - Sistem persetujuan multi-level
-  - Notifikasi email otomatis
-  - Tracking status pengajuan
-  - Catatan/komentar dari approver
+- **Approval Workflow**:
+  - Multi-level approval system
+  - Automatic email notifications
+  - Application status tracking
+  - Notes/comments from approvers
 
-- **Manajemen Saldo Cuti**:
-  - Perhitungan otomatis saldo cuti
-  - Riwayat penggunaan cuti
-  - Carry-forward saldo cuti
-  - Peringatan saldo cuti menipis
+- **Leave Balance Management**:
+  - Automatic leave balance calculation
+  - Leave usage history
+  - Leave balance carry-forward
+  - Low balance alerts
 
-- **Pelaporan Cuti**:
-  - Dashboard khusus monitoring cuti
-  - Laporan penggunaan cuti per departemen
-  - Analisis tren pengambilan cuti
-  - Ekspor data dalam format Excel/PDF
+- **Leave Reporting**:
+  - Dedicated leave monitoring dashboard
+  - Departmental leave usage reports
+  - Leave trend analysis
+  - Data export in Excel/PDF formats
 
-### Integrasi & Pelaporan
-- **HR Integration**: Sinkronisasi dengan sistem HR
-- **Payroll Connection**: Kalkulasi gaji berbasis kehadiran
-- **Custom Reports**: Generator laporan yang fleksibel
-- **Export Options**: Dukungan berbagai format ekspor
+### Integration & Reporting
+- **HR Integration**: Synchronization with HR system
+- **Payroll Connection**: Attendance-based salary calculation
+- **Custom Reports**: Flexible report generator
+- **Export Options**: Support for various export formats
 
-## Arsitektur Teknis
+## Technical Architecture
 
 ### Frontend
-- **React.js**: Library utama untuk membangun UI
-- **TypeScript**: Type safety dan maintainability
-- **Chakra UI**: Komponen UI yang modern dan responsif
-- **React Router**: Manajemen routing dan navigasi
-- **Axios**: HTTP client untuk API requests
+- **React.js**: Main library for UI building
+- **TypeScript**: Type safety and maintainability
+- **Chakra UI**: Modern and responsive UI components
+- **React Router**: Routing and navigation management
+- **Axios**: HTTP client for API requests
 - **Context API**: State management
 
 ### Backend
-- **Node.js & Express**: REST API dan business logic
-- **PostgreSQL**: Database utama
-- **JWT**: Autentikasi dan otorisasi
+- **Node.js & Express**: REST API and business logic
+- **PostgreSQL**: Main database
+- **JWT**: Authentication and authorization
 - **Express-fileupload**: Handling file uploads
 
-## Implementasi Kunci
+## Key Implementation
 
 ### Data Management
 1. **Storage Strategy**:

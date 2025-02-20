@@ -1,6 +1,6 @@
 ---
 title: Cloud Drive Storage
-description: Sistem penyimpanan cloud yang aman dan efisien dengan fitur enkripsi, manajemen akses pengguna, dan integrasi multi-platform untuk pengelolaan data yang optimal.
+description: A secure and efficient cloud storage system with encryption features, user access management, and multi-platform integration for optimal data management.
 image: cloud-cover.png
 date: '2024-01-15'
 stacks: ['Nextcloud', 'PHP', 'Apache', 'PostgreSQL', 'Redis']
@@ -12,64 +12,64 @@ repositoryUrl: #
 
 ## Overview
 
-Cloud Drive Storage adalah solusi penyimpanan cloud yang komprehensif, dirancang untuk memenuhi kebutuhan penyimpanan dan berbagi data secara aman. Sistem ini menggabungkan teknologi modern dengan praktik keamanan terbaik untuk memberikan pengalaman pengelolaan data yang optimal.
+Cloud Drive Storage is a comprehensive cloud storage solution designed to meet secure data storage and sharing needs. This system combines modern technology with best security practices to provide an optimal data management experience.
 
-Fokus utama pengembangan:
-- **Keamanan**: Enkripsi end-to-end dan manajemen akses yang ketat
-- **Skalabilitas**: Arsitektur yang dapat menangani pertumbuhan data
-- **Kemudahan**: Interface yang intuitif dan kemudahan integrasi
+Key development focuses:
+- **Security**: End-to-end encryption and strict access management
+- **Scalability**: Architecture that can handle data growth
+- **Ease of Use**: Intuitive interface and easy integration
 
 ## Screenshots & Features
 
 ### File Manager
 ![File Manager](/media/projects/cloud-files.png)
-Sistem pengelolaan file dengan fitur drag-and-drop, preview file, dan organisasi folder. Dilengkapi dengan pencarian cepat dan filter untuk memudahkan pengelolaan file dalam jumlah besar.
+File management system with drag-and-drop features, file preview, and folder organization. Equipped with quick search and filters to facilitate managing large numbers of files.
 
 ### Sharing Center
-Panel kontrol untuk berbagi file dan folder dengan pengaturan akses yang detail. Mendukung berbagi via link, email, atau grup, dengan opsi pembatasan waktu akses.
+Control panel for sharing files and folders with detailed access settings. Supports sharing via link, email, or group, with time-based access restriction options.
 
-## Fitur Utama
+## Main Features
 
-### Penyimpanan & Sinkronisasi
-- **Multi-device Sync**: Sinkronisasi otomatis antar perangkat
-- **Versioning**: Riwayat versi file
-- **Selective Sync**: Pilihan folder untuk sinkronisasi
-- **Offline Access**: Akses file tanpa koneksi internet
+### Storage & Synchronization
+- **Multi-device Sync**: Automatic synchronization between devices
+- **Versioning**: File version history
+- **Selective Sync**: Choose folders for synchronization
+- **Offline Access**: Access files without internet connection
 
-### Keamanan & Privasi
-- **End-to-end Encryption**: Enkripsi data saat diam dan transit
-- **Access Control**: Manajemen hak akses granular
-- **2FA**: Autentikasi dua faktor
-- **Audit Trail**: Log aktivitas lengkap
+### Security & Privacy
+- **End-to-end Encryption**: Data encryption at rest and in transit
+- **Access Control**: Granular access rights management
+- **2FA**: Two-factor authentication
+- **Audit Trail**: Complete activity logs
 
-### Kolaborasi
-- **File Sharing**: Berbagi file dengan kontrol akses
-- **Team Folders**: Folder kolaboratif untuk tim
-- **Comments**: Komentar pada file
-- **Activity Feed**: Timeline aktivitas real-time
+### Collaboration
+- **File Sharing**: Share files with access control
+- **Team Folders**: Collaborative folders for teams
+- **Comments**: Comments on files
+- **Activity Feed**: Real-time activity timeline
 
-## Arsitektur Teknis
+## Technical Architecture
 
 ### Frontend & Backend
-- **Nextcloud**: Platform utama cloud storage
-- **PHP**: Bahasa pemrograman server-side
+- **Nextcloud**: Main cloud storage platform
+- **PHP**: Server-side programming language
 - **Apache**: Web server
-- **PostgreSQL**: Database utama
-- **Redis**: Caching dan session management
+- **PostgreSQL**: Main database
+- **Redis**: Caching and session management
 
 ### Infrastructure
-- **Apache**: Web server dan load balancer
+- **Apache**: Web server and load balancer
 - **Let's Encrypt**: SSL/TLS certificates
-- **Redis**: In-memory caching dan queue management
+- **Redis**: In-memory caching and queue management
 - **Backup System**: Automated backup solutions
 
-## Implementasi Kunci
+## Key Implementations
 
 ### Storage System
 1. **File Management**:
-   - Chunked upload untuk file besar
-   - Deduplication untuk efisiensi storage
-   - Kompresi adaptif
+   - Chunked upload for large files
+   - Deduplication for storage efficiency
+   - Adaptive compression
 
 2. **Caching Strategy**:
    - Multi-level caching
@@ -97,20 +97,3 @@ Panel kontrol untuk berbagi file dan folder dengan pengaturan akses yang detail.
    - Full-text search
    - Metadata indexing
    - Real-time updates
-
-## Tantangan & Solusi
-
-1. **Skalabilitas**:
-   - Implementasi microservices
-   - Horizontal scaling
-   - Load balancing dinamis
-
-2. **Konsistensi Data**:
-   - Distributed locking
-   - Conflict resolution
-   - Version control
-
-3. **Keamanan**:
-   - Regular security audits
-   - Penetration testing
-   - Compliance monitoring
