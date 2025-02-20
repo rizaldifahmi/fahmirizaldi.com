@@ -7,7 +7,9 @@ import {
   JQuery,
   Laravel,
   Markdown,
+  Midtrans,
   MySQL,
+  Nextcloud,
   NextJS,
   NuxtJS,
   PHP,
@@ -20,6 +22,8 @@ import {
   TailwindCSS,
   TypeScript,
   VueJS,
+  WooCommerce,
+  WordPress,
 } from '@/components/shared/icons';
 import { cn } from '@/lib/utils';
 import type { Stack } from '@/types/stack';
@@ -48,4 +52,8 @@ export const STACKS: Stack = {
   JQuery: <JQuery className={cn('size-4 fill-[#0769AD]')} />,
   Bootstrap: <Bootstrap className={cn('size-4 fill-[#7952B3]')} />,
   Android: <Android className={cn('size-4 fill-[#34A853]')} />,
+  WordPress: <WordPress className={cn('size-4 fill-[#21759B]')} />,
+  WooCommerce: <WooCommerce className={cn('size-4 fill-[#96588A]')} />,
+  Midtrans: <Midtrans className={cn('size-4 fill-[#1E4B99]')} />,
+  Nextcloud: <Nextcloud className={cn('size-4 fill-[#0082C9]')} />,
 };

@@ -38,6 +38,8 @@ const Project = defineDocumentType(() => ({
     url: { type: 'string' },
     repositoryUrl: { type: 'string' },
     playStoreUrl: { type: 'string' },
+    deprecated: { type: 'boolean', default: false },
+    deprecatedReason: { type: 'string' },
   },
   computedFields,
 }));

@@ -34,8 +34,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
     return {};
   }, [image, imageMeta]);
 
-  let projectUrl = url ?? `${ROUTES.projects}/${slug}`;
+  let projectUrl = `${ROUTES.projects}/${slug}`;
   if (playStoreUrl) projectUrl = playStoreUrl;
+  if (url && !project.body.raw) projectUrl = url;
 
   return (
     <Link

@@ -1,0 +1,116 @@
+---
+title: Cloud Drive Storage
+description: Sistem penyimpanan cloud yang aman dan efisien dengan fitur enkripsi, manajemen akses pengguna, dan integrasi multi-platform untuk pengelolaan data yang optimal.
+image: cloud-cover.png
+date: '2024-01-15'
+stacks: ['Nextcloud', 'PHP', 'Apache', 'PostgreSQL', 'Redis']
+highlight: true
+published: true
+url: https://cloud.fahmirizaldi.com/
+repositoryUrl: #
+---
+
+## Overview
+
+Cloud Drive Storage adalah solusi penyimpanan cloud yang komprehensif, dirancang untuk memenuhi kebutuhan penyimpanan dan berbagi data secara aman. Sistem ini menggabungkan teknologi modern dengan praktik keamanan terbaik untuk memberikan pengalaman pengelolaan data yang optimal.
+
+Fokus utama pengembangan:
+- **Keamanan**: Enkripsi end-to-end dan manajemen akses yang ketat
+- **Skalabilitas**: Arsitektur yang dapat menangani pertumbuhan data
+- **Kemudahan**: Interface yang intuitif dan kemudahan integrasi
+
+## Screenshots & Features
+
+### File Manager
+![File Manager](/media/projects/cloud-files.png)
+Sistem pengelolaan file dengan fitur drag-and-drop, preview file, dan organisasi folder. Dilengkapi dengan pencarian cepat dan filter untuk memudahkan pengelolaan file dalam jumlah besar.
+
+### Sharing Center
+Panel kontrol untuk berbagi file dan folder dengan pengaturan akses yang detail. Mendukung berbagi via link, email, atau grup, dengan opsi pembatasan waktu akses.
+
+## Fitur Utama
+
+### Penyimpanan & Sinkronisasi
+- **Multi-device Sync**: Sinkronisasi otomatis antar perangkat
+- **Versioning**: Riwayat versi file
+- **Selective Sync**: Pilihan folder untuk sinkronisasi
+- **Offline Access**: Akses file tanpa koneksi internet
+
+### Keamanan & Privasi
+- **End-to-end Encryption**: Enkripsi data saat diam dan transit
+- **Access Control**: Manajemen hak akses granular
+- **2FA**: Autentikasi dua faktor
+- **Audit Trail**: Log aktivitas lengkap
+
+### Kolaborasi
+- **File Sharing**: Berbagi file dengan kontrol akses
+- **Team Folders**: Folder kolaboratif untuk tim
+- **Comments**: Komentar pada file
+- **Activity Feed**: Timeline aktivitas real-time
+
+## Arsitektur Teknis
+
+### Frontend & Backend
+- **Nextcloud**: Platform utama cloud storage
+- **PHP**: Bahasa pemrograman server-side
+- **Apache**: Web server
+- **PostgreSQL**: Database utama
+- **Redis**: Caching dan session management
+
+### Infrastructure
+- **Apache**: Web server dan load balancer
+- **Let's Encrypt**: SSL/TLS certificates
+- **Redis**: In-memory caching dan queue management
+- **Backup System**: Automated backup solutions
+
+## Implementasi Kunci
+
+### Storage System
+1. **File Management**:
+   - Chunked upload untuk file besar
+   - Deduplication untuk efisiensi storage
+   - Kompresi adaptif
+
+2. **Caching Strategy**:
+   - Multi-level caching
+   - Predictive pre-fetching
+   - Cache invalidation
+
+### Security Implementation
+1. **Data Protection**:
+   - AES-256 encryption
+   - Zero-knowledge architecture
+   - Secure key management
+
+2. **Access Control**:
+   - Role-based access control (RBAC)
+   - IP-based restrictions
+   - Session management
+
+### Performance Optimization
+1. **Upload/Download**:
+   - Parallel processing
+   - Resume capability
+   - Bandwidth optimization
+
+2. **Search & Indexing**:
+   - Full-text search
+   - Metadata indexing
+   - Real-time updates
+
+## Tantangan & Solusi
+
+1. **Skalabilitas**:
+   - Implementasi microservices
+   - Horizontal scaling
+   - Load balancing dinamis
+
+2. **Konsistensi Data**:
+   - Distributed locking
+   - Conflict resolution
+   - Version control
+
+3. **Keamanan**:
+   - Regular security audits
+   - Penetration testing
+   - Compliance monitoring
