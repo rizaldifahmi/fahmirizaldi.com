@@ -30,7 +30,7 @@ export const EXPERIENCES: Experience[] = [
     },
     role: 'Full-stack Engineer',
     startDate: '2023-03',
-    endDate: null,
+    endDate: '2025-04',
     stacks: [
       {
         name: 'React.js',
