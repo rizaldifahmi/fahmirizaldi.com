@@ -46,7 +46,7 @@ export const EXPERIENCES: Experience[] = [
       },
     ],
     accomplishments: [
-      'Developed and maintained SIMRS (Hospital Management Information System) using CodeIgniter and React.js',
+      'Developed and maintained SIMRS (Hospital Management Information System) using CodeIgniter',
       'Implemented patient registration and queue management system',
       'Developed electronic medical records (EMR) system for dental and oral health services',
       'Integrated with BPJS Kesehatan API for insurance claim processing',
