@@ -13,7 +13,7 @@ import { EXPERIENCES } from '@/constants';
 import { cn, formatDate } from '@/lib/utils';
 
 const CareerJourney = () => {
-  const lastUpdated = formatDate('2024-03-20');
+  const lastUpdated = formatDate('2025-05-01');
 
   return (
     <>

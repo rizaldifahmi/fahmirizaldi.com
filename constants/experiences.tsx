@@ -14,6 +14,7 @@ import {
   TailwindCSS,
   TypeScript,
   VueJS,
+  WordPress,
 } from '@/components/shared/icons';
 import { cn } from '@/lib/utils';
 import type { Experience } from '@/types/experience';
@@ -69,39 +70,27 @@ export const EXPERIENCES: Experience[] = [
     endDate: '2021-01',
     stacks: [
       {
-        name: 'Vue.js',
-        icon: <VueJS className={cn('size-5 fill-[#4FC08D]')} />,
-      },
-      {
-        name: 'JavaScript',
-        icon: <JavaScript className={cn('size-5 fill-[#F7DF1E]')} />,
-      },
-      {
-        name: 'Laravel',
-        icon: <Laravel className={cn('size-5 fill-[#FF2D20]')} />,
+        name: 'WordPress',
+        icon: <WordPress className={cn('size-5 fill-[#21759B]')} />,
       },
       {
         name: 'PHP',
         icon: <PHP className={cn('size-5 fill-[#777BB4]')} />,
       },
       {
-        name: 'Redis',
-        icon: <Redis className={cn('size-5 fill-[#DC382D]')} />,
-      },
-      {
-        name: 'RabbitMQ',
-        icon: <RabbitMQ className={cn('size-5 fill-[#FF6600]')} />,
+        name: 'JavaScript',
+        icon: <JavaScript className={cn('size-5 fill-[#F7DF1E]')} />,
       },
     ],
     accomplishments: [
-      'Designed and developed high-performance game backend services using PHP (Laravel)',
-      'Built and maintained game management dashboard using Vue.js and JavaScript',
-      'Implemented real-time features using WebSocket and Redis for live game interactions',
-      'Optimized database queries and API performance for handling high-traffic game sessions',
-      'Developed microservices architecture using RabbitMQ for game event processing',
-      'Implemented comprehensive unit testing using Jest for frontend and backend components',
-      'Collaborated with game designers and frontend developers to implement game mechanics',
-      'Maintained API documentation and technical specifications for game services',
+      'Developed and customized company profile website using WordPress',
+      'Created custom WordPress themes and templates for client requirements',
+      'Implemented responsive design and mobile-friendly layouts',
+      'Integrated and configured essential WordPress plugins',
+      'Optimized website performance and loading speed',
+      'Set up and managed WordPress hosting and domain configurations',
+      'Implemented SEO best practices and meta tag optimization',
+      'Provided training and documentation for content management',
     ],
   },
   {
