@@ -45,6 +45,10 @@ export const EXPERIENCES: Experience[] = [
         name: 'PHP',
         icon: <PHP className={cn('size-5 fill-[#777BB4]')} />,
       },
+      {
+        name: 'MySQL',
+        icon: <MySQL className={cn('size-5 fill-[#4479A1]')} />,
+      },
     ],
     accomplishments: [
       'Developed and maintained SIMRS (Hospital Management Information System) using CodeIgniter',
