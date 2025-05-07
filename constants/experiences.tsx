@@ -85,6 +85,10 @@ export const EXPERIENCES: Experience[] = [
         name: 'JavaScript',
         icon: <JavaScript className={cn('size-5 fill-[#F7DF1E]')} />,
       },
+      {
+        name: 'MySQL',
+        icon: <MySQL className={cn('size-5 fill-[#4479A1]')} />,
+      },
     ],
     accomplishments: [
       'Developed and customized company profile website using WordPress',
@@ -119,26 +123,21 @@ export const EXPERIENCES: Experience[] = [
         icon: <PHP className={cn('size-5 fill-[#777BB4]')} />,
       },
       {
-        name: 'Vue.js',
-        icon: <VueJS className={cn('size-5 fill-[#4FC08D]')} />,
-      },
-      {
-        name: 'React.js',
-        icon: <ReactJS className={cn('size-5 fill-[#61DAFB]')} />,
-      },
-      {
         name: 'JavaScript',
         icon: <JavaScript className={cn('size-5 fill-[#F7DF1E]')} />,
       },
+      {
+        name: 'MySQL',
+        icon: <MySQL className={cn('size-5 fill-[#4479A1]')} />,
+      },
     ],
     accomplishments: [
-      'Developed and maintained property management system using Laravel and Vue.js',
+      'Developed and maintained property management system using Laravel',
       'Built dynamic property listing platform with advanced search and filtering',
       'Implemented booking and payment system integration',
       'Created admin dashboard for property management and analytics',
       'Optimized property search performance and database queries',
       'Integrated with maps and location services for property visualization',
-      'Developed mobile-responsive UI components with React.js',
     ],
   },
 ];
