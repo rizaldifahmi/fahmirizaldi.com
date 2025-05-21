@@ -6,6 +6,7 @@ import {
   Plus_Jakarta_Sans as PlusJakartaSans,
 } from 'next/font/google';
 import localFont from 'next/font/local';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import Analytics from '@/components/analytics';
@@ -81,6 +82,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         <Analytics />
         <Toaster />
         <SpeedInsights />
+        <VercelAnalytics />
       </AppProvider>
     </body>
   </html>
