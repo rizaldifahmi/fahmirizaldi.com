@@ -19,7 +19,7 @@ const RANGE_OPTIONS = [
   { value: '7_days', label: 'Last 7 Days' },
   { value: '30_days', label: 'Last 30 Days' },
   { value: '6_months', label: 'Last 6 Months' },
-  { value: '1_year', label: 'Last Year' },
+  { value: '1_year', label: 'Last 12 Months' },
 ] as const;
 
 const CodingActivity = () => {
@@ -50,7 +50,7 @@ const CodingActivity = () => {
 
   const dailyAverage =
     data?.human_readable_daily_average_including_other_language ?? 'N/A';
-  const thisWeekTotal =
+  const periodTotal =
     data?.human_readable_total_including_other_language ?? 'N/A';
   const bestDayDate = data?.best_day?.date;
   const bestDayText = data?.best_day?.text;
@@ -114,7 +114,10 @@ const CodingActivity = () => {
       <div className={cn('flex flex-col gap-4')}>
         <div className={cn('grid gap-3 py-2', 'md:grid-cols-2')}>
           <OverviewCard label="Daily Coding Average" value={dailyAverage} />
-          <OverviewCard label="This Week Coding Time" value={thisWeekTotal} />
+          <OverviewCard 
+            label={`${RANGE_OPTIONS.find(opt => opt.value === range)?.label} Coding Time`} 
+            value={periodTotal} 
+          />
           <OverviewCard label="Best Day Coding Time" value={bestDay} />
           <OverviewCard
             label="All Time Coding Time"
