@@ -21,8 +21,6 @@ export const GET = async (request: Request) => {
     const headersList = headers();
     const userAgent = headersList.get('user-agent') || '';
     const cfIpCountry = headersList.get('cf-ipcountry') || '';
-    
-    console.log('[WakaTime API] Request from:', cfIpCountry, 'User-Agent:', userAgent);
 
     const stats = await getStats(range as '7_days' | '30_days' | '6_months' | '1_year');
     const allTimeSinceToday = await getAllTimeSinceToday();
@@ -48,7 +46,6 @@ export const GET = async (request: Request) => {
 
     return res;
   } catch (error) {
-    console.error('[WakaTime API] Error:', error);
     return response<APIErrorResponse>({
       message: error instanceof Error ? error.message : 'Internal Server Error',
     });

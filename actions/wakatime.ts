@@ -117,7 +117,6 @@ type WakaTimeRange = '7_days' | '30_days' | '6_months' | '1_year';
 
 export const getStats = async (range: WakaTimeRange = '7_days'): Promise<WakaTimeStats> => {
   try {
-    console.log('[WakaTime Stats] Fetching stats for range:', range);
     const auth = generateBasicAuthorizationBase64();
     // Fix: menggunakan year bukan 1_year untuk parameter API
     const rangeParam = range === '1_year' ? 'last_year' : `last_${range}`;
@@ -137,15 +136,6 @@ export const getStats = async (range: WakaTimeRange = '7_days'): Promise<WakaTim
     }
 
     const data = response.data;
-    console.log('[WakaTime Stats] Received data for range:', range, {
-      hasLanguages: !!data.languages?.length,
-      hasEditors: !!data.editors?.length,
-      totalTime: data.human_readable_total_including_other_language,
-      totalSeconds: data.total_seconds_including_other_language,
-      range: data.range,
-      start: data.start,
-      end: data.end
-    });
     
     // Keep original data for totals and averages
     const {
