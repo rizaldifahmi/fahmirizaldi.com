@@ -15,11 +15,17 @@ import type { WakaTimeSummary } from '@/types/wakatime';
 import OverviewCard from './overview-card';
 import Section from './section';
 
+const RANGE_OPTIONS = [
+  { value: '7_days', label: 'Last 7 Days' },
+  { value: '30_days', label: 'Last 30 Days' },
+  { value: '6_months', label: 'Last 6 Months' },
+  { value: '1_year', label: 'Last Year' },
+] as const;
+
 const CodingActivity = () => {
-  const { data, isLoading } = useStats<CodingActivityStats>('wakatime');
-  const [formattedLastModifiedDate, setFormattedLastModifiedDate] = useState<
-    string | null
-  >(null);
+  const [range, setRange] = useState<(typeof RANGE_OPTIONS)[number]['value']>('7_days');
+  const { data, isLoading } = useStats<CodingActivityStats>('wakatime', { range });
+  const [formattedLastModifiedDate, setFormattedLastModifiedDate] = useState<string | null>(null);
 
   useEffect(() => {
     const formatLastModified = (): void => {
@@ -74,22 +80,35 @@ const CodingActivity = () => {
 
   return (
     <Section
-      title="Weekly Coding Activities"
+      title="Coding Activities"
       icon={<WakaTime />}
-      description="My WakaTime last 7 days stats."
+      description="WakaTime coding stats"
       isLoading={isLoading}
       appendix={
-        <Link
-          className={cn('text-muted-foreground hover:text-foreground')}
-          href="https://wakatime.com/@fahmirizaldi"
-        >
-          Last updated:{' '}
-          {formattedLastModifiedDate ? (
-            <span>{formattedLastModifiedDate}</span>
-          ) : (
-            'N/A'
-          )}
-        </Link>
+        <div className="flex items-center gap-4">
+          <select
+            value={range}
+            onChange={(e) => setRange(e.target.value as typeof range)}
+            className="rounded-md border border-border bg-background px-2 py-1 text-sm text-muted-foreground hover:text-foreground"
+          >
+            {RANGE_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          <Link
+            className={cn('text-muted-foreground hover:text-foreground')}
+            href="https://wakatime.com/@fahmirizaldi"
+          >
+            Last updated:{' '}
+            {formattedLastModifiedDate ? (
+              <span>{formattedLastModifiedDate}</span>
+            ) : (
+              'N/A'
+            )}
+          </Link>
+        </div>
       }
     >
       <div className={cn('flex flex-col gap-4')}>

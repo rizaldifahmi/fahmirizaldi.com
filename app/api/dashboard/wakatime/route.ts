@@ -2,7 +2,7 @@ import { headers } from 'next/headers';
 
 import {
   getAllTimeSinceToday,
-  getLastSevenDaysStats,
+  getStats,
 } from '@/actions/wakatime';
 import { response } from '@/lib/server';
 import type { APIErrorResponse, APISingleResponse } from '@/types/server';
@@ -13,21 +13,24 @@ export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 export const runtime = 'nodejs';
 
-export const GET = async () => {
+export const GET = async (request: Request) => {
   try {
+    const { searchParams } = new URL(request.url);
+    const range = searchParams.get('range') || '7_days';
+    
     const headersList = headers();
     const userAgent = headersList.get('user-agent') || '';
     const cfIpCountry = headersList.get('cf-ipcountry') || '';
     
     console.log('[WakaTime API] Request from:', cfIpCountry, 'User-Agent:', userAgent);
 
-    const lastSevenDaysStats = await getLastSevenDaysStats();
+    const stats = await getStats(range as '7_days' | '30_days' | '6_months' | '1_year');
     const allTimeSinceToday = await getAllTimeSinceToday();
 
     const res = new Response(
       JSON.stringify({
         data: {
-          ...lastSevenDaysStats,
+          ...stats,
           all_time_since_today: allTimeSinceToday,
         },
       }),

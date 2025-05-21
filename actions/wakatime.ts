@@ -27,6 +27,20 @@ const EXCLUDED_LANGUAGES = [
   'Bash',
   'Other',
   'TSConfig',
+  'INI',
+  'Docker',
+  'XML',
+  'Groovy',
+  'Cheetah',  
+  'RPMSpec',
+  'Debian Control file',
+  'Control file',
+  'TOML',
+  'Apache Config',
+  'Config',
+  'Prolog',
+  'Nginx configuration file',
+  'Makefile',
 ];
 
 const generateBasicAuthorizationBase64 = (): string => {
@@ -99,12 +113,15 @@ export const getAllTimeSinceToday =
     }
   };
 
-export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
+type WakaTimeRange = '7_days' | '30_days' | '6_months' | '1_year';
+
+export const getStats = async (range: WakaTimeRange = '7_days'): Promise<WakaTimeStats> => {
   try {
     const auth = generateBasicAuthorizationBase64();
+    const rangeParam = `last_${range}`;
 
     const response = await fetchWithRetry<WakaTimeResponse<WakaTimeStats>>(
-      `${STATS_ENDPOINT}/last_7_days`,
+      `${STATS_ENDPOINT}/${rangeParam}`,
       {
         method: 'GET',
         headers: {
@@ -156,3 +173,6 @@ export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
     throw error;
   }
 };
+
+// Alias untuk backward compatibility
+export const getLastSevenDaysStats = () => getStats('7_days');
