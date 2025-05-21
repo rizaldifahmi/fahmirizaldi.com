@@ -140,7 +140,11 @@ export const getStats = async (range: WakaTimeRange = '7_days'): Promise<WakaTim
     console.log('[WakaTime Stats] Received data for range:', range, {
       hasLanguages: !!data.languages?.length,
       hasEditors: !!data.editors?.length,
-      totalTime: data.human_readable_total_including_other_language
+      totalTime: data.human_readable_total_including_other_language,
+      totalSeconds: data.total_seconds_including_other_language,
+      range: data.range,
+      start: data.start,
+      end: data.end
     });
     
     // Keep original data for totals and averages
