@@ -6,6 +6,7 @@ import {
   Plus_Jakarta_Sans as PlusJakartaSans,
 } from 'next/font/google';
 import localFont from 'next/font/local';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import Analytics from '@/components/analytics';
 import GuestbookWidget from '@/components/guestbook-widget';
@@ -79,6 +80,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         </div>
         <Analytics />
         <Toaster />
+        <SpeedInsights />
       </AppProvider>
     </body>
   </html>
