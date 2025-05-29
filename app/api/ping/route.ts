@@ -4,7 +4,10 @@ import db from '@/lib/db';
 export async function GET() {
   try {
     // Melakukan query sederhana ke database
-    await db.$queryRaw`SELECT 1`;
+    await db.contentMeta.findFirst({
+      select: { id: true },
+      take: 1
+    });
 
     return NextResponse.json({ 
       status: 'success',
