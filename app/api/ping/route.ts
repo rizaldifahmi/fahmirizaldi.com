@@ -6,39 +6,19 @@ export async function GET() {
     // Melakukan query sederhana ke database
     await db.$queryRaw`SELECT 1`;
 
-    return new NextResponse(
-      `<!DOCTYPE html>
-      <html>
-        <head>
-          <meta http-equiv="refresh" content="2;url=/" />
-        </head>
-        <body>
-          <p>Database ping successful. Redirecting to home page...</p>
-        </body>
-      </html>`,
-      {
-        headers: {
-          'Content-Type': 'text/html',
-        },
-      }
-    );
+    return NextResponse.json({ 
+      status: 'success',
+      message: 'Ping successful',
+      timestamp: new Date().toISOString()
+    });
   } catch (error) {
-    return new NextResponse(
-      `<!DOCTYPE html>
-      <html>
-        <head>
-          <meta http-equiv="refresh" content="2;url=/" />
-        </head>
-        <body>
-          <p>Database ping failed. Redirecting to home page...</p>
-        </body>
-      </html>`,
-      {
-        headers: {
-          'Content-Type': 'text/html',
-        },
-        status: 500
-      }
+    return NextResponse.json(
+      { 
+        status: 'error',
+        message: 'Service unavailable',
+        timestamp: new Date().toISOString()
+      },
+      { status: 503 }
     );
   }
 } 
