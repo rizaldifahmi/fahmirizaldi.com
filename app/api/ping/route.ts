@@ -9,11 +9,20 @@ export async function GET() {
       take: 1
     });
 
-    return NextResponse.json({ 
-      status: 'success',
-      message: 'Ping successful',
-      timestamp: new Date().toISOString()
-    });
+    return NextResponse.json(
+      { 
+        status: 'success',
+        message: 'Ping successful',
+        timestamp: new Date().toISOString()
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      }
+    );
   } catch (error) {
     return NextResponse.json(
       { 
@@ -21,7 +30,14 @@ export async function GET() {
         message: 'Service unavailable',
         timestamp: new Date().toISOString()
       },
-      { status: 503 }
+      { 
+        status: 503,
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      }
     );
   }
 } 
