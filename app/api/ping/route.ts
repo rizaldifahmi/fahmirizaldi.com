@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { format } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import db from '@/lib/db';
 
 export async function GET() {
@@ -9,11 +11,15 @@ export async function GET() {
       take: 1
     });
 
+    const now = new Date();
+    const jakartaTime = toZonedTime(now, 'Asia/Jakarta');
+    const formattedTime = format(jakartaTime, 'dd-MM-yyyy HH:mm:ss');
+
     return NextResponse.json(
       { 
         status: 'success',
         message: 'Ping successful',
-        timestamp: new Date().toISOString()
+        timestamp: formattedTime
       },
       {
         headers: {
@@ -24,11 +30,15 @@ export async function GET() {
       }
     );
   } catch (error) {
+    const now = new Date();
+    const jakartaTime = toZonedTime(now, 'Asia/Jakarta');
+    const formattedTime = format(jakartaTime, 'dd-MM-yyyy HH:mm:ss');
+
     return NextResponse.json(
       { 
         status: 'error',
         message: 'Service unavailable',
-        timestamp: new Date().toISOString()
+        timestamp: formattedTime
       },
       { 
         status: 503,
