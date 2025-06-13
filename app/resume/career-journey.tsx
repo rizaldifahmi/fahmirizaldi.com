@@ -18,11 +18,26 @@ const CareerJourney = () => {
   return (
     <>
       <div className={cn('mb-12', 'md:mb-16')}>
-        <Button asChild variant="shadow" className={cn('gap-x-1')}>
-          <Link href="/resume/download" target="_blank">
-            <Document /> Download resume
-          </Link>
-        </Button>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <div 
+              className={cn(
+                'inline-flex items-center justify-center gap-x-1',
+                'rounded-md bg-secondary px-4 py-2 text-sm font-medium',
+                'text-secondary-foreground',
+                'shadow-sm transition-colors',
+                'hover:bg-secondary/80',
+                'cursor-not-allowed opacity-50',
+                'touch-manipulation'
+              )}
+            >
+              <Document /> Download resume
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="bottom" className="text-sm">
+            Not available at this time
+          </TooltipContent>
+        </Tooltip>
       </div>
       <div className={cn('prose max-w-none px-4', 'dark:prose-dark')}>
         <ol className={cn('list-none space-y-4 border-l border-border pl-10')}>
