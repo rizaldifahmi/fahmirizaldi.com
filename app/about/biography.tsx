@@ -18,8 +18,9 @@ const Biography = () => {
         <Link href="https://www.google.com/maps/place/Bandung,+Jawa+Barat">
           Bandung, Indonesia
         </Link>
-        , where I had the opportunity to contribute to healthcare technology
-        solutions.
+        , and currently working at{' '}
+        <Link href="https://www.bih.id">Bali International Hospital</Link>
+        , where I continue to contribute to healthcare technology solutions.
       </p>
       <p>
         I have a wealth of experience in crafting scalable software systems that
@@ -37,15 +38,15 @@ const Biography = () => {
         healthcare organizations.
       </p>
       <p>
-        In my role as a Software Engineer at RSKGM Kota Bandung, I took charge
+        Throughout my career in healthcare technology, I've taken charge
         of designing, developing, and maintaining healthcare software systems
-        that met both technical specifications and medical requirements. I
-        understood the importance of delivering high-quality products that not
-        only met technical requirements but also provided tangible value to
-        healthcare providers and patients. To achieve this, I worked closely with
+        that meet both technical specifications and medical requirements. I
+        understand the importance of delivering high-quality products that not
+        only meet technical requirements but also provide tangible value to
+        healthcare providers and patients. To achieve this, I work closely with
         healthcare professionals to understand their unique needs and
-        requirements, and I utilized my technical expertise to deliver customized
-        solutions that enhanced healthcare service delivery.
+        requirements, and utilize my technical expertise to deliver customized
+        solutions that enhance healthcare service delivery.
       </p>
       <p>
         I consider myself a curious and inquisitive person, always eager to
