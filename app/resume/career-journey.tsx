@@ -110,7 +110,7 @@ const CareerJourney = () => {
                         <div className={cn('flex gap-1')}>
                           <span>{format(start, 'MMM yyyy')}</span> -{' '}
                           <span>
-                            {endDate ? format(endDate, 'MMM yyyy') : 'Present'}
+                            {endDate ? format(end, 'MMM yyyy') : 'Present'}
                           </span>
                         </div>
                         <span>&middot;</span>

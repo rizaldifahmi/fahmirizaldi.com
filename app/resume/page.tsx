@@ -7,6 +7,8 @@ import { seo } from '@/lib/meta';
 
 import CareerJourney from './career-journey';
 
+export const revalidate = 86400; // revalidate every 24h so "Present" durations update
+
 export const metadata: Metadata = seo({
   title: 'Resume',
   description: 'Check out how my journey have been like over the years',
