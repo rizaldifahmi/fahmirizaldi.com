@@ -9,44 +9,39 @@ import TechStacks from './tech-stacks';
 const Biography = () => {
   return (
     <>
-      <p>Hi there! Thanks for visiting my digital home on the internet.</p>
       <p>
-        I'm Fahmi Rizaldi, a Software Engineer with a focus on delivery
-        innovative digital solutions that drive business value. I previously
-        worked at <Link href="https://rskgm.bandung.go.id">RSKGM Kota Bandung</Link>
-        , a well-regarded healthcare institution located in{' '}
-        <Link href="https://www.google.com/maps/place/Bandung,+Jawa+Barat">
-          Bandung, Indonesia
-        </Link>
-        , and currently working at{' '}
-        <Link href="https://www.bih.id">Bali International Hospital</Link>
-        , where I continue to contribute to healthcare technology solutions.
+        Hi, I'm Fahmi Rizaldi — a Software Engineer who enjoys turning complex
+        problems into simple, reliable products.
       </p>
       <p>
-        I have a wealth of experience in crafting scalable software systems that
-        meet both technical and business requirements, utilizing a range of
-        programming languages such as{' '}
+        My work is primarily in healthcare technology. I've contributed at{' '}
+        <Link href="https://rskgm.bandung.go.id">RSKGM Kota Bandung</Link> in{' '}
+        <Link href="https://www.google.com/maps/place/Bandung,+Jawa+Barat">Bandung</Link>
+        , Indonesia, and I currently work at{' '}
+        <Link href="https://www.bih.id">Bali International Hospital</Link>,
+        where I focus on software that improves operational efficiency and care
+        delivery.
+      </p>
+      <p>
+        I design and ship scalable systems with a pragmatic approach: clear
+        boundaries, strong fundamentals, and maintainable code. I work across{' '}
         <Link href="https://www.php.net/">PHP</Link>,{' '}
         <Link href="https://www.javascript.com/">JavaScript</Link>, and{' '}
-        <Link href="https://www.typescriptlang.org/">TypeScript</Link>.
-        Leveraging my proficiency in backend frameworks like{' '}
-        <Link href="https://codeigniter.com/">CodeIgniter</Link>, coupled with expertise
-        in frontend frameworks such as{' '}
-        <Link href="https://reactjs.org/">React</Link> and{' '}
-        <Link href="https://vuejs.org/">Vue</Link>, allows me to deliver
-        efficient and effective software solutions that meet the unique needs of
-        healthcare organizations.
+        <Link href="https://www.typescriptlang.org/">TypeScript</Link> — using{' '}
+        <Link href="https://codeigniter.com/">CodeIgniter</Link> on the backend
+        and <Link href="https://reactjs.org/">React</Link> /{' '}
+        <Link href="https://vuejs.org/">Vue</Link> on the frontend — to deliver
+        reliable products that teams can iterate on with confidence.
       </p>
       <p>
-        Throughout my career in healthcare technology, I've taken charge
-        of designing, developing, and maintaining healthcare software systems
-        that meet both technical specifications and medical requirements. I
-        understand the importance of delivering high-quality products that not
-        only meet technical requirements but also provide tangible value to
-        healthcare providers and patients. To achieve this, I work closely with
-        healthcare professionals to understand their unique needs and
-        requirements, and utilize my technical expertise to deliver customized
-        solutions that enhance healthcare service delivery.
+        I collaborate closely with clinicians and stakeholders, translating
+        real-world workflows into safe, efficient digital solutions that meet
+        both technical constraints and regulatory needs — with measurable impact
+        for providers and patients.
+      </p>
+      <p>
+        Outside of work, I explore new technologies, tinker with side projects,
+        and recharge with games and music.
       </p>
       <p>
         I consider myself a curious and inquisitive person, always eager to
@@ -63,15 +58,7 @@ const Biography = () => {
         work. I believe that maintaining a healthy work-life balance is is the
         key to keeping both my code and my spirits bug-free! 🎮🎶
       </p>
-      <p>
-        If you're interested in learning more about my professional background
-        and qualifications, I encourage you to review{' '}
-      </p>
-      <Link href={ROUTES.resume} className={cn('text-inherit')}>
-        <Button variant="shadow" className={cn('gap-x-1')}>
-          <Document /> My Resume
-        </Button>
-      </Link>
+      {/* Resume button moved to About page header section */}
 
       <h2 className={cn('font-cal text-2xl', 'lg:text-3xl')}>Tech Stack</h2>
       <TechStacks />

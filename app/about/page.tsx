@@ -7,6 +7,9 @@ import { ROUTES, SITE } from '@/constants';
 import { env } from '@/lib/env';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
+import Link from '@/components/shared/link';
+import { Button } from '@/components/ui/button';
+import { Document } from '@/components/shared/icons';
 
 import Biography from './biography';
 import OpenForHire from './open-for-hire';
@@ -57,6 +60,11 @@ const AboutPage = () => {
                 Software Engineer
               </h4>
             </div>
+            <Link href={ROUTES.resume} className={cn('py-2')}>
+              <Button variant="shadow" className={cn('gap-x-1')}>
+                <Document /> My Resume
+              </Button>
+            </Link>
             <OpenForHire isOpenForHire={isAvailableForHire} />
           </div>
 
