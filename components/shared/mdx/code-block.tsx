@@ -55,7 +55,6 @@ const CodeBlock = ({
         data-theme={dataTheme}
         className={cn(
           'border border-foreground/10 border-t-transparent',
-          // 'dark:border-none',
           className,
         )}
         {...props}

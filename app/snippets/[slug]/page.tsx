@@ -73,7 +73,6 @@ const SnippetPage = ({ params }: { params: { slug?: string } }) => {
             description,
             headline: title,
             datePublished: publishedDate,
-            // TODO: add dateModified
             dateModified: publishedDate,
             url: `${BASE_URL}${ROUTES.snippets}/${slug}`,
           }),

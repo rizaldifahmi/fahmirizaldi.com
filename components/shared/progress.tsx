@@ -18,7 +18,6 @@ const Progress = ({
 }) => {
   const { name, total_seconds } = data;
 
-  // Recalculate percentage based on total seconds of displayed items
   const totalSeconds = items?.reduce((acc, curr) => acc + curr.total_seconds, 0) || 0;
   const percent = totalSeconds > 0 ? (total_seconds / totalSeconds) * 100 : 0;
 
@@ -32,7 +31,6 @@ const Progress = ({
 
   const isMounted = useMounted();
 
-  // Format percentage: show 1 decimal place if < 1%, otherwise round to integer
   const formattedPercent = percent < 1 ? percent.toFixed(1) : percent.toFixed(0);
 
   return (

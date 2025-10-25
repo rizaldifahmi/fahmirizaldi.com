@@ -30,7 +30,7 @@ export const EXPERIENCES: Experience[] = [
       jobType: 'Full-time',
     },
     role: 'IT Consultant',
-    startDate: '2025-06',
+    startDate: '2025-06-11',
     endDate: null,
     stacks: [
       {

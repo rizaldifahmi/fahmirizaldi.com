@@ -8,7 +8,7 @@ import useScroll from '@/hooks/use-scroll';
 import { cn } from '@/lib/utils';
 
 const ScrollToTop = () => {
-  const isScrolled = useScroll(100); // Show button after scrolling 100px
+  const isScrolled = useScroll(100);
 
   const scrollToTop = () => {
     try {

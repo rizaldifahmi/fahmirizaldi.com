@@ -25,13 +25,10 @@ type AnimationValue = {
 const getRandomAnimationValue = (): AnimationValue => {
   const key = randomBetween(0, 1000);
 
-  // left and right
   const x = randomBetween(-40, 40);
 
-  // top length
   const y = randomBetween(-230, -170);
 
-  // random duration
   const duration = randomBetween(1.6, 1.9) + y / 1000;
 
   return {
@@ -99,7 +96,6 @@ const EmojiReaction = ({
           animate={{ x, y, opacity: [1, 1, 0] }}
           transition={{ ease: 'easeOut', duration }}
           onAnimationComplete={() => {
-            // remove from DOM
             setHistory((prev) => prev.filter((el) => el.key !== key));
           }}
           className={cn('pointer-events-none absolute size-10 select-none')}

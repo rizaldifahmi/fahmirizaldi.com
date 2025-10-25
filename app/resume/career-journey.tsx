@@ -1,4 +1,4 @@
-import { differenceInMonths, differenceInYears, format } from 'date-fns';
+import { differenceInDays, differenceInMonths, differenceInYears, format } from 'date-fns';
 import Image from 'next/image';
 
 import { Document } from '@/components/shared/icons';
@@ -105,7 +105,12 @@ const CareerJourney = () => {
               const end = endDate ? new Date(endDate) : new Date();
 
               const durationInYears = differenceInYears(end, start);
-              const durationInMonths = differenceInMonths(end, start) % 12;
+              let durationInMonths = differenceInMonths(end, start) % 12;
+              
+              const remainingDays = differenceInDays(end, start) % 30;
+              if (remainingDays > 0) {
+                durationInMonths += 1;
+              }
 
               let durationText = '';
 

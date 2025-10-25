@@ -32,7 +32,6 @@ const GitHubInsights = () => {
     ? Math.max(...totalContributionList) 
     : 0;
 
-  // Count only days with contributions
   const daysWithContributions = totalContributionList.filter(count => count > 0).length;
   const averageContribution = daysWithContributions > 0
     ? Math.round((totalContributions / daysWithContributions) * 10) / 10
