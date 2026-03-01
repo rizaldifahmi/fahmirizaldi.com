@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Skeleton } from '@/components/ui/skeleton';
 import useGuestbook from '@/hooks/use-guestbook';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/use-auth';
 
 import Entries from './entries';
 import MessagePanel from './message-panel';
@@ -12,6 +13,7 @@ import SignIn from './sign-in';
 
 const Guestbook = ({ isWidget }: { isWidget?: boolean }) => {
   const { data: session } = useSession();
+  const { isAuthenticated } = useAuth();
   const { entries, isLoading, addEntry, deleteEntry } = useGuestbook();
 
   const onSendMessage = async (message: string) => {
@@ -63,7 +65,7 @@ const Guestbook = ({ isWidget }: { isWidget?: boolean }) => {
             onDeleteMessage={onDeleteMessage}
             isWidget={isWidget}
           />
-          {session ? (
+          {isAuthenticated ? (
             <MessagePanel onSendMessage={onSendMessage} isWidget={isWidget} />
           ) : (
             <SignIn />

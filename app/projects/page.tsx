@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = seo({
   title: 'Projects',
-  description: 'A collection of finest projects that I have built.',
+  description: 'A curated showcase of applications, tools, and digital experiences I have crafted.',
   keywords: [
     'projects',
     'development',
@@ -34,7 +34,7 @@ const ProjectsPage = () => {
     <>
       <PageHeader
         title="Projects"
-        description="A collection of finest projects that I have built. ❤️️"
+        description="A curated showcase of applications, tools, and digital experiences I have crafted. ❤️"
       />
       <Container>
         {projects.length ? (

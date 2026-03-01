@@ -19,6 +19,13 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GOOGLE_ID!,
       clientSecret: env.GOOGLE_SECRET!,
       checks: 'none',
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
     }),
   ],
   pages: {

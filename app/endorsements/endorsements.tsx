@@ -10,12 +10,14 @@ import { Button } from '@/components/ui/button';
 import useEndorsements from '@/hooks/use-endorsements';
 import { cn } from '@/lib/utils';
 import type { SkillCategory } from '@/types/skill';
+import { useAuth } from '@/hooks/use-auth';
 
 import SignIn from '../guestbook/sign-in';
 import Badge from './badge';
 
 const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
   const { data: session } = useSession();
+  const { user, isAuthenticated, logout } = useAuth();
   const { endorsements, error, addEndorsement } = useEndorsements({
     fallbackData,
   });
@@ -30,28 +32,27 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
             'after:absolute after:-inset-1 after:-z-10 after:rounded-[calc(8px+3px)] after:bg-rainbow-gradient after:content-[""]',
           )}
         >
-          {session?.user ? (
+          {isAuthenticated ? (
             <>
               <p>
                 You are currently logged in as{' '}
                 <span className={cn('font-cal font-bold')}>
-                  {session.user.name}
+                  {user?.name}
                 </span>
               </p>
               {isAuthenticating ? (
                 <Spinner />
               ) : (
-                <Link
-                  href="/api/auth/signout"
+                <Button
+                  variant="ghost"
                   className={cn('font-semibold underline')}
-                  onClick={async (e) => {
-                    e.preventDefault();
+                  onClick={async () => {
                     setIsAuthenticating(true);
-                    await signOut();
+                    await logout();
                   }}
                 >
                   Logout
-                </Link>
+                </Button>
               )}
             </>
           ) : (
@@ -96,8 +97,12 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
                       <Badge
                         key={skill.id}
                         skill={skill}
-                        user={session?.user}
-                        currentUserId={session?.id}
+                        user={user ? {
+                          name: user.name,
+                          email: user.email,
+                          image: user.picture
+                        } : undefined}
+                        currentUserId={user?.id}
                         onEndorse={addEndorsement}
                       />
                     ))}

@@ -129,3 +129,31 @@
     @apply rounded-lg;
   }
 }
+
+.dark .prose li::marker {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose strong {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose blockquote {
+  color: hsl(var(--muted-foreground));
+  border-left-color: hsl(var(--border));
+}
+
+.dark .prose th {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose ol>li::marker {
+  color: hsl(var(--foreground));
+}
