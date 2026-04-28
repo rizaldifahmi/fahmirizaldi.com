@@ -1,9 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { env } from '@/lib/env';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
+    // 1. Check NextAuth session first
+    const session = await getServerSession(authOptions);
+
+    if (session && session.user) {
+      return NextResponse.json(
+        { 
+          user: {
+            id: session.id || (session.user as any).id,
+            email: session.user.email,
+            name: session.user.name,
+            picture: session.user.image,
+            email_verified: true,
+          }
+        },
+        { status: 200 }
+      );
+    }
+
+    // 2. Fallback to custom JWT token
     const token = request.cookies.get('auth-token')?.value;
 
     if (!token) {

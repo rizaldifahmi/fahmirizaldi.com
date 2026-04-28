@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { signOut } from 'next-auth/react';
 
 interface User {
   id: string;
@@ -53,6 +54,7 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
+      await signOut({ redirect: false });
       setAuthState({
         user: null,
         isLoading: false,
