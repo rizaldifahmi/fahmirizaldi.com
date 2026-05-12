@@ -39,10 +39,9 @@ const nextConfig = {
     ],
   },
   webpack: (config, { dev }) => {
-    if (!dev && Array.isArray(config.optimization?.minimizer)) {
-      config.optimization.minimizer = config.optimization.minimizer.filter(
-        (minimizer) => minimizer?.constructor?.name !== 'CssMinimizerPlugin',
-      );
+    if (!dev) {
+      config.optimization.minimize = false;
+      config.optimization.minimizer = [];
     }
 
     config.module.rules.push({
