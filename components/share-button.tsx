@@ -111,7 +111,7 @@ const ShareButton = ({ slug }: { slug: string }) => {
             <LinkIcon className={cn('size-5')} />
             Copy link
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem className={cn('p-0')}>
             <ShareItemLink
               href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
                 currentUrl,

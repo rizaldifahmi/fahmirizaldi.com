@@ -2,7 +2,7 @@ import { ExternalLink } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { cloneElement } from 'react';
+import { cloneElement, type ReactElement } from 'react';
 
 import { allProjects } from '@/.contentlayer/generated';
 import Container from '@/components/shared/container';
@@ -20,33 +20,35 @@ import type { Stack } from '@/types/stack';
 import { ChevronLeft } from 'lucide-react';
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = allProjects.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const project = allProjects.find((p) => p.slug === slug);
 
   if (!project) {
     return seo({
       title: 'Project Not Found',
       description: 'The project you are looking for does not exist.',
-      url: `${ROUTES.projects}/${params.slug}`,
+      url: `${ROUTES.projects}/${slug}`,
     });
   }
 
   return seo({
     title: project.title,
     description: project.description,
-    url: `${ROUTES.projects}/${params.slug}`,
+    url: `${ROUTES.projects}/${slug}`,
   });
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = allProjects.find((p) => p.slug === params.slug);
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  const project = allProjects.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();
@@ -121,7 +123,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                       <Tooltip key={`${stack}-${idx}`}>
                         <TooltipTrigger asChild>
                           <div className={cn('group flex items-center gap-2 rounded-lg border bg-background p-2 transition-colors hover:bg-muted')}>
-                            {cloneElement(stackIcon, {
+                            {cloneElement(stackIcon as ReactElement<{ className?: string }>, {
                               className: cn(
                                 'size-5',
                                 (stackIcon as any)?.props?.className,

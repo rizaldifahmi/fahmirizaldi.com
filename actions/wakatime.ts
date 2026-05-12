@@ -176,4 +176,4 @@ export const getStats = async (range: WakaTimeRange = '7_days'): Promise<WakaTim
 };
 
 // Alias untuk backward compatibility
-export const getLastSevenDaysStats = () => getStats('7_days');
+export const getLastSevenDaysStats = async () => getStats('7_days');

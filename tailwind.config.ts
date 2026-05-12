@@ -1,13 +1,22 @@
 import typography from '@tailwindcss/typography';
 import svgDataUri from 'mini-svg-data-uri';
 import type { Config } from 'tailwindcss';
-import { fontFamily } from 'tailwindcss/defaultTheme';
-import type { PluginAPI } from 'tailwindcss/types/config';
+import defaultTheme from 'tailwindcss/defaultTheme';
 import animate from 'tailwindcss-animate';
 
 const {
   default: flattenColorPalette,
 } = require('tailwindcss/lib/util/flattenColorPalette');
+
+const { fontFamily } = defaultTheme;
+
+type PluginAPI = {
+  matchUtilities: (
+    utilities: Record<string, (value: string) => Record<string, string>>,
+    options: { values: Record<string, string>; type: string },
+  ) => void;
+  theme: (path: string) => Record<string, string>;
+};
 
 const config = {
   content: [
@@ -15,13 +24,12 @@ const config = {
     './components/**/*.{ts,tsx}',
     './constants/**/*.{ts,tsx}',
   ],
-  darkMode: ['class'],
+  darkMode: 'class',
   /**
    * Fix dark mode not working
    *
    * https://github.com/shadcn-ui/ui/issues/313#issuecomment-1929054475
    */
-  safelist: ['dark'],
   theme: {
     container: {
       center: true,
@@ -159,7 +167,7 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'border-gradient': 'border-gradient ease infinite',
       },
-      typography: (theme: (value: string) => void) => ({
+      typography: ({ theme }: { theme: (value: string) => string }) => ({
         DEFAULT: {
           css: {
             color: 'hsl(var(--foreground))',
@@ -276,7 +284,7 @@ const config = {
     function ({ matchUtilities, theme }: PluginAPI) {
       matchUtilities(
         {
-          'grid-pattern': (value) => ({
+          'grid-pattern': (value: string) => ({
             backgroundImage: `url("${svgDataUri(
               `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="36" height="36" fill="none" stroke="${value}" stroke-dasharray="6 3" transform="scale(1)"><path d="M36 .5H1.5V36"/></svg>`,
             )}")`,

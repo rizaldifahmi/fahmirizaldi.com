@@ -27,7 +27,7 @@ const MobileMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn('w-56')}>
         {NAV_LINKS.map(({ path, label, icon }) => (
-          <DropdownMenuItem key={path} asChild>
+          <DropdownMenuItem key={path} className={cn('p-0')}>
             <Link
               href={path}
               className={cn(

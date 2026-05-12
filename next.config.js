@@ -22,7 +22,6 @@ const nextConfig = {
     // your project has type errors.
     ignoreBuildErrors: true,
   },
-  swcMinify: true,
   compress: true,
   reactStrictMode: true,
   crossOrigin: 'anonymous',

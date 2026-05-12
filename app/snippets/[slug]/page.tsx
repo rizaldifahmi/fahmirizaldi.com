@@ -21,9 +21,10 @@ const findSnippetBySlug = (slug?: string): Snippet | undefined =>
 export const generateMetadata = async ({
   params,
 }: {
-  params: { slug?: string };
+  params: Promise<{ slug?: string }>;
 }): Promise<Metadata | undefined> => {
-  const snippet = findSnippetBySlug(params?.slug);
+  const { slug } = await params;
+  const snippet = findSnippetBySlug(slug);
 
   if (!snippet) return;
 
@@ -50,8 +51,13 @@ export const generateMetadata = async ({
   });
 };
 
-const SnippetPage = ({ params }: { params: { slug?: string } }) => {
-  const snippet = findSnippetBySlug(params?.slug);
+const SnippetPage = async ({
+  params,
+}: {
+  params: Promise<{ slug?: string }>;
+}) => {
+  const { slug: paramSlug } = await params;
+  const snippet = findSnippetBySlug(paramSlug);
 
   if (!snippet) return notFound();
 

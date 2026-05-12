@@ -1,31 +1,31 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import type { NextAuthOptions } from 'next-auth';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import NextAuth, { type NextAuthConfig } from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 
 import prisma from './db';
 import { env } from './env';
 
-export const authOptions: NextAuthOptions = {
+export const authConfig = {
   adapter: PrismaAdapter(prisma),
   secret: env.NEXTAUTH_SECRET,
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_ID!,
       clientSecret: env.GITHUB_SECRET!,
-      checks: 'none',
+      checks: ['none'],
     }),
     GoogleProvider({
       clientId: env.GOOGLE_ID!,
       clientSecret: env.GOOGLE_SECRET!,
-      checks: 'none',
+      checks: ['none'],
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
+        },
+      },
     }),
   ],
   pages: {
@@ -34,7 +34,11 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async ({ session, user }) => {
       session.id = user.id;
-      return Promise.resolve(session);
+      return session;
     },
   },
-};
+} satisfies NextAuthConfig;
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
+
+export const authOptions = authConfig;

@@ -39,7 +39,7 @@ const components: MDXComponents = {
       </ImageZoom>
     );
   },
-  a: Link,
+  a: (props: React.ComponentPropsWithoutRef<'a'>) => <Link {...props} />,
   pre: CodeBlock,
   figcaption: CodeBlockHeader,
   AppsGrid,

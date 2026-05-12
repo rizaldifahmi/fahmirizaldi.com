@@ -1,18 +1,18 @@
 import type { NextRequest } from 'next/server';
-import { getServerSession } from 'next-auth';
 
 import { deleteEntry, findEntryById } from '@/actions/guestbook';
 import { SITE } from '@/constants';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { response } from '@/lib/server';
 import type { APIErrorResponse } from '@/types/server';
 
 export const DELETE = async (
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
 
     if (!session) {
       return response<APIErrorResponse>(
@@ -23,7 +23,7 @@ export const DELETE = async (
       );
     }
 
-    const entry = await findEntryById(Number(params.id));
+    const entry = await findEntryById(Number(id));
 
     if (!entry) {
       return response<APIErrorResponse>(
@@ -42,7 +42,7 @@ export const DELETE = async (
       return response<APIErrorResponse>({ message: 'Forbidden' }, 403);
     }
 
-    await deleteEntry(Number(params.id));
+    await deleteEntry(Number(id));
 
     return response(null, 204);
   } catch (error) {

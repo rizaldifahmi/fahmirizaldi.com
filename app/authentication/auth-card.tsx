@@ -1,8 +1,6 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type { BuiltInProviderType } from 'next-auth/providers';
-import type { ClientSafeProvider, LiteralUnion } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 import RenderIf from '@/components/shared/render-if';
@@ -19,13 +17,19 @@ import { cn } from '@/lib/utils';
 
 import ProviderButton from './provider-button';
 
+export type ClientAuthProvider = {
+  id: string;
+  name: string;
+  type: string;
+  signinUrl: string;
+  callbackUrl: string;
+  redirectTo: string;
+};
+
 const AuthCard = ({
   providers,
 }: {
-  providers: Record<
-    LiteralUnion<BuiltInProviderType>,
-    ClientSafeProvider
-  > | null;
+  providers: Record<string, ClientAuthProvider> | null;
 }) => {
   const [isShowError, setIsShowError] = useState(false);
   const searchParams = useSearchParams();

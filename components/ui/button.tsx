@@ -1,7 +1,10 @@
-import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLMotionProps } from 'motion/react';
 import * as React from 'react';
 
+import {
+  Button as ButtonPrimitive,
+} from '@/components/animate-ui/primitives/buttons/button';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
@@ -35,19 +38,23 @@ const buttonVariants = cva(
   },
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+export type ButtonProps = HTMLMotionProps<'button'> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+    hoverScale?: number;
+    tapScale?: number;
+    children?: React.ReactNode;
+  };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button';
+    const Primitive = ButtonPrimitive as React.ComponentType<any>;
+
     return (
-      <Comp
+      <Primitive
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        asChild={asChild}
         {...props}
       />
     );

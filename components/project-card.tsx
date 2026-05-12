@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { cloneElement, useMemo } from 'react';
+import { cloneElement, type ReactElement, useMemo } from 'react';
 
 import type { Project } from '@/.contentlayer/generated';
 import { ROUTES, STACKS } from '@/constants';
@@ -87,7 +87,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             return (
               <Tooltip key={`${stack}-${idx}`}>
                 <TooltipTrigger asChild>
-                  {cloneElement(stackIcon, {
+                  {cloneElement(stackIcon as ReactElement<{ className?: string }>, {
                     className: cn(
                       'size-5',
                       (stackIcon as any)?.props?.className,

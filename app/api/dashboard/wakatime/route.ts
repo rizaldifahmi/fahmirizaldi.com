@@ -18,7 +18,7 @@ export const GET = async (request: Request) => {
     const { searchParams } = new URL(request.url);
     const range = searchParams.get('range') || '7_days';
     
-    const headersList = headers();
+    const headersList = await headers();
     const userAgent = headersList.get('user-agent') || '';
     const cfIpCountry = headersList.get('cf-ipcountry') || '';
 

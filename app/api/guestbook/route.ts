@@ -1,8 +1,7 @@
 import type { NextRequest } from 'next/server';
-import { getServerSession } from 'next-auth';
 
 import { addGuestbookEntry, getGuestbookEntries } from '@/actions/guestbook';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { response } from '@/lib/server';
 import type { Guestbook } from '@/types/guestbook';
 import type {
@@ -24,7 +23,7 @@ export const GET = async () => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session) {
       return response<APIErrorResponse>(

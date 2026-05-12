@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
 import { getProviders } from 'next-auth/react';
 
 import Container from '@/components/shared/container';
 import PageHeader from '@/components/shared/page-header';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { seo } from '@/lib/meta';
 
 import AuthCard from './auth-card';
@@ -18,7 +17,7 @@ export const metadata: Metadata = seo({
 });
 
 const AuthenticationPage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (session) redirect('/');
 

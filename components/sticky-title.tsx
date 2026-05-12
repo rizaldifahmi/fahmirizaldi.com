@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, type Transition } from 'framer-motion';
 import { useLayoutEffect, useState } from 'react';
 
 import useMediaQuery from '@/hooks/use-media-query';
@@ -16,7 +16,7 @@ import { Separator } from './ui/separator';
 
 interface StickyTitleProps {
   title: string;
-  elementRef: React.RefObject<HTMLDivElement>;
+  elementRef: React.RefObject<HTMLDivElement | null>;
   gap?: number;
 }
 
@@ -41,7 +41,7 @@ const StickyTitle = ({ title, elementRef, gap = -64 }: StickyTitleProps) => {
 
   const isScrolled = useScroll(threshold + gap);
 
-  const transition = { duration: 0.3, ease: 'easeInOut' };
+  const transition: Transition = { duration: 0.3, ease: 'easeInOut' };
   const variants = {
     initial: { opacity: isScrolled ? 0 : 1, y: isScrolled ? gap : 0 },
     animate: { opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : gap },
