@@ -27,6 +27,7 @@ interface BadgeProps {
   user: DefaultSession['user'];
   currentUserId?: string;
   onEndorse: (skillId: string) => Promise<void>;
+  onCancelEndorsement: (skillId: string) => Promise<void>;
 }
 
 enum STATE {
@@ -36,7 +37,13 @@ enum STATE {
   SUCCESS,
 }
 
-const Badge = ({ skill, user, currentUserId, onEndorse }: BadgeProps) => {
+const Badge = ({
+  skill,
+  user,
+  currentUserId,
+  onEndorse,
+  onCancelEndorsement,
+}: BadgeProps) => {
   const { id, name, users } = skill;
   const isEndorsedByUser = skill.users.find((u) => u.id === currentUserId);
   const isLoggedIn = Boolean(user);
@@ -75,6 +82,35 @@ const Badge = ({ skill, user, currentUserId, onEndorse }: BadgeProps) => {
     }
   };
 
+  const _onCancelEndorsement = async (skillId: string) => {
+    setState(STATE.LOADING);
+
+    try {
+      await onCancelEndorsement(skillId);
+      setState(STATE.IDLE);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'There was a problem to cancel this endorsement.';
+
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: message,
+        action: (
+          <ToastAction
+            altText="Try again"
+            onClick={() => _onCancelEndorsement(skillId)}
+          >
+            Try again
+          </ToastAction>
+        ),
+      });
+      setState(STATE.IDLE);
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -93,10 +129,9 @@ const Badge = ({ skill, user, currentUserId, onEndorse }: BadgeProps) => {
                 className={cn(
                   'gap-1 px-3 py-1',
                   'hover:bg-background hover:text-foreground',
-                  'disabled:cursor-not-allowed disabled:opacity-100',
                 )}
-                title="You already endorsed this skill!"
-                disabled
+                title="Cancel your endorsement"
+                onClick={() => _onCancelEndorsement(id)}
               >
                 <span>Endorsed</span>
                 <Medal />

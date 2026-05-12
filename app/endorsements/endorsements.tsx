@@ -18,9 +18,10 @@ import Badge from './badge';
 const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
   const { data: session } = useSession();
   const { user, isAuthenticated, logout } = useAuth();
-  const { endorsements, error, addEndorsement } = useEndorsements({
+  const { endorsements, error, addEndorsement, removeEndorsement } =
+    useEndorsements({
     fallbackData,
-  });
+    });
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   return (
@@ -104,6 +105,7 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
                         } : undefined}
                         currentUserId={user?.id}
                         onEndorse={addEndorsement}
+                        onCancelEndorsement={removeEndorsement}
                       />
                     ))}
                   </div>

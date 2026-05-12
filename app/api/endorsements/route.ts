@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 
 import {
   createEndorsement,
+  deleteEndorsement,
   getEndorsements,
   isEndorsed,
 } from '@/actions/endorsements';
@@ -43,9 +44,10 @@ export const POST = async (req: NextRequest) => {
     const body = await req.json();
     const { skillId } = body;
     const userId = session.id as string;
+    const parsedSkillId = Number(skillId);
 
     const alreadyEndorsed = await isEndorsed({
-      skillId,
+      skillId: parsedSkillId,
       userId,
     });
 
@@ -58,13 +60,60 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    await createEndorsement({ skillId, userId });
+    await createEndorsement({ skillId: parsedSkillId, userId });
 
     return response<APISingleResponse<{}>>(
       {
         data: {},
       },
       201,
+    );
+  } catch (error) {
+    return response<APIErrorResponse>({
+      message: error instanceof Error ? error.message : 'Internal Server Error',
+    });
+  }
+};
+
+export const DELETE = async (req: NextRequest) => {
+  try {
+    const session = await auth();
+
+    if (!session) {
+      return response<APIErrorResponse>(
+        {
+          message: 'Unauthenticated',
+        },
+        401,
+      );
+    }
+
+    const body = await req.json();
+    const { skillId } = body;
+    const userId = session.id as string;
+    const parsedSkillId = Number(skillId);
+
+    const alreadyEndorsed = await isEndorsed({
+      skillId: parsedSkillId,
+      userId,
+    });
+
+    if (!alreadyEndorsed) {
+      return response<APIErrorResponse>(
+        {
+          message: 'Not endorsed',
+        },
+        404,
+      );
+    }
+
+    await deleteEndorsement({ skillId: parsedSkillId, userId });
+
+    return response<APISingleResponse<{}>>(
+      {
+        data: {},
+      },
+      200,
     );
   } catch (error) {
     return response<APIErrorResponse>({

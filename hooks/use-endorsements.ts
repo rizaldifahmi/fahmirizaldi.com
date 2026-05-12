@@ -39,12 +39,33 @@ const useEndorsements = ({
     }
   };
 
+  const removeEndorsement = async (skillId: string) => {
+    try {
+      const response = await fetch('/api/endorsements', {
+        method: 'DELETE',
+        body: JSON.stringify({ skillId }),
+      });
+
+      if (!response.ok) {
+        const json = await response.json();
+        const message =
+          json.message ?? 'There was a problem removing this endorsement.';
+        throw new Error(message);
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      mutate();
+    }
+  };
+
   return {
     endorsements,
     isLoading,
     error,
     mutate,
     addEndorsement,
+    removeEndorsement,
   };
 };
 

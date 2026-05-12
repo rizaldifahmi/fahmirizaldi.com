@@ -69,3 +69,18 @@ export const createEndorsement = async ({
     },
   });
 };
+
+export const deleteEndorsement = async ({
+  skillId,
+  userId,
+}: {
+  skillId: number;
+  userId: string;
+}) => {
+  await db.endorsement.deleteMany({
+    where: {
+      skill_id: skillId,
+      userId,
+    },
+  });
+};
