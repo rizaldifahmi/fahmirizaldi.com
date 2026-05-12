@@ -38,7 +38,13 @@ const nextConfig = {
       { hostname: 'ui-avatars.com' },
     ],
   },
-  webpack: (config) => {
+  webpack: (config, { dev }) => {
+    if (!dev && Array.isArray(config.optimization?.minimizer)) {
+      config.optimization.minimizer = config.optimization.minimizer.filter(
+        (minimizer) => minimizer?.constructor?.name !== 'CssMinimizerPlugin',
+      );
+    }
+
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
