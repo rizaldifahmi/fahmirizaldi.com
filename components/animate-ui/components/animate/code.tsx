@@ -88,7 +88,7 @@ function CodeBlock({ cursor, className, ...props }: CodeBlockProps) {
       scrollContainerRef={scrollRef}
       className={cn(
         'relative text-sm p-4 overflow-auto',
-        '[&>pre,_&_code]:!bg-transparent [&>pre,_&_code]:[background:transparent_!important] [&>pre,_&_code]:border-none [&_code]:!text-[13px] [&_code_.line]:!px-0',
+        '[&>pre]:!bg-transparent [&_code]:!bg-transparent [&>pre]:[background:transparent_!important] [&_code]:[background:transparent_!important] [&>pre]:border-none [&_code]:border-none [&_code]:!text-[13px] [&_code_.line]:!px-0',
         cursor &&
           "data-[done=false]:[&_.line:last-of-type::after]:content-['|'] data-[done=false]:[&_.line:last-of-type::after]:inline-block data-[done=false]:[&_.line:last-of-type::after]:w-[1ch] data-[done=false]:[&_.line:last-of-type::after]:-translate-px",
         className,
