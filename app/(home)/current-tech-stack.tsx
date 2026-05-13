@@ -89,12 +89,8 @@ const CurrentTechStack = () => {
           <Tooltip key={title}>
             <TooltipTrigger asChild>
               <motion.div
-                role="button"
-                tabIndex={0}
-                aria-label={title}
                 className={cn(
                   'size-6 cursor-default text-muted-foreground transition duration-200',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                   hoverClass,
                 )}
                 variants={animation}

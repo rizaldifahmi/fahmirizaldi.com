@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import * as motion from 'motion/react-client';
 import { forwardRef, type HTMLAttributes } from 'react';
 
 import { cn } from '@/lib/utils';
