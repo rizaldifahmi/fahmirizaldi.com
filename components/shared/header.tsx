@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
@@ -37,9 +38,19 @@ const Header = () => {
               className={cn('flex items-center justify-center gap-2')}
             >
               {theme === 'dark' ? (
-                <LogoDark className={cn('h-7')} />
+                <Image
+                  src={LogoDark}
+                  alt="Fahmi Rizaldi"
+                  className={cn('h-7 w-auto')}
+                  priority
+                />
               ) : (
-                <LogoLight className={cn('h-7')} />
+                <Image
+                  src={LogoLight}
+                  alt="Fahmi Rizaldi"
+                  className={cn('h-7 w-auto')}
+                  priority
+                />
               )}
               <span
                 className={cn(
