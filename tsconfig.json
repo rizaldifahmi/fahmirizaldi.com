@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "ignoreDeprecations": "6.0",
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -12,12 +17,13 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "@/*": [
+        "./*"
+      ]
     },
     "plugins": [
       {
@@ -25,13 +31,18 @@
       }
     ]
   },
-  "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.test.ts"],
+  "exclude": [
+    "./out/**/*",
+    "./node_modules/**/*",
+    "**/*.test.ts"
+  ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "next.config.js",
-    "./.contentlayer/generated",
-    ".next/types/**/*.ts"
+    "./.velite",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ]
 }

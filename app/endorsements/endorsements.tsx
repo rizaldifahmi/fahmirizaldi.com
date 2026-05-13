@@ -7,10 +7,10 @@ import Link from '@/components/shared/link';
 import RenderIf from '@/components/shared/render-if';
 import Spinner from '@/components/shared/spinner';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/use-auth';
 import useEndorsements from '@/hooks/use-endorsements';
 import { cn } from '@/lib/utils';
 import type { SkillCategory } from '@/types/skill';
-import { useAuth } from '@/hooks/use-auth';
 
 import SignIn from '../guestbook/sign-in';
 import Badge from './badge';
@@ -20,7 +20,8 @@ const Endorsements = ({ fallbackData }: { fallbackData: SkillCategory[] }) => {
   const { user, isAuthenticated, logout } = useAuth();
   const { endorsements, error, addEndorsement, removeEndorsement } =
     useEndorsements({
-    fallbackData,
+      fallbackData,
+      currentUser: user,
     });
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 

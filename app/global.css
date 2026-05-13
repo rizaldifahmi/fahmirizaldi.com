@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@config '../tailwind.config.ts';
+@config '../tailwind.config.js';
 
 @layer base {
   :root {
@@ -74,6 +74,17 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   ::-webkit-scrollbar {
     @apply w-1 h-1;
   }
@@ -88,6 +99,58 @@
 }
 
 @layer components {
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-reveal-up {
+    animation: reveal-up 0.5s ease-out both;
+  }
+
+  @keyframes reveal-left {
+    from {
+      opacity: 0;
+      transform: translateX(-1.5rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-reveal-left {
+    animation: reveal-left 0.5s ease-out both;
+  }
+
+  @keyframes reveal-scale-x {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) scaleX(0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(-50%) scaleX(1);
+    }
+  }
+
+  .animate-reveal-scale-x {
+    animation: reveal-scale-x 0.6s ease-out 0.25s both;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+  }
+
   .bg-grid {
     @apply relative z-0;
 
@@ -127,6 +190,18 @@
   [data-rmiz-modal-img] {
     @apply rounded-lg;
   }
+}
+
+.prose [data-rehype-pretty-code-figure] code[data-theme],
+.prose [data-rehype-pretty-code-figure] code[data-theme] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.dark .prose [data-rehype-pretty-code-figure] code[data-theme],
+.dark .prose [data-rehype-pretty-code-figure] code[data-theme] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
 }
 
 .dark .prose li::marker {

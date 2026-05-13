@@ -1,9 +1,9 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useDeferredValue, useMemo, useState } from 'react';
 
-import type { Post } from '@/.contentlayer/generated';
+import type { Post } from '@/lib/content/generated';
 import { cn } from '@/lib/utils';
 
 import PostCard from './post-card';
@@ -29,10 +29,11 @@ const filterPosts = (
 
 const FilteredPosts = ({ posts }: { posts: Array<Post> }) => {
   const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
 
   const filteredPosts = useMemo(
-    () => filterPosts(posts, query),
-    [posts, query],
+    () => filterPosts(posts, deferredQuery),
+    [posts, deferredQuery],
   );
 
   const renderSearchComponent = () => {

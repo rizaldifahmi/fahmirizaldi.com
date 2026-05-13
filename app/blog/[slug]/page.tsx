@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import type { Post } from '@/.contentlayer/generated';
-import { allPosts } from '@/.contentlayer/generated';
 import ContentEngagements from '@/components/content-engagements';
 import PostProvider from '@/components/providers/post-provider';
 import Container from '@/components/shared/container';
 import Mdx from '@/components/shared/mdx';
 import { BASE_URL, ROUTES } from '@/constants';
+import type { Post } from '@/lib/content/generated';
+import { allPosts } from '@/lib/content/generated';
 import { buildJsonLd, seo } from '@/lib/meta';
 import { cn, formatDate } from '@/lib/utils';
 

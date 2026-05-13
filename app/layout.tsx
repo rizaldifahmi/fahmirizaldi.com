@@ -1,13 +1,13 @@
 import './global.css';
 
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import {
   Fira_Code as FiraCode,
   Plus_Jakarta_Sans as PlusJakartaSans,
 } from 'next/font/google';
 import localFont from 'next/font/local';
-import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import Analytics from '@/components/analytics';
 import GuestbookWidget from '@/components/guestbook-widget';

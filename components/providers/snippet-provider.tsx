@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from 'react';
 
-import type { Snippet } from '@/.contentlayer/generated';
+import type { Snippet } from '@/lib/content/generated';
 
 export const SnippetContext = createContext<Snippet | null>(null);
 

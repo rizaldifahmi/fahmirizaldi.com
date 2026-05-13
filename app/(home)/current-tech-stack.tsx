@@ -1,10 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import {
-  JavaScript,
   CodeIgniter,
+  JavaScript,
   NextJS,
   PHP,
   ReactJS,
@@ -65,34 +65,44 @@ export const CURRENT_TECH = [
 
 const CurrentTechStack = () => {
   const animation = {
-    hide: { x: -8, opacity: 0 },
-    show: { x: 0, opacity: 1 },
+    hide: { y: 10, opacity: 0 },
+    show: { y: 0, opacity: 1 },
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ y: 18, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.38, duration: 0.45, ease: 'easeOut' }}
+      className={cn(
+        'rounded-2xl border border-foreground/10 bg-card/75 p-4 shadow-border backdrop-blur',
+        'sm:inline-block sm:min-w-[22rem]',
+      )}
+    >
       <motion.p
         initial={animation.hide}
         animate={animation.show}
         transition={{ delay: 0.4 }}
-        className={cn('mb-2 text-sm text-muted-foreground')}
+        className={cn('mb-3 text-sm text-muted-foreground')}
       >
         Tech stack and tools
       </motion.p>
       <motion.div
         initial="hide"
         animate="show"
-        transition={{ delayChildren: 0.5, staggerChildren: 0.015 }}
-        className={cn('flex flex-wrap gap-2')}
+        transition={{ delayChildren: 0.5, staggerChildren: 0.025 }}
+        className={cn('flex flex-wrap gap-2.5')}
       >
-        {CURRENT_TECH.map(({ title, icon, hoverClass }) => (
+        {CURRENT_TECH.map(({ title, description, icon, hoverClass }) => (
           <Tooltip key={title}>
             <TooltipTrigger asChild>
               <motion.button
                 type="button"
-                aria-label={title}
+                aria-label={`${title}: ${description}`}
                 className={cn(
-                  'size-6 appearance-none border-0 bg-transparent p-0 text-muted-foreground transition-all duration-300 ease-out',
+                  'inline-flex size-10 appearance-none items-center justify-center rounded-xl border border-foreground/10 bg-background/80 p-2 text-muted-foreground transition-all duration-300 ease-out',
+                  'md:size-9',
+                  '[&_svg]:size-full',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                   hoverClass,
                 )}
@@ -104,11 +114,18 @@ const CurrentTechStack = () => {
                 {icon}
               </motion.button>
             </TooltipTrigger>
-            <TooltipContent>{title}</TooltipContent>
+            <TooltipContent>
+              <div className={cn('space-y-0.5')}>
+                <p className={cn('font-semibold')}>{title}</p>
+                <p className={cn('text-xs text-muted-foreground')}>
+                  {description}
+                </p>
+              </div>
+            </TooltipContent>
           </Tooltip>
         ))}
       </motion.div>
-    </>
+    </motion.div>
   );
 };
 

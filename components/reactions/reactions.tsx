@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactionType } from '@prisma/client';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion, useAnimationControls } from 'motion/react';
 import { useEffect } from 'react';
 
 import { MAX_REACTIONS_PER_SESSION } from '@/constants';

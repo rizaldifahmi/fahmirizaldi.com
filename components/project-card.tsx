@@ -1,8 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import { cloneElement, type ReactElement, useMemo } from 'react';
 
-import type { Project } from '@/.contentlayer/generated';
 import { ROUTES, STACKS } from '@/constants';
+import type { Project } from '@/lib/content/generated';
 import { cn } from '@/lib/utils';
 import type { Stack } from '@/types/stack';
 
@@ -24,8 +26,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
   } = project;
 
   const extraImageProps = useMemo(() => {
-    if (image && imageMeta?.blur64) {
-      return { placeholder: 'blur', blurDataURL: imageMeta?.blur64 } as {
+    if (image && imageMeta?.blurDataURL) {
+      return { placeholder: 'blur', blurDataURL: imageMeta.blurDataURL } as {
         placeholder: 'blur' | 'empty';
         blurDataURL?: string;
       };
@@ -43,7 +45,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
       key={_id}
       href={projectUrl}
       className={cn(
-        'group rounded-xl bg-card shadow-border transition-colors duration-200',
+        'group block h-full overflow-hidden rounded-xl bg-card shadow-border transition-[box-shadow,transform] duration-200 ease-out',
+        'motion-safe:hover:-translate-y-1',
       )}
     >
       <div
@@ -56,7 +59,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
           src={image ?? ''}
           alt={title}
           fill
-          className={cn('rounded-t-xl object-cover')}
+          className={cn(
+            'rounded-t-xl object-cover transition-transform duration-500 ease-out',
+            'motion-safe:group-hover:scale-105',
+          )}
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
           {...extraImageProps}
@@ -65,7 +71,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div
         className={cn(
           'flex flex-col p-4 transition-transform duration-200 ease-out',
-          'group-hover:translate-x-0.5',
+          'motion-safe:group-hover:translate-x-0.5',
         )}
       >
         <h2
@@ -83,16 +89,28 @@ const ProjectCard = ({ project }: { project: Project }) => {
           {stacks?.map((stack, idx) => {
             const stackIcon = STACKS[stack as keyof Stack];
             if (!stackIcon) return null;
-            
+
             return (
               <Tooltip key={`${stack}-${idx}`}>
                 <TooltipTrigger asChild>
-                  {cloneElement(stackIcon as ReactElement<{ className?: string }>, {
-                    className: cn(
-                      'size-5',
-                      (stackIcon as any)?.props?.className,
-                    ),
-                  })}
+                  <span
+                    aria-label={stack}
+                    className={cn(
+                      'inline-flex size-5 items-center justify-center rounded-sm outline-none',
+                      'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                    )}
+                    tabIndex={0}
+                  >
+                    {cloneElement(
+                      stackIcon as ReactElement<{ className?: string }>,
+                      {
+                        className: cn(
+                          'size-5',
+                          (stackIcon as any)?.props?.className,
+                        ),
+                      },
+                    )}
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>{stack}</TooltipContent>
               </Tooltip>

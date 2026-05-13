@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { useMemo } from 'react';
 
-import type { Post } from '@/.contentlayer/generated';
 import { ROUTES } from '@/constants';
 import useViews from '@/hooks/use-views';
+import type { Post } from '@/lib/content/generated';
 import { cn, formatDate } from '@/lib/utils';
 
 import IncrementCounter from './shared/increment-counter';
@@ -19,8 +19,8 @@ const PostCard = ({ post }: { post: Post }) => {
   const { views, isLoading: isLoadViews } = useViews({ slug });
 
   const extraImageProps = useMemo(() => {
-    if (imageMeta?.blur64) {
-      return { placeholder: 'blur', blurDataURL: imageMeta?.blur64 } as {
+    if (imageMeta?.blurDataURL) {
+      return { placeholder: 'blur', blurDataURL: imageMeta.blurDataURL } as {
         placeholder: 'blur' | 'empty';
         blurDataURL?: string;
       };
@@ -36,7 +36,8 @@ const PostCard = ({ post }: { post: Post }) => {
       key={_id}
       href={`${ROUTES.blog}/${slug}`}
       className={cn(
-        'group rounded-xl bg-card shadow-border transition-colors duration-200',
+        'group block h-full overflow-hidden rounded-xl bg-card shadow-border transition-[box-shadow,transform] duration-200 ease-out',
+        'motion-safe:hover:-translate-y-1',
       )}
     >
       <div
@@ -49,7 +50,10 @@ const PostCard = ({ post }: { post: Post }) => {
           src={image ?? ''}
           alt={title}
           fill
-          className={cn('rounded-t-xl object-cover')}
+          className={cn(
+            'rounded-t-xl object-cover transition-transform duration-500 ease-out',
+            'motion-safe:group-hover:scale-105',
+          )}
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
           {...extraImageProps}
@@ -78,7 +82,7 @@ const PostCard = ({ post }: { post: Post }) => {
       <div
         className={cn(
           'flex flex-col p-4 transition-transform duration-200 ease-out',
-          'group-hover:translate-x-0.5',
+          'motion-safe:group-hover:translate-x-0.5',
         )}
       >
         <h2

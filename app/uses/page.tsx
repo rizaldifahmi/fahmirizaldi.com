@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { allPages } from '@/.contentlayer/generated';
 import Container from '@/components/shared/container';
 import Mdx from '@/components/shared/mdx';
 import PageHeader from '@/components/shared/page-header';
 import { ROUTES } from '@/constants';
+import { allPages } from '@/lib/content/generated';
 import { seo } from '@/lib/meta';
 
 export const metadata: Metadata = seo({

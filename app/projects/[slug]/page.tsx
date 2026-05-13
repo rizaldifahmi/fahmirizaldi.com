@@ -1,10 +1,10 @@
 import { ExternalLink } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { cloneElement, type ReactElement } from 'react';
 
-import { allProjects } from '@/.contentlayer/generated';
 import Container from '@/components/shared/container';
 import { GitHub } from '@/components/shared/icons';
 import Link from '@/components/shared/link';
@@ -14,10 +14,10 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants';
 import { STACKS } from '@/constants';
+import { allProjects } from '@/lib/content/generated';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
 import type { Stack } from '@/types/stack';
-import { ChevronLeft } from 'lucide-react';
 
 interface ProjectPageProps {
   params: Promise<{
@@ -122,7 +122,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     return (
                       <Tooltip key={`${stack}-${idx}`}>
                         <TooltipTrigger asChild>
-                          <div className={cn('group flex items-center gap-2 rounded-lg border bg-background p-2 transition-colors hover:bg-muted')}>
+                          <button
+                            type="button"
+                            className={cn(
+                              'group flex items-center gap-2 rounded-lg border bg-background p-2 transition-colors hover:bg-muted',
+                              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                            )}
+                            aria-label={stack}
+                          >
                             {cloneElement(stackIcon as ReactElement<{ className?: string }>, {
                               className: cn(
                                 'size-5',
@@ -130,7 +137,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                               ),
                             })}
                             <span className={cn('text-xs font-medium')}>{stack}</span>
-                          </div>
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent>{stack}</TooltipContent>
                       </Tooltip>

@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import { motion } from 'motion/react';
 
 import { Button } from '@/components/ui/button';
 import useScroll from '@/hooks/use-scroll';

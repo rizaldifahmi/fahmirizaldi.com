@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
 import { format } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
+import { NextResponse } from 'next/server';
+
 import db from '@/lib/db';
 
 export const dynamic = 'force-dynamic';

@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 
 import Container from '@/components/shared/container';
+import { Document } from '@/components/shared/icons';
+import Link from '@/components/shared/link';
 import PageHeader from '@/components/shared/page-header';
+import { Button } from '@/components/ui/button';
 import { ROUTES, SITE } from '@/constants';
 import { env } from '@/lib/env';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
-import Link from '@/components/shared/link';
-import { Button } from '@/components/ui/button';
-import { Document } from '@/components/shared/icons';
 
 import Biography from './biography';
 import OpenForHire from './open-for-hire';

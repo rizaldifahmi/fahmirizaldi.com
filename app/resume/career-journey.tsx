@@ -4,14 +4,14 @@ import Image from 'next/image';
 import { Document } from '@/components/shared/icons';
 import Link from '@/components/shared/link';
 import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { env } from '@/lib/env';
 import { EXPERIENCES } from '@/constants';
+import { env } from '@/lib/env';
 import { cn, formatDate } from '@/lib/utils';
 
 const CareerJourney = () => {
@@ -187,9 +187,16 @@ const CareerJourney = () => {
                     {stacks.map(({ name, icon }) => (
                       <Tooltip key={name}>
                         <TooltipTrigger asChild>
-                          <div className={cn('rounded-lg bg-card p-1.5')}>
+                          <button
+                            type="button"
+                            className={cn(
+                              'rounded-lg bg-card p-1.5 outline-none',
+                              'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                            )}
+                            aria-label={name}
+                          >
                             {icon}
-                          </div>
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent>{name}</TooltipContent>
                       </Tooltip>

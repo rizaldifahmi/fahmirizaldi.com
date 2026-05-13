@@ -3,10 +3,10 @@
 export {
   Popover,
   PopoverClose,
-  PopoverContent,
-  PopoverTrigger,
   type PopoverCloseProps,
+  PopoverContent,
   type PopoverContentProps,
   type PopoverProps,
+  PopoverTrigger,
   type PopoverTriggerProps,
 } from '@/components/animate-ui/components/radix/popover';

@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useAnimationControls } from 'framer-motion';
 import { CheckCircle2, Link as LinkIcon, Share } from 'lucide-react';
+import { motion, useAnimationControls } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 

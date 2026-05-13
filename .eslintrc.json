@@ -7,7 +7,7 @@
   "rules": {
     "prettier/prettier": "off"
   },
-  "ignorePatterns": ["next-env.d.ts"],
+  "ignorePatterns": ["next-env.d.ts", "components/animate-ui/**/*"],
   "overrides": [
     // configuration for typescript files
     {
@@ -15,11 +15,9 @@
       "plugins": [
         "@typescript-eslint",
         "unused-imports",
-        "simple-import-sort",
-        "tailwindcss"
+        "simple-import-sort"
       ],
       "extends": [
-        "plugin:tailwindcss/recommended",
         "next/core-web-vitals",
         "plugin:prettier/recommended"
       ],
@@ -36,14 +34,6 @@
         "import/prefer-default-export": "off",
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
-        "tailwindcss/no-custom-classname": "off",
-        "tailwindcss/classnames-order": [
-          2,
-          {
-            "callees": ["cn", "clsx", "cva"],
-            "prependCustom": true
-          }
-        ],
         "react/function-component-definition": [
           "error",
           {

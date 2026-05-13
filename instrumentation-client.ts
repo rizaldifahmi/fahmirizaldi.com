@@ -6,3 +6,5 @@ Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: 0.2,
 });
+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

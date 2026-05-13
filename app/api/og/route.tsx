@@ -5,7 +5,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import OGImage from '@/components/og-image';
 import type { APIErrorResponse } from '@/types/server';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 const getFont = async (): Promise<SatoriOptions['fonts'] | undefined> => {
   try {

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
-import { allPosts, allProjects, allSnippets } from '@/.contentlayer/generated';
 import { BASE_URL, ROUTES } from '@/constants';
+import { allPosts, allProjects, allSnippets } from '@/lib/content/generated';
 
 const sitemap = (): MetadataRoute.Sitemap => {
   const posts = allPosts

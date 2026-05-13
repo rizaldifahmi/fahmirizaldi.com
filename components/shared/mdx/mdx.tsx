@@ -1,7 +1,6 @@
 'use client';
 
 import type { MDXComponents } from 'mdx/types';
-import { useMDXComponent } from 'next-contentlayer/hooks';
 
 import { cn } from '@/lib/utils';
 
@@ -12,6 +11,7 @@ import CodeBlock from './code-block';
 import CodeBlockHeader from './code-block-header';
 import Heading from './heading';
 import ImageZoom from './image-zoom';
+import { useMDXComponent } from './use-mdx-component';
 import Workstation from './workstation';
 
 const components: MDXComponents = {
@@ -53,6 +53,7 @@ const Mdx = ({ code, className }: { code: string; className?: string }) => {
     <div
       className={cn('prose w-full max-w-none', 'dark:prose-dark', className)}
     >
+      {/* eslint-disable-next-line react-hooks/static-components */}
       <Component components={{ ...components }} />
     </div>
   );

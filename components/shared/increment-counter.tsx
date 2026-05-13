@@ -6,7 +6,7 @@ import {
   useInView,
   useMotionValue,
   useTransform,
-} from 'framer-motion';
+} from 'motion/react';
 import { useEffect, useRef } from 'react';
 
 interface IncrementCounterProps {

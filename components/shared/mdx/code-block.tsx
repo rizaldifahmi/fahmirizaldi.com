@@ -1,14 +1,15 @@
 'use client';
 
-import { Check, CheckCircle2, Copy } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import {
+  Children,
   type DetailedHTMLProps,
   type HTMLAttributes,
-  useRef,
-  useState,
+  isValidElement,
+  type ReactNode,
 } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { CopyButton } from '@/components/animate-ui/components/buttons/copy';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -17,23 +18,33 @@ interface CodeBlockProps
   'data-theme'?: string;
 }
 
+const getTextContent = (node: ReactNode): string => {
+  if (typeof node === 'string' || typeof node === 'number') {
+    return String(node);
+  }
+
+  if (Array.isArray(node)) {
+    return node.map(getTextContent).join('');
+  }
+
+  if (isValidElement<{ children?: ReactNode }>(node)) {
+    return getTextContent(node.props.children);
+  }
+
+  return '';
+};
+
 const CodeBlock = ({
   children,
   'data-theme': dataTheme = '',
   className,
   ...props
 }: CodeBlockProps) => {
-  const codeBlockRef = useRef<HTMLPreElement>(null);
-
-  const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const code = Children.toArray(children).map(getTextContent).join('');
 
-  const onCopyToClipboard = async () => {
-    try {
-      const content = codeBlockRef.current?.textContent ?? '';
-      await navigator.clipboard.writeText(content);
-
-      setCopied(true);
+  const onCopiedChange = (copied: boolean) => {
+    if (copied) {
       toast({
         description: (
           <span className={cn('flex items-center gap-2')}>
@@ -42,16 +53,12 @@ const CodeBlock = ({
         ),
         className: 'p-4',
       });
-      setTimeout(() => setCopied(false), 300);
-    } catch {
-      setCopied(false);
     }
   };
 
   return (
     <>
       <pre
-        ref={codeBlockRef}
         data-theme={dataTheme}
         className={cn(
           'border border-foreground/10 border-t-transparent',
@@ -62,21 +69,16 @@ const CodeBlock = ({
         {children}
       </pre>
       <div className={cn('absolute right-0.5 top-0.5')}>
-        <Button
+        <CopyButton
           aria-label="Copy to clipboard"
-          type="button"
           title="Copy to clipboard"
+          content={code}
           variant="ghost"
-          size="icon"
-          onClick={onCopyToClipboard}
-          className={cn('hover:bg-background/60')}
-        >
-          {copied ? (
-            <Check className={cn('size-4')} />
-          ) : (
-            <Copy className={cn('size-4')} />
-          )}
-        </Button>
+          size="default"
+          delay={900}
+          onCopiedChange={onCopiedChange}
+          className={cn('size-10 hover:bg-background/60')}
+        />
       </div>
     </>
   );

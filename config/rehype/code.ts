@@ -42,7 +42,6 @@ export const prettyCode = [
     },
     onVisitHighlightedWord(node?: RehypeElement | null) {
       if (!node) return;
-      // eslint-disable-next-line no-param-reassign
       node.properties.className = ['word'];
     },
   },

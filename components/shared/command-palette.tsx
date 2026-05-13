@@ -1,5 +1,6 @@
 'use client';
 
+import { AnimatePresence, motion } from 'motion/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Fragment, useEffect, useState } from 'react';
@@ -36,10 +37,11 @@ const CommandPalette = () => {
 
   const placeholder = placeholders[placeholderIndex];
 
-  const isActiveRoute = (path: string) => pathname === path;
+  const isActiveRoute = (path: string) =>
+    path === '/' ? pathname === path : pathname === path || pathname.startsWith(`${path}/`);
 
   const handleOnSelect = (action: CommandMenu) => {
-    if (action.closeOnSelect) setIsOpen(false);
+    if (action.closeOnSelect !== false) setIsOpen(false);
 
     if (action.onClick) {
       action.onClick();
@@ -125,7 +127,7 @@ const CommandPalette = () => {
                   <CommandItem
                     key={option.label}
                     className={cn(
-                      'group flex cursor-pointer items-center justify-between [&:not(:last-child)]:mb-0.5',
+                      'group flex cursor-pointer items-center justify-between overflow-hidden [&:not(:last-child)]:mb-0.5',
                       {
                         'bg-accent':
                           option.type === 'PAGE' && isActiveRoute(option.href),
@@ -134,18 +136,37 @@ const CommandPalette = () => {
                     onSelect={() => handleOnSelect(option)}
                   >
                     <div className={cn('flex items-center gap-2')}>
-                      <div
+                      <motion.div
                         className={cn(
-                          'transition-transform duration-200 group-hover:-rotate-12',
+                          'flex size-8 items-center justify-center rounded-md bg-background shadow-border',
                         )}
+                        whileHover={{ rotate: -10, scale: 1.06 }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 420,
+                          damping: 18,
+                        }}
                       >
                         {option.icon}
-                      </div>
+                      </motion.div>
                       {option.label}
                     </div>
-                    {option.type === 'PAGE' && isActiveRoute(option.href) && (
-                      <Badge variant="secondary">You are here</Badge>
-                    )}
+                    <AnimatePresence>
+                      {option.type === 'PAGE' && isActiveRoute(option.href) && (
+                        <motion.div
+                          initial={{ x: 8, opacity: 0, scale: 0.94 }}
+                          animate={{ x: 0, opacity: 1, scale: 1 }}
+                          exit={{ x: 8, opacity: 0, scale: 0.94 }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 420,
+                            damping: 28,
+                          }}
+                        >
+                          <Badge variant="secondary">You are here</Badge>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </CommandItem>
                 ))}
               </CommandGroup>

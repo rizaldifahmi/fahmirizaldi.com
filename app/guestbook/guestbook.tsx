@@ -3,9 +3,9 @@
 import { useSession } from 'next-auth/react';
 
 import { Skeleton } from '@/components/ui/skeleton';
+import { useAuth } from '@/hooks/use-auth';
 import useGuestbook from '@/hooks/use-guestbook';
 import { cn } from '@/lib/utils';
-import { useAuth } from '@/hooks/use-auth';
 
 import Entries from './entries';
 import MessagePanel from './message-panel';

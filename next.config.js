@@ -7,21 +7,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const appHeaders = require('./config/next/headers');
 const redirects = require('./config/next/redirects');
 
-const { withContentlayer } = require('next-contentlayer');
-const million = require('million/compiler');
-
 const nextConfig = {
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    ignoreBuildErrors: true,
-  },
   compress: true,
   reactStrictMode: true,
   crossOrigin: 'anonymous',
@@ -38,24 +24,7 @@ const nextConfig = {
       { hostname: 'ui-avatars.com' },
     ],
   },
-  webpack: (config, { dev }) => {
-    if (!dev) {
-      config.optimization.minimize = false;
-      config.optimization.minimizer = [];
-    }
-
-    config.module.rules.push({
-      test: /\.(png|jpe?g|gif|mp4)$/i,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            publicPath: '/_next',
-            name: 'static/media/[name].[hash].[ext]',
-          },
-        },
-      ],
-    });
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
@@ -71,18 +40,6 @@ const nextConfig = {
   },
 };
 
-const millionConfig = {
-  mute: true,
-  // auto: { rsc: true },
-  rsc: true,
-};
-
 module.exports = isDevelopment
-  ? million.next(withContentlayer(nextConfig), millionConfig)
-  : million.next(
-      withSentryConfig(
-        withContentlayer(nextConfig),
-        SentryWebpackPluginOptions,
-      ),
-      millionConfig,
-    );
+  ? nextConfig
+  : withSentryConfig(nextConfig, SentryWebpackPluginOptions);

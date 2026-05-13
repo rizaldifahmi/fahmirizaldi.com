@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
@@ -55,14 +56,29 @@ const Header = () => {
                   ({ onlyShowOnDropdownMenu }) => !onlyShowOnDropdownMenu,
                 ).map(({ path, label }) => {
                   const isActive =
-                    pathname === path || pathname.startsWith(path);
+                    path === '/'
+                      ? pathname === path
+                      : pathname === path || pathname.startsWith(`${path}/`);
 
                   return (
                     <li key={path} className={cn('relative')}>
+                      {isActive && (
+                        <motion.div
+                          layoutId="nav-active-pill"
+                          className={cn(
+                            'absolute inset-0 rounded-md bg-accent shadow-sm',
+                          )}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 380,
+                            damping: 32,
+                          }}
+                        />
+                      )}
                       <Link
                         href={path}
                         className={cn(
-                          'flex items-center rounded px-2.5 py-1.5 text-sm font-medium transition-colors duration-200 hover:text-foreground',
+                          'relative z-10 flex items-center rounded px-2.5 py-1.5 text-sm font-medium transition-colors duration-200 hover:text-foreground',
                           isActive
                             ? 'text-foreground'
                             : 'text-muted-foreground hover:text-foreground',

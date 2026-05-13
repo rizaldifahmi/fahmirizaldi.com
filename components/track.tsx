@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface TrackProps {
   ranking: number;
   title: string;
@@ -20,7 +22,7 @@ const Track = ({ ranking, title, artist, songUrl, albumImageUrl }: TrackProps) =
         </span>
       </div>
       <div className="flex flex-1 items-center gap-4">
-        <img
+        <Image
           src={albumImageUrl}
           alt={title}
           width={48}

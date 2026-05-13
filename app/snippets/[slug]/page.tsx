@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import type { Snippet } from '@/.contentlayer/generated';
-import { allSnippets } from '@/.contentlayer/generated';
 import ContentEngagements from '@/components/content-engagements';
 import SnippetProvider from '@/components/providers/snippet-provider';
 import Container from '@/components/shared/container';
 import Mdx from '@/components/shared/mdx';
 import { BASE_URL, ROUTES } from '@/constants';
+import type { Snippet } from '@/lib/content/generated';
+import { allSnippets } from '@/lib/content/generated';
 import { buildJsonLd, seo } from '@/lib/meta';
 import { cn, formatDate } from '@/lib/utils';
 

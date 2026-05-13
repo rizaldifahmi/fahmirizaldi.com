@@ -1,11 +1,9 @@
 'use client';
 
-import useSWR from 'swr';
-
 import Card from '@/components/shared/card';
 import Track from '@/components/track';
 import useRequest from '@/hooks/use-request';
-import type { APIErrorResponse, APISingleResponse } from '@/types/server';
+import type { APIErrorResponse } from '@/types/server';
 
 interface TopTrack {
   artist: string;
@@ -19,7 +17,9 @@ interface TopTracksData {
 }
 
 const TopTracks = () => {
-  const { data, isLoading } = useRequest<TopTracksData, APIErrorResponse>('/api/top-tracks');
+  const { data, isLoading } = useRequest<TopTracksData, APIErrorResponse>(
+    '/api/top-tracks',
+  );
 
   if (isLoading) {
     return (
@@ -59,4 +59,4 @@ const TopTracks = () => {
   );
 };
 
-export default TopTracks; 
+export default TopTracks;

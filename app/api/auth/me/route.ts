@@ -1,7 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { env } from '@/lib/env';
+import type { NextRequest} from 'next/server';
+import { NextResponse } from 'next/server';
+
 import { auth } from '@/lib/auth';
+import { env } from '@/lib/env';
 
 export async function GET(request: NextRequest) {
   try {

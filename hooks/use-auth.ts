@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { signOut } from 'next-auth/react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface User {
   id: string;
@@ -24,7 +24,7 @@ export const useAuth = () => {
     isAuthenticated: false,
   });
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await fetch('/api/auth/me');
       if (response.ok) {
@@ -49,7 +49,7 @@ export const useAuth = () => {
         isAuthenticated: false,
       });
     }
-  };
+  }, []);
 
   const logout = async () => {
     try {
@@ -68,8 +68,10 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    queueMicrotask(() => {
+      void fetchUser();
+    });
+  }, [fetchUser]);
 
   return {
     ...authState,

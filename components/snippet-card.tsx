@@ -1,5 +1,5 @@
-import type { Snippet } from '@/.contentlayer/generated';
 import { ROUTES } from '@/constants';
+import type { Snippet } from '@/lib/content/generated';
 import { cn } from '@/lib/utils';
 
 import Link from './shared/link';
@@ -13,8 +13,8 @@ const SnippetCard = ({ snippet }: { snippet: Snippet }) => {
       key={_id}
       href={`${ROUTES.snippets}/${slug}`}
       className={cn(
-        'relative w-full animate-border-gradient rounded-xl bg-gradient-to-r from-pink-400 via-blue-500 to-purple-600 bg-[length:400%_400%] p-0.5 transition [animation-duration:_6s]',
-        'hover:shadow-sm',
+        'relative block h-full w-full rounded-xl bg-gradient-to-r from-pink-400 via-blue-500 to-purple-600 p-0.5 transition-[box-shadow,transform] duration-200 ease-out',
+        'motion-safe:hover:-translate-y-1 hover:shadow-sm',
       )}
     >
       <div

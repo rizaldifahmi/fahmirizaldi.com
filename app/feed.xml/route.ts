@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import RSS from 'rss';
 
-import { allPosts } from '@/.contentlayer/generated';
 import { BASE_URL, ROUTES, SITE } from '@/constants';
+import { allPosts } from '@/lib/content/generated';
 
 export const GET = () => {
   const feed = new RSS({

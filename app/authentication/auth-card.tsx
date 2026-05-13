@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import RenderIf from '@/components/shared/render-if';
 import { Button } from '@/components/ui/button';
@@ -31,12 +31,10 @@ const AuthCard = ({
 }: {
   providers: Record<string, ClientAuthProvider> | null;
 }) => {
-  const [isShowError, setIsShowError] = useState(false);
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setIsShowError(searchParams.has('error'));
-  }, [searchParams]);
+  const [isShowError, setIsShowError] = useState(() =>
+    searchParams.has('error'),
+  );
 
   return (
     <>

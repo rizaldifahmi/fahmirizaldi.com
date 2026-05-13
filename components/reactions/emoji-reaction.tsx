@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { cn, randomBetween } from '@/lib/utils';
 
@@ -57,10 +57,6 @@ const EmojiReaction = ({
   const [emoji, setEmoji] = useState<string>(
     disabled ? disabledEmoji : defaultEmoji,
   );
-
-  useEffect(() => {
-    if (disabled) setEmoji(disabledEmoji);
-  }, [disabled, disabledEmoji]);
 
   const handleClick = () => {
     if (disabled) return;
@@ -118,7 +114,7 @@ const EmojiReaction = ({
         <Image
           className={cn('size-full')}
           alt={title}
-          src={emoji}
+          src={disabled ? disabledEmoji : emoji}
           width={48}
           height={48}
           unoptimized

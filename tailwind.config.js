@@ -1,23 +1,13 @@
-import typography from '@tailwindcss/typography';
-import svgDataUri from 'mini-svg-data-uri';
-import type { Config } from 'tailwindcss';
-import defaultTheme from 'tailwindcss/defaultTheme';
-import animate from 'tailwindcss-animate';
+const typography = require('@tailwindcss/typography');
+const svgDataUri = require('mini-svg-data-uri');
+const defaultTheme = require('tailwindcss/defaultTheme');
+const animate = require('tailwindcss-animate');
 
-const {
-  default: flattenColorPalette,
-} = require('tailwindcss/lib/util/flattenColorPalette');
+const flattenColorPalette = require('tailwindcss/lib/util/flattenColorPalette');
 
 const { fontFamily } = defaultTheme;
 
-type PluginAPI = {
-  matchUtilities: (
-    utilities: Record<string, (value: string) => Record<string, string>>,
-    options: { values: Record<string, string>; type: string },
-  ) => void;
-  theme: (path: string) => Record<string, string>;
-};
-
+/** @type {import('tailwindcss').Config} */
 const config = {
   content: [
     './app/**/*.{ts,tsx}',
@@ -167,7 +157,7 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'border-gradient': 'border-gradient ease infinite',
       },
-      typography: ({ theme }: { theme: (value: string) => string }) => ({
+      typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             color: 'hsl(var(--foreground))',
@@ -189,10 +179,6 @@ const config = {
             },
             'code, pre code': {
               fontFamily: 'var(--font-fira-code)',
-            },
-            'code[data-theme*=" "], code[data-theme*=" "] span': {
-              color: 'var(--shiki-light)',
-              backgroundColor: 'var(--shiki-light-bg)',
             },
             '[data-rehype-pretty-code-figure]': {
               position: 'relative',
@@ -263,10 +249,6 @@ const config = {
         },
         dark: {
           css: {
-            'code[data-theme*=" "], code[data-theme*=" "] span': {
-              color: 'var(--shiki-dark)',
-              backgroundColor: 'var(--shiki-dark-bg)',
-            },
             pre: {
               border: '1px solid hsl(var(--border))',
               '> code': {
@@ -281,10 +263,10 @@ const config = {
     },
   },
   plugins: [
-    function ({ matchUtilities, theme }: PluginAPI) {
+    function ({ matchUtilities, theme }) {
       matchUtilities(
         {
-          'grid-pattern': (value: string) => ({
+          'grid-pattern': (value) => ({
             backgroundImage: `url("${svgDataUri(
               `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="36" height="36" fill="none" stroke="${value}" stroke-dasharray="6 3" transform="scale(1)"><path d="M36 .5H1.5V36"/></svg>`,
             )}")`,
@@ -299,6 +281,6 @@ const config = {
     typography,
     animate,
   ],
-} satisfies Config;
+};
 
-export default config;
+module.exports = config;

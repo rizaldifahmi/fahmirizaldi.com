@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type Transition } from 'framer-motion';
+import { motion, type Transition } from 'motion/react';
 import { useLayoutEffect, useState } from 'react';
 
 import useMediaQuery from '@/hooks/use-media-query';

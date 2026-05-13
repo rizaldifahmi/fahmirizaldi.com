@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Marquee from '@/components/shared/marquee';
 import { STACKS } from '@/constants';
@@ -9,13 +9,7 @@ import { cn } from '@/lib/utils';
 const TechStacks = () => {
   const [shuffledStacks, setShuffledStacks] = useState<
     Array<[string, React.ReactNode]>
-  >([]);
-
-  useEffect(() => {
-    const stacks = Object.entries(STACKS);
-    const shuffled = [...stacks].sort(() => Math.random() - 0.5);
-    setShuffledStacks(shuffled);
-  }, []);
+  >(() => Object.entries(STACKS).sort(() => Math.random() - 0.5));
 
   const sliders = Array.from({ length: 2 }, (_, index) => {
     const stackSliders = [...shuffledStacks].sort(() => Math.random() - 0.5);

@@ -3,25 +3,24 @@
 export {
   Dialog,
   DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   type DialogCloseProps,
+  DialogContent,
   type DialogContentProps,
+  DialogDescription,
   type DialogDescriptionProps,
+  DialogFooter,
   type DialogFooterProps,
+  DialogHeader,
   type DialogHeaderProps,
   type DialogProps,
+  DialogTitle,
   type DialogTitleProps,
+  DialogTrigger,
   type DialogTriggerProps,
 } from '@/components/animate-ui/components/radix/dialog';
-
 export {
   DialogOverlay,
-  DialogPortal,
   type DialogOverlayProps,
+  DialogPortal,
   type DialogPortalProps,
 } from '@/components/animate-ui/primitives/radix/dialog';

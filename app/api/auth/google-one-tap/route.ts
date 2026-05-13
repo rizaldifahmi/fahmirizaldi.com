@@ -1,18 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
-import { env } from '@/lib/env';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-const client = new OAuth2Client(env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
+import { env } from '@/lib/env';
 
 export async function POST(request: NextRequest) {
   try {
+    const { OAuth2Client } = await import('google-auth-library');
+    const client = new OAuth2Client(env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
     const { credential } = await request.json();
 
     if (!credential) {
       return NextResponse.json(
         { error: 'No credential provided' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
     if (!payload) {
       return NextResponse.json(
         { error: 'Invalid credential' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -41,21 +42,21 @@ export async function POST(request: NextRequest) {
         email_verified: payload.email_verified,
       },
       env.NEXTAUTH_SECRET, // Using NextAuth secret for consistency
-      { expiresIn: '7d' }
+      { expiresIn: '7d' },
     );
 
     // Set HTTP-only cookie
     const response = NextResponse.json(
-      { 
-        success: true, 
+      {
+        success: true,
         user: {
           id: payload.sub,
           email: payload.email,
           name: payload.name,
           picture: payload.picture,
-        }
+        },
       },
-      { status: 200 }
+      { status: 200 },
     );
 
     response.cookies.set('auth-token', token, {
@@ -67,12 +68,11 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-
   } catch (error) {
     console.error('Google One Tap verification error:', error);
     return NextResponse.json(
       { error: 'Verification failed' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

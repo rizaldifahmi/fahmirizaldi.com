@@ -3,9 +3,9 @@ import { signIn } from 'next-auth/react';
 import GoogleOneTap from '@/components/shared/google-one-tap';
 import { GitHub, Google } from '@/components/shared/icons';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { env } from '@/lib/env';
 import { useAuth } from '@/hooks/use-auth';
+import { env } from '@/lib/env';
+import { cn } from '@/lib/utils';
 
 const SignIn = ({ message = 'Kindly login to start a conversation.' }: { message?: string }) => {
   const { isAuthenticated, logout } = useAuth();

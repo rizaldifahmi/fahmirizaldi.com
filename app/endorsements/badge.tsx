@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import type { DefaultSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
@@ -112,7 +112,10 @@ const Badge = ({
   };
 
   return (
-    <div
+    <motion.div
+      layout
+      whileHover={{ y: -2 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 24 }}
       className={cn(
         'flex flex-col flex-nowrap items-stretch gap-4 rounded-xl bg-card p-4 shadow-border',
       )}
@@ -230,7 +233,7 @@ const Badge = ({
           Thank you for endorsing this skill!
         </p>
       </RenderIf>
-    </div>
+    </motion.div>
   );
 };
 
