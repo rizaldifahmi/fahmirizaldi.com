@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 
 import {
@@ -31,8 +30,9 @@ const MobileMenu = () => {
       </SheetTrigger>
       <SheetContent
         side="bottom"
+        transition={{ duration: 0.16, ease: 'easeOut' }}
         className={cn(
-          'fixed inset-x-2 bottom-2 z-50 h-auto rounded-2xl border bg-background/95 p-0 shadow-2xl backdrop-blur',
+          'fixed inset-x-2 bottom-2 z-50 h-auto rounded-2xl border bg-background p-0 shadow-xl',
           'md:hidden',
         )}
       >
@@ -43,19 +43,7 @@ const MobileMenu = () => {
           </SheetDescription>
         </SheetHeader>
 
-        <motion.nav
-          className={cn('grid gap-1 p-2')}
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: {},
-            show: {
-              transition: {
-                staggerChildren: 0.035,
-              },
-            },
-          }}
-        >
+        <nav className={cn('grid gap-1 p-2')}>
           {NAV_LINKS.map(({ path, label, icon }) => {
             const isActive =
               path === '/'
@@ -63,52 +51,31 @@ const MobileMenu = () => {
                 : pathname === path || pathname.startsWith(`${path}/`);
 
             return (
-              <motion.div
-                key={path}
-                variants={{
-                  hidden: { y: 10, opacity: 0 },
-                  show: { y: 0, opacity: 1 },
-                }}
-              >
-                <SheetClose asChild>
-                  <Link
-                    href={path}
+              <SheetClose key={path} asChild>
+                <Link
+                  href={path}
+                  className={cn(
+                    'group relative flex w-full items-center gap-3 overflow-hidden rounded-xl px-3 py-3 text-sm font-semibold text-muted-foreground transition-colors duration-150',
+                    'hover:bg-accent hover:text-accent-foreground',
+                    {
+                      'bg-accent text-accent-foreground': isActive,
+                    },
+                  )}
+                >
+                  <span
                     className={cn(
-                      'group relative flex w-full items-center gap-3 overflow-hidden rounded-xl px-3 py-3 text-sm font-semibold text-muted-foreground transition-colors duration-150',
-                      'hover:bg-accent hover:text-accent-foreground',
-                      {
-                        'bg-accent text-accent-foreground': isActive,
-                      },
+                      'flex size-9 items-center justify-center rounded-lg bg-background shadow-border transition-transform duration-200',
+                      'group-hover:scale-105',
                     )}
                   >
-                    {isActive && (
-                      <motion.span
-                        layoutId="mobile-nav-active-pill"
-                        className={cn(
-                          'absolute inset-0 -z-10 rounded-xl bg-accent',
-                        )}
-                        transition={{
-                          type: 'spring',
-                          stiffness: 380,
-                          damping: 32,
-                        }}
-                      />
-                    )}
-                    <span
-                      className={cn(
-                        'flex size-9 items-center justify-center rounded-lg bg-background shadow-border transition-transform duration-200',
-                        'group-hover:scale-105',
-                      )}
-                    >
-                      {icon}
-                    </span>
-                    <span>{label}</span>
-                  </Link>
-                </SheetClose>
-              </motion.div>
+                    {icon}
+                  </span>
+                  <span>{label}</span>
+                </Link>
+              </SheetClose>
             );
           })}
-        </motion.nav>
+        </nav>
       </SheetContent>
     </Sheet>
   );
