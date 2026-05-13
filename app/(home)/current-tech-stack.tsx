@@ -83,7 +83,10 @@ const CurrentTechStack = () => {
         initial="hide"
         animate="show"
         transition={{ delayChildren: 0.5, staggerChildren: 0.015 }}
-        className={cn('flex flex-wrap gap-2')}
+        className={cn(
+          'inline-flex max-w-full flex-wrap gap-1.5 rounded-full border border-border/70 bg-background/70 p-1.5 shadow-sm',
+          'supports-[backdrop-filter]:bg-background/55 supports-[backdrop-filter]:backdrop-blur-sm',
+        )}
       >
         {CURRENT_TECH.map(({ title, icon, hoverClass }) => (
           <Tooltip key={title}>
@@ -92,13 +95,15 @@ const CurrentTechStack = () => {
                 type="button"
                 aria-label={title}
                 className={cn(
-                  'size-6 appearance-none border-0 bg-transparent p-0 text-muted-foreground transition-all duration-300 ease-out',
+                  'inline-flex size-9 appearance-none items-center justify-center rounded-full border border-transparent bg-transparent p-2 text-muted-foreground transition-[background-color,border-color,color,box-shadow] duration-300 ease-out',
+                  'hover:border-border hover:bg-card hover:shadow-border',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                  '[&_svg]:size-full',
                   hoverClass,
                 )}
                 variants={animation}
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 1.08, y: -1 }}
+                whileHover={{ scale: 1.12, y: -2 }}
+                whileTap={{ scale: 1.06, y: -1 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
                 {icon}
