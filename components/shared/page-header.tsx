@@ -20,12 +20,18 @@ const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
 
     return (
       <div
-        className={cn('bg-grid py-8', 'lg:py-12', className)}
+        className={cn(
+          'relative overflow-hidden bg-grid py-8',
+          'before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_12%_15%,hsl(var(--primary)/0.14),transparent_26%),linear-gradient(90deg,transparent,hsl(var(--primary)/0.08),transparent)]',
+          'after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-border after:to-transparent',
+          'lg:py-12',
+          className,
+        )}
         {...props}
         ref={ref}
       >
         <Container
-          className={cn('pointer-events-none select-none overflow-hidden', {
+          className={cn('pointer-events-none relative select-none overflow-hidden', {
             'text-center': centered,
           })}
         >
