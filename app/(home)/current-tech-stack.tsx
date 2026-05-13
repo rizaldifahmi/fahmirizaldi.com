@@ -88,21 +88,19 @@ const CurrentTechStack = () => {
         {CURRENT_TECH.map(({ title, icon, hoverClass }) => (
           <Tooltip key={title}>
             <TooltipTrigger asChild>
-              <motion.button
-                type="button"
+              <motion.div
+                role="button"
+                tabIndex={0}
                 aria-label={title}
                 className={cn(
-                  'size-6 appearance-none border-0 bg-transparent p-0 text-muted-foreground transition-all duration-300 ease-out',
+                  'size-6 cursor-default text-muted-foreground transition duration-200',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                   hoverClass,
                 )}
                 variants={animation}
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 1.08, y: -1 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
                 {icon}
-              </motion.button>
+              </motion.div>
             </TooltipTrigger>
             <TooltipContent>{title}</TooltipContent>
           </Tooltip>
