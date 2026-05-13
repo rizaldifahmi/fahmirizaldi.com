@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { forwardRef, type HTMLAttributes } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -10,76 +11,53 @@ interface PageHeaderProps extends HTMLAttributes<HTMLDivElement> {
   centered?: boolean;
 }
 
-const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(({
-  title,
-  description,
-  centered = false,
-  className,
-  ...props
-}, ref) => {
-  return (
-    <div
-      className={cn(
-        'relative overflow-hidden bg-grid py-8',
-        'lg:py-12',
-        className,
-      )}
-      {...props}
-      ref={ref}
-    >
+const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
+  ({ title, description, centered = false, className, ...props }, ref) => {
+    const animation = {
+      hide: centered ? { y: 32, opacity: 0 } : { x: -32, opacity: 0 },
+      show: centered ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 },
+    };
+
+    return (
       <div
-        aria-hidden
-        className={cn(
-          'pointer-events-none absolute -right-24 -top-28 size-72 rounded-full bg-gradient-to-br from-primary/30 via-sky-400/15 to-pink-400/20 opacity-70 blur-3xl',
-          'md:size-96',
-          'dark:opacity-50',
-        )}
-      />
-      <div
-        aria-hidden
-        className={cn(
-          'pointer-events-none absolute bottom-0 left-1/2 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/40 to-transparent',
-          'motion-safe:animate-reveal-scale-x',
-        )}
-      />
-      <Container
-        className={cn(
-          'pointer-events-none relative select-none overflow-hidden',
-          {
-            'text-center': centered,
-          },
-        )}
+        className={cn('bg-grid py-8', 'lg:py-12', className)}
+        {...props}
+        ref={ref}
       >
-        <div
-          className={cn(
-            'motion-safe:animate-reveal-up',
-            !centered && 'motion-safe:animate-reveal-left',
-          )}
+        <Container
+          className={cn('pointer-events-none select-none overflow-hidden', {
+            'text-center': centered,
+          })}
         >
-          <h1
-            className={cn(
-              'pb-2 font-cal text-4xl font-bold',
-              'md:text-5xl',
-              'lg:text-6xl',
-            )}
+          <motion.div
+            initial={animation.hide}
+            animate={animation.show}
+            transition={{ delay: 0.1 }}
           >
-            {title}
-          </h1>
-        </div>
-        {description && (
-          <div
-            className={cn(
-              'motion-safe:animate-reveal-up animation-delay-100',
-              !centered && 'motion-safe:animate-reveal-left',
-            )}
-          >
-            <p className={cn('mt-2 font-cal text-lg')}>{description}</p>
-          </div>
-        )}
-      </Container>
-    </div>
-  );
-});
+            <h1
+              className={cn(
+                'pb-2 font-cal text-4xl font-bold',
+                'md:text-5xl',
+                'lg:text-6xl',
+              )}
+            >
+              {title}
+            </h1>
+          </motion.div>
+          {description && (
+            <motion.div
+              initial={animation.hide}
+              animate={animation.show}
+              transition={{ delay: 0.2 }}
+            >
+              <p className={cn('mt-2 font-cal text-lg')}>{description}</p>
+            </motion.div>
+          )}
+        </Container>
+      </div>
+    );
+  },
+);
 
 PageHeader.displayName = 'PageHeader';
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { Check } from 'lucide-react';
-import { motion } from 'motion/react';
 import Image from 'next/image';
 import type { DefaultSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
@@ -12,11 +11,6 @@ import RenderIf from '@/components/shared/render-if';
 import Spinner from '@/components/shared/spinner';
 import { Button } from '@/components/ui/button';
 import { ToastAction } from '@/components/ui/toast';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { SITE } from '@/constants';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -112,12 +106,10 @@ const Badge = ({
   };
 
   return (
-    <motion.div
-      layout
-      whileHover={{ y: -2 }}
-      transition={{ type: 'spring', stiffness: 320, damping: 24 }}
+    <div
       className={cn(
-        'flex flex-col flex-nowrap items-stretch gap-4 rounded-xl bg-card p-4 shadow-border',
+        'flex flex-col flex-nowrap items-stretch gap-4 rounded-xl bg-card p-4 shadow-border transition-transform duration-200 ease-out',
+        'motion-safe:hover:-translate-y-0.5',
       )}
     >
       <div className={cn('flex items-center justify-between')}>
@@ -154,63 +146,49 @@ const Badge = ({
       </div>
       <div className={cn('flex flex-wrap items-center gap-y-4')}>
         {users.map((user, index) => (
-          <Tooltip key={`${user.id}-${index}`}>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                className={cn(
-                  'group relative -mr-4 rounded-full outline-none',
-                  'focus-visible:z-30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-                )}
-                aria-label={user.name}
-              >
-                <Image
-                  height={100}
-                  width={100}
-                  src={
-                    user.image ??
-                    `https://ui-avatars.com/api/?name=${user.name}&background=B191FF&color=fff&rounded=true`
-                  }
-                  alt={user.name}
-                  className={cn(
-                    'relative !m-0 size-10 rounded-full border-2 border-card object-cover object-top !p-0 transition duration-500',
-                    'group-hover:z-30 group-hover:scale-105',
-                  )}
-                />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent
-              side="top"
-              sideOffset={10}
+          <button
+            key={`${user.id}-${index}`}
+            type="button"
+            className={cn(
+              'group relative -mr-4 rounded-full outline-none',
+              'focus-visible:z-30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            )}
+            aria-label={user.name}
+          >
+            <Image
+              height={100}
+              width={100}
+              src={
+                user.image ??
+                `https://ui-avatars.com/api/?name=${user.name}&background=B191FF&color=fff&rounded=true`
+              }
+              alt={user.name}
               className={cn(
-                'overflow-visible bg-transparent p-0 shadow-none',
+                'relative !m-0 size-10 rounded-full border-2 border-card object-cover object-top !p-0 transition duration-500',
+                'group-hover:z-30 group-hover:scale-105',
+              )}
+            />
+            <span
+              className={cn(
+                'pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 translate-y-3 scale-75 opacity-0',
+                'transition-[opacity,transform] duration-200 ease-out',
+                'group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100',
+                'group-focus-visible:translate-y-0 group-focus-visible:scale-100 group-focus-visible:opacity-100',
               )}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 12, scale: 0.6 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: {
-                    type: 'spring',
-                    stiffness: 260,
-                    damping: 10,
-                  },
-                }}
-                exit={{ opacity: 0, y: 12, scale: 0.6 }}
+              <span
                 className={cn(
-                  'relative rounded-md bg-background px-4 py-2 text-foreground shadow-xl',
+                  'relative block rounded-md bg-background px-4 py-2 text-foreground shadow-xl',
                 )}
               >
-                <div className="absolute inset-x-10 -bottom-px z-30 h-px w-1/5 bg-gradient-to-r from-transparent via-pink-500 to-transparent" />
-                <div className="absolute -bottom-px left-8 z-30 h-px w-2/5 bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <div className="relative z-30 whitespace-nowrap text-sm font-bold">
+                <span className="absolute inset-x-10 -bottom-px z-30 h-px w-1/5 bg-gradient-to-r from-transparent via-pink-500 to-transparent" />
+                <span className="absolute -bottom-px left-8 z-30 h-px w-2/5 bg-gradient-to-r from-transparent via-primary to-transparent" />
+                <span className="relative z-30 block whitespace-nowrap text-sm font-bold">
                   {user.name}
-                </div>
-              </motion.div>
-            </TooltipContent>
-          </Tooltip>
+                </span>
+              </span>
+            </span>
+          </button>
         ))}
       </div>
       <RenderIf isTrue={users.length > 0}>
@@ -233,7 +211,7 @@ const Badge = ({
           Thank you for endorsing this skill!
         </p>
       </RenderIf>
-    </motion.div>
+    </div>
   );
 };
 
