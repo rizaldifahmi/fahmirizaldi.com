@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { useState } from 'react';
 
 import {
   CodeIgniter,
@@ -65,19 +64,13 @@ export const CURRENT_TECH = [
 ];
 
 const CurrentTechStack = () => {
-  const [activeTitle, setActiveTitle] = useState(CURRENT_TECH[0]?.title);
-  const [openTooltip, setOpenTooltip] = useState<string | null>(null);
-
   const animation = {
     hide: { x: -8, opacity: 0 },
     show: { x: 0, opacity: 1 },
   };
 
-  const activeTech =
-    CURRENT_TECH.find((tech) => tech.title === activeTitle) ?? CURRENT_TECH[0];
-
   return (
-    <div className={cn('max-w-md')}>
+    <>
       <motion.p
         initial={animation.hide}
         animate={animation.show}
@@ -90,42 +83,22 @@ const CurrentTechStack = () => {
         initial="hide"
         animate="show"
         transition={{ delayChildren: 0.5, staggerChildren: 0.015 }}
-        className={cn(
-          'inline-flex max-w-full flex-wrap gap-1.5 rounded-xl border border-dashed border-border bg-background/65 p-1.5',
-        )}
+        className={cn('flex flex-wrap gap-2')}
       >
-        {CURRENT_TECH.map(({ title, description, icon, hoverClass }) => {
-          const isActive = activeTech?.title === title;
-
-          return (
-          <Tooltip
-            key={title}
-            open={openTooltip === title}
-            onOpenChange={(open) => setOpenTooltip(open ? title : null)}
-          >
+        {CURRENT_TECH.map(({ title, icon, hoverClass }) => (
+          <Tooltip key={title}>
             <TooltipTrigger asChild>
               <motion.button
                 type="button"
-                aria-label={`${title}: ${description}`}
-                aria-pressed={isActive}
-                onClick={() => {
-                  setActiveTitle(title);
-                  setOpenTooltip((current) =>
-                    current === title ? null : title,
-                  );
-                }}
-                onMouseEnter={() => setActiveTitle(title)}
+                aria-label={title}
                 className={cn(
-                  'inline-flex size-8 appearance-none items-center justify-center rounded-lg border border-transparent bg-transparent p-1.5 text-muted-foreground transition-[background-color,border-color,color,box-shadow] duration-200 ease-out',
-                  'hover:border-border hover:bg-card hover:shadow-border',
-                  isActive && 'border-border bg-card text-foreground shadow-border',
+                  'size-6 appearance-none border-0 bg-transparent p-0 text-muted-foreground transition-all duration-300 ease-out',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-                  '[&_svg]:size-full',
                   hoverClass,
                 )}
                 variants={animation}
-                whileHover={{ scale: 1.12, y: -2 }}
-                whileTap={{ scale: 1.06, y: -1 }}
+                whileHover={{ scale: 1.15, y: -2 }}
+                whileTap={{ scale: 1.08, y: -1 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
                 {icon}
@@ -133,22 +106,9 @@ const CurrentTechStack = () => {
             </TooltipTrigger>
             <TooltipContent>{title}</TooltipContent>
           </Tooltip>
-          );
-        })}
+        ))}
       </motion.div>
-      <motion.div
-        key={activeTech?.title}
-        initial={{ opacity: 0, y: 4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.16 }}
-        className={cn('mt-2 text-sm text-muted-foreground')}
-      >
-        <span className={cn('font-cal text-foreground')}>
-          {activeTech?.title}
-        </span>{' '}
-        <span>{activeTech?.description}</span>
-      </motion.div>
-    </div>
+    </>
   );
 };
 
