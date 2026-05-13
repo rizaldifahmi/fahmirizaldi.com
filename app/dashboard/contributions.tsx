@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'motion/react';
 import { useState } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -62,24 +61,13 @@ const Contributions = ({ data }: { data?: ContributionCalendar }) => {
                 {week.contributionDays.map((contribution) => {
                   const backgroundColor =
                     contribution.contributionCount > 0 && contribution.color;
-                  const getRandomDelayAnimate =
-                    Math.random() * week.contributionDays.length * 0.15;
 
                   return (
-                    <motion.span
+                    <span
                       key={contribution.date}
-                      initial="initial"
-                      animate="animate"
-                      variants={{
-                        initial: { opacity: 0, translateY: -20 },
-                        animate: {
-                          opacity: 1,
-                          translateY: 0,
-                          transition: { delay: getRandomDelayAnimate },
-                        },
-                      }}
                       className={cn(
-                        'my-[2px] block h-[14.85px] w-[14.85px] rounded-sm bg-muted',
+                        'my-[2px] block h-[14.85px] w-[14.85px] rounded-sm bg-muted transition-transform duration-100',
+                        'hover:scale-125',
                       )}
                       style={backgroundColor ? { backgroundColor } : undefined}
                       onMouseEnter={() =>
@@ -103,19 +91,10 @@ const Contributions = ({ data }: { data?: ContributionCalendar }) => {
         <div className={cn('flex items-center gap-2 text-xs')}>
           <span className={cn('text-muted-foreground')}>Less</span>
           <ul className={cn('flex gap-1')}>
-            <motion.li className={cn('size-3 rounded-sm bg-muted')} />
+            <li className={cn('size-3 rounded-sm bg-muted')} />
             {contributionColors.map((color, index) => (
-              <motion.li
+              <li
                 key={color}
-                initial="initial"
-                animate="animate"
-                variants={{
-                  initial: { opacity: 0 },
-                  animate: {
-                    opacity: 1,
-                    transition: { delay: index * 0.3 },
-                  },
-                }}
                 className={cn('size-3 rounded-sm')}
                 style={{ backgroundColor: color }}
               />

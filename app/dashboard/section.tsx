@@ -1,8 +1,5 @@
 'use client';
 
-import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
-
 import RenderIf from '@/components/shared/render-if';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
@@ -17,17 +14,6 @@ interface SectionProps {
   className?: string;
 }
 
-const variants = {
-  initial: {
-    y: 40,
-    opacity: 0,
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-  },
-};
-
 const Section = ({
   title,
   description,
@@ -37,21 +23,8 @@ const Section = ({
   isLoading,
   className,
 }: SectionProps) => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(sectionRef, { once: true, margin: '-100px' });
-
   return (
-    <motion.section
-      initial="initial"
-      animate={inView ? 'animate' : 'initial'}
-      variants={variants}
-      transition={{ duration: 0.5 }}
-      className={cn(
-        'will-change-[transform, opacity] flex flex-col gap-2',
-        className,
-      )}
-      ref={sectionRef}
-    >
+    <section className={cn('flex flex-col gap-2', className)}>
       <div
         className={cn('flex items-center gap-1 font-cal text-xl font-medium')}
       >
@@ -76,7 +49,7 @@ const Section = ({
       ) : (
         <>{children}</>
       )}
-    </motion.section>
+    </section>
   );
 };
 

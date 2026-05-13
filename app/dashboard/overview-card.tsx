@@ -1,4 +1,3 @@
-import IncrementCounter from '@/components/shared/increment-counter';
 import { cn } from '@/lib/utils';
 
 interface OverviewCardProps {
@@ -20,9 +19,7 @@ const OverviewCard = ({ label, value, unit }: OverviewCardProps) => {
       </span>
       <div className={cn('flex items-end font-cal')}>
         {typeof value === 'number' ? (
-          <div className={cn('text-xl')}>
-            <IncrementCounter to={value} />
-          </div>
+          <div className={cn('text-xl')}>{value.toLocaleString()}</div>
         ) : (
           <div>{value}</div>
         )}
