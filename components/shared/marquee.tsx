@@ -23,6 +23,8 @@ const Marquee = ({
 }: MarqueeProps) => {
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
+  const animationName =
+    direction === 'left' ? 'marquee-left' : 'marquee-up';
 
   return (
     <div
@@ -39,7 +41,7 @@ const Marquee = ({
         WebkitMaskImage: fade
           ? `linear-gradient(${linearGradientDirectionClass}, transparent 0%, rgba(0, 0, 0, 1.0) 10%, rgba(0, 0, 0, 1.0) 90%, transparent 100%)`
           : undefined,
-      }}
+      } as React.CSSProperties}
     >
       {Array.from({ length: loopSize }, (_, index) => (
         <div
@@ -52,6 +54,14 @@ const Marquee = ({
             pauseOnHover && 'group-hover:[animation-play-state:paused]',
             reverse && 'direction-reverse',
           )}
+          style={{
+            animationDirection: reverse ? 'reverse' : 'normal',
+            animationDuration: `var(--duration, ${duration}s)`,
+            animationIterationCount: 'infinite',
+            animationName,
+            animationPlayState: 'running',
+            animationTimingFunction: 'linear',
+          }}
         >
           {children}
         </div>
