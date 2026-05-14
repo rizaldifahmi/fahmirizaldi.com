@@ -147,6 +147,38 @@
     animation: reveal-scale-x 0.6s ease-out 0.25s both;
   }
 
+  @keyframes marquee-left {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee-up {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  .animate-marquee-left {
+    animation: marquee-left var(--duration, 50s) linear infinite;
+  }
+
+  .animate-marquee-up {
+    animation: marquee-up var(--duration, 50s) linear infinite;
+  }
+
+  .direction-reverse {
+    animation-direction: reverse;
+  }
+
   .animation-delay-100 {
     animation-delay: 0.1s;
   }
