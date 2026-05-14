@@ -45,7 +45,7 @@ const Marquee = ({
     >
       <div
         className={cn(
-          'flex w-max shrink-0 gap-4 will-change-transform',
+          'marquee-track flex w-max shrink-0 gap-4 will-change-transform',
           direction === 'left' ? 'flex-row' : 'flex-col',
           pauseOnHover && 'group-hover:[animation-play-state:paused]',
         )}

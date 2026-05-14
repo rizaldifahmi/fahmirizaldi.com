@@ -201,9 +201,11 @@
 
   @media (prefers-reduced-motion: reduce) {
     .animate-marquee-left,
-    .animate-marquee-up {
+    .animate-marquee-up,
+    .marquee-track {
       animation-duration: var(--duration, 50s) !important;
       animation-iteration-count: infinite !important;
+      animation-play-state: running !important;
     }
   }
 
