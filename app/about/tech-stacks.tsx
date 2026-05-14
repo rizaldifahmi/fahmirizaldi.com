@@ -15,12 +15,12 @@ const TechStacks = () => {
         : [...STACK_ENTRIES.slice(midpoint), ...STACK_ENTRIES.slice(0, midpoint)];
 
     return (
-      <Marquee key={index} reverse={index === 1} fade duration={64}>
+      <Marquee key={index} reverse={index === 1} fade pauseOnHover duration={64}>
         {stackSliders.map(([title, icon], stackIndex) => (
           <div
             key={`${index}-${stackIndex}`}
             className={cn(
-              'flex items-center gap-4 rounded-lg bg-card p-3 shadow-border',
+              'inline-flex shrink-0 items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 text-sm shadow-border',
             )}
           >
             {icon}

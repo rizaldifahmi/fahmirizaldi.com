@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, useAnimationControls } from 'motion/react';
+import { useEffect, useMemo } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -18,18 +19,48 @@ interface MarqueeProps {
 const Marquee = ({
   children,
   direction = 'left',
+  pauseOnHover = false,
   reverse = false,
   fade = false,
   className,
   loopSize = 2,
   duration = 32,
 }: MarqueeProps) => {
+  const controls = useAnimationControls();
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
-  const animate =
-    direction === 'left'
-      ? { x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }
-      : { y: reverse ? ['-50%', '0%'] : ['0%', '-50%'] };
+  const animate = useMemo(
+    () =>
+      direction === 'left'
+        ? { x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }
+        : { y: reverse ? ['-50%', '0%'] : ['0%', '-50%'] },
+    [direction, reverse],
+  );
+  const transition = useMemo(
+    () => ({
+      duration,
+      ease: 'linear' as const,
+      repeat: Infinity,
+      repeatType: 'loop' as const,
+    }),
+    [duration],
+  );
+
+  useEffect(() => {
+    controls.start(animate, { transition });
+  }, [animate, controls, transition]);
+
+  const handleMouseEnter = () => {
+    if (!pauseOnHover) return;
+
+    controls.stop();
+  };
+
+  const handleMouseLeave = () => {
+    if (!pauseOnHover) return;
+
+    controls.start(animate, { transition });
+  };
 
   return (
     <div
@@ -38,6 +69,8 @@ const Marquee = ({
         direction === 'left' ? 'flex-row' : 'flex-col',
         className,
       )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       style={{
         '--duration': `${duration}s`,
         maskImage: fade
@@ -53,13 +86,7 @@ const Marquee = ({
           'flex w-max shrink-0 gap-4 will-change-transform',
           direction === 'left' ? 'flex-row' : 'flex-col',
         )}
-        animate={animate}
-        transition={{
-          duration,
-          ease: 'linear',
-          repeat: Infinity,
-          repeatType: 'loop',
-        }}
+        animate={controls}
       >
         {Array.from({ length: loopSize }, (_, index) => (
           <div
