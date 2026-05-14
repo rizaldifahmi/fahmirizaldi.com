@@ -47,7 +47,7 @@ const Marquee = ({
   );
 
   useEffect(() => {
-    controls.start(animate, { transition });
+    controls.start({ ...animate, transition });
   }, [animate, controls, transition]);
 
   const handleMouseEnter = () => {
@@ -59,7 +59,7 @@ const Marquee = ({
   const handleMouseLeave = () => {
     if (!pauseOnHover) return;
 
-    controls.start(animate, { transition });
+    controls.start({ ...animate, transition });
   };
 
   return (
