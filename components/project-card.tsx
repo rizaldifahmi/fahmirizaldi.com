@@ -45,8 +45,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       key={_id}
       href={projectUrl}
       className={cn(
-        'group block h-full overflow-hidden rounded-xl bg-card shadow-border transition-[box-shadow,transform] duration-200 ease-out',
-        'motion-safe:hover:-translate-y-1',
+        'group rounded-xl bg-card shadow-border transition-colors duration-200',
       )}
     >
       <div
@@ -59,10 +58,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           src={image ?? ''}
           alt={title}
           fill
-          className={cn(
-            'rounded-t-xl object-cover transition-transform duration-500 ease-out',
-            'motion-safe:group-hover:scale-105',
-          )}
+          className={cn('rounded-t-xl object-cover')}
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
           {...extraImageProps}
@@ -71,7 +67,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div
         className={cn(
           'flex flex-col p-4 transition-transform duration-200 ease-out',
-          'motion-safe:group-hover:translate-x-0.5',
+          'group-hover:translate-x-0.5',
         )}
       >
         <h2
@@ -93,24 +89,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
             return (
               <Tooltip key={`${stack}-${idx}`}>
                 <TooltipTrigger asChild>
-                  <span
-                    aria-label={stack}
-                    className={cn(
-                      'inline-flex size-5 items-center justify-center rounded-sm outline-none',
-                      'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-                    )}
-                    tabIndex={0}
-                  >
-                    {cloneElement(
-                      stackIcon as ReactElement<{ className?: string }>,
-                      {
-                        className: cn(
-                          'size-5',
-                          (stackIcon as any)?.props?.className,
-                        ),
-                      },
-                    )}
-                  </span>
+                  {cloneElement(
+                    stackIcon as ReactElement<{ className?: string }>,
+                    {
+                      className: cn(
+                        'size-5',
+                        (stackIcon as any)?.props?.className,
+                      ),
+                    },
+                  )}
                 </TooltipTrigger>
                 <TooltipContent>{stack}</TooltipContent>
               </Tooltip>
