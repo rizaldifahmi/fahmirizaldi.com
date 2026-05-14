@@ -15,7 +15,7 @@ const TechStacks = () => {
         : [...STACK_ENTRIES.slice(midpoint), ...STACK_ENTRIES.slice(0, midpoint)];
 
     return (
-      <Marquee key={index} reverse={index === 1} fade duration={24}>
+      <Marquee key={index} reverse={index === 1} fade duration={64}>
         {stackSliders.map(([title, icon], stackIndex) => (
           <div
             key={`${index}-${stackIndex}`}
