@@ -8,6 +8,7 @@ interface MarqueeProps {
   fade?: boolean;
   className?: string;
   loopSize?: number;
+  duration?: number;
 }
 
 const Marquee = ({
@@ -18,6 +19,7 @@ const Marquee = ({
   fade = false,
   className,
   loopSize = 2,
+  duration = 32,
 }: MarqueeProps) => {
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
@@ -30,6 +32,7 @@ const Marquee = ({
         className,
       )}
       style={{
+        '--duration': `${duration}s`,
         maskImage: fade
           ? `linear-gradient(${linearGradientDirectionClass}, transparent 0%, rgba(0, 0, 0, 1.0) 10%, rgba(0, 0, 0, 1.0) 90%, transparent 100%)`
           : undefined,
@@ -42,7 +45,7 @@ const Marquee = ({
         <div
           key={index}
           className={cn(
-            'flex shrink-0 justify-around gap-4 [--gap:1rem]',
+            'flex shrink-0 justify-around gap-4 [--gap:1rem] will-change-transform',
             direction === 'left'
               ? 'animate-marquee-left flex-row'
               : 'animate-marquee-up flex-col',

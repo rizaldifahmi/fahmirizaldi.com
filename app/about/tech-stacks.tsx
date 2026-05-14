@@ -15,7 +15,7 @@ const TechStacks = () => {
     const stackSliders = [...shuffledStacks].sort(() => Math.random() - 0.5);
 
     return (
-      <Marquee key={index} reverse={index === 1} fade pauseOnHover>
+      <Marquee key={index} reverse={index === 1} fade duration={24}>
         {stackSliders.map(([title, icon], stackIndex) => (
           <div
             key={`${index}-${stackIndex}`}

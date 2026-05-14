@@ -179,6 +179,14 @@
     animation-direction: reverse;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee-left,
+    .animate-marquee-up {
+      animation-duration: var(--duration, 50s) !important;
+      animation-iteration-count: infinite !important;
+    }
+  }
+
   .animation-delay-100 {
     animation-delay: 0.1s;
   }
