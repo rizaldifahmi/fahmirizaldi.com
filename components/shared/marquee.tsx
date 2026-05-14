@@ -27,27 +27,31 @@ const Marquee = ({
   duration = 32,
 }: MarqueeProps) => {
   const x = useMotionValue(reverse ? '-50%' : '0%');
-  const y = useMotionValue(reverse ? '-50%' : '0%');
-  const progressRef = useRef(reverse ? 50 : 0);
+  const y = useMotionValue('0%');
+  const progressRef = useRef(0);
   const isPausedRef = useRef(false);
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
 
   useEffect(() => {
-    progressRef.current = reverse ? 50 : 0;
+    progressRef.current = 0;
     const value = reverse ? '-50%' : '0%';
 
-    x.set(value);
+    if (direction === 'left') {
+      x.set(value);
+      y.set('0%');
+      return;
+    }
+
+    x.set('0%');
     y.set(value);
-  }, [reverse, x, y]);
+  }, [direction, reverse, x, y]);
 
   useAnimationFrame((_, delta) => {
     if (isPausedRef.current) return;
 
     const step = (delta / (duration * 1000)) * 50;
-    const nextProgress = reverse
-      ? (progressRef.current - step + 50) % 50
-      : (progressRef.current + step) % 50;
+    const nextProgress = (progressRef.current + step) % 50;
     const value = reverse ? nextProgress - 50 : -nextProgress;
 
     progressRef.current = nextProgress;
