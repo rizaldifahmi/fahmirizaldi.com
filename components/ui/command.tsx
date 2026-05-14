@@ -4,7 +4,13 @@ import { Command as CommandPrimitive } from 'cmdk';
 import { Search } from 'lucide-react';
 import * as React from 'react';
 
-import { Dialog, DialogContent, type DialogProps } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  type DialogProps,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 
 const Command = React.forwardRef<
@@ -39,6 +45,10 @@ const CommandDialog = ({
         className="overflow-hidden rounded-2xl p-0 shadow-2xl"
         onOpenAutoFocus={onOpenAutoFocus}
       >
+        <DialogTitle className="sr-only">Command menu</DialogTitle>
+        <DialogDescription className="sr-only">
+          Search pages, social links, and appearance settings.
+        </DialogDescription>
         <div
           aria-hidden
           className={cn(

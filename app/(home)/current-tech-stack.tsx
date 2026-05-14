@@ -25,42 +25,49 @@ export const CURRENT_TECH = [
     description: 'Typed foundation for safer interfaces and APIs',
     icon: <TypeScript />,
     hoverClass: 'hover:text-[#3178C6]',
+    activeClass: 'text-[#3178C6]',
   },
   {
     title: 'JavaScript',
     description: 'Runtime glue for interactive product details',
     icon: <JavaScript />,
     hoverClass: 'hover:text-[#F7DF1E]',
+    activeClass: 'text-[#F7DF1E]',
   },
   {
     title: 'PHP',
     description: 'Reliable server-side work for business systems',
     icon: <PHP />,
     hoverClass: 'hover:text-[#777BB4]',
+    activeClass: 'text-[#777BB4]',
   },
   {
     title: 'Next.js',
     description: 'Full-stack React framework for web apps',
     icon: <NextJS />,
     hoverClass: 'dark:hover:text-white hover:text-black',
+    activeClass: 'text-black dark:text-white',
   },
   {
     title: 'React.js',
     description: 'Composable interfaces and client-side interactions',
     icon: <ReactJS />,
     hoverClass: 'hover:text-[#61DAFB]',
+    activeClass: 'text-[#61DAFB]',
   },
   {
     title: 'CodeIgniter',
     description: 'Pragmatic backend framework for fast delivery',
     icon: <CodeIgniter />,
     hoverClass: 'hover:text-[#EE4323]',
+    activeClass: 'text-[#EE4323]',
   },
   {
     title: 'Tailwind CSS',
     description: 'Design system styling without leaving markup',
     icon: <TailwindCSS />,
     hoverClass: 'hover:text-[#06B6D4]',
+    activeClass: 'text-[#06B6D4]',
   },
 ];
 
@@ -116,47 +123,49 @@ const CurrentTechStack = () => {
           'inline-flex max-w-full flex-wrap gap-1.5 rounded-xl border border-dashed border-border bg-background/65 p-1.5',
         )}
       >
-        {CURRENT_TECH.map(({ title, description, icon, hoverClass }) => {
+        {CURRENT_TECH.map(
+          ({ title, description, icon, hoverClass, activeClass }) => {
           const isActive = activeTech?.title === title;
 
           return (
-          <Tooltip
-            key={title}
-            open={openTooltip === title}
-            onOpenChange={(open) => setOpenTooltip(open ? title : null)}
-          >
-            <TooltipTrigger asChild>
-              <motion.div
-                role="button"
-                tabIndex={0}
-                aria-label={`${title}: ${description}`}
-                aria-pressed={isActive}
-                onClick={() => {
-                  pauseAutoRotate();
-                  setActiveTitle(title);
-                  setOpenTooltip((current) =>
-                    current === title ? null : title,
-                  );
-                }}
-                onMouseEnter={() => {
-                  pauseAutoRotate();
-                  setActiveTitle(title);
-                }}
-                className={cn(
-                  'inline-flex size-8 cursor-pointer appearance-none items-center justify-center rounded-lg border border-transparent bg-transparent p-1.5 text-muted-foreground transition-[background-color,border-color,color,box-shadow] duration-200 ease-out',
-                  'hover:border-border hover:bg-card hover:shadow-border',
-                  isActive && 'border-border bg-card text-foreground shadow-border',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-                  '[&_svg]:size-full',
-                  hoverClass,
-                )}
-                variants={animation}
-              >
-                {icon}
-              </motion.div>
-            </TooltipTrigger>
-            <TooltipContent>{title}</TooltipContent>
-          </Tooltip>
+            <Tooltip
+              key={title}
+              open={openTooltip === title}
+              onOpenChange={(open) => setOpenTooltip(open ? title : null)}
+            >
+              <TooltipTrigger asChild>
+                <motion.div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${title}: ${description}`}
+                  aria-pressed={isActive}
+                  onClick={() => {
+                    pauseAutoRotate();
+                    setActiveTitle(title);
+                    setOpenTooltip((current) =>
+                      current === title ? null : title,
+                    );
+                  }}
+                  onMouseEnter={() => {
+                    pauseAutoRotate();
+                    setActiveTitle(title);
+                  }}
+                  className={cn(
+                    'inline-flex size-8 cursor-pointer appearance-none items-center justify-center rounded-lg border border-transparent bg-transparent p-1.5 text-muted-foreground transition-[background-color,border-color,color,box-shadow] duration-200 ease-out',
+                    'hover:border-border hover:bg-card hover:shadow-border',
+                    isActive && 'border-border bg-card shadow-border',
+                    isActive && activeClass,
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                    '[&_svg]:size-full',
+                    hoverClass,
+                  )}
+                  variants={animation}
+                >
+                  {icon}
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent>{title}</TooltipContent>
+            </Tooltip>
           );
         })}
       </motion.div>
