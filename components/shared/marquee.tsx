@@ -24,7 +24,7 @@ const Marquee = ({
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
   const animationName =
-    direction === 'left' ? 'marquee-left' : 'marquee-up';
+    direction === 'left' ? 'marquee-track-left' : 'marquee-track-up';
 
   return (
     <div
@@ -43,29 +43,34 @@ const Marquee = ({
           : undefined,
       } as React.CSSProperties}
     >
-      {Array.from({ length: loopSize }, (_, index) => (
-        <div
-          key={index}
-          className={cn(
-            'flex shrink-0 justify-around gap-4 [--gap:1rem] will-change-transform',
-            direction === 'left'
-              ? 'animate-marquee-left flex-row'
-              : 'animate-marquee-up flex-col',
-            pauseOnHover && 'group-hover:[animation-play-state:paused]',
-            reverse && 'direction-reverse',
-          )}
-          style={{
-            animationDirection: reverse ? 'reverse' : 'normal',
-            animationDuration: `var(--duration, ${duration}s)`,
-            animationIterationCount: 'infinite',
-            animationName,
-            animationPlayState: 'running',
-            animationTimingFunction: 'linear',
-          }}
-        >
-          {children}
-        </div>
-      ))}
+      <div
+        className={cn(
+          'flex w-max shrink-0 gap-4 will-change-transform',
+          direction === 'left' ? 'flex-row' : 'flex-col',
+          pauseOnHover && 'group-hover:[animation-play-state:paused]',
+        )}
+        style={{
+          animationDirection: reverse ? 'reverse' : 'normal',
+          animationDuration: `var(--duration, ${duration}s)`,
+          animationIterationCount: 'infinite',
+          animationName,
+          animationPlayState: 'running',
+          animationTimingFunction: 'linear',
+        }}
+      >
+        {Array.from({ length: loopSize }, (_, index) => (
+          <div
+            key={index}
+            aria-hidden={index > 0}
+            className={cn(
+              'flex shrink-0 justify-around gap-4',
+              direction === 'left' ? 'flex-row' : 'flex-col',
+            )}
+          >
+            {children}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

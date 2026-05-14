@@ -167,6 +167,26 @@
     }
   }
 
+  @keyframes marquee-track-left {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes marquee-track-up {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(0, -50%, 0);
+    }
+  }
+
   .animate-marquee-left {
     animation: marquee-left var(--duration, 50s) linear infinite;
   }

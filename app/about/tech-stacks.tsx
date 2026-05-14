@@ -1,18 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-
 import Marquee from '@/components/shared/marquee';
 import { STACKS } from '@/constants';
 import { cn } from '@/lib/utils';
 
-const TechStacks = () => {
-  const [shuffledStacks, setShuffledStacks] = useState<
-    Array<[string, React.ReactNode]>
-  >(() => Object.entries(STACKS).sort(() => Math.random() - 0.5));
+const STACK_ENTRIES = Object.entries(STACKS);
 
+const TechStacks = () => {
   const sliders = Array.from({ length: 2 }, (_, index) => {
-    const stackSliders = [...shuffledStacks].sort(() => Math.random() - 0.5);
+    const midpoint = Math.ceil(STACK_ENTRIES.length / 2);
+    const stackSliders =
+      index === 0
+        ? STACK_ENTRIES
+        : [...STACK_ENTRIES.slice(midpoint), ...STACK_ENTRIES.slice(0, midpoint)];
 
     return (
       <Marquee key={index} reverse={index === 1} fade duration={24}>
