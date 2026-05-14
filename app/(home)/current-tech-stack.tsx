@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   CodeIgniter,
@@ -22,43 +22,43 @@ import { cn } from '@/lib/utils';
 export const CURRENT_TECH = [
   {
     title: 'TypeScript',
-    description: 'Primary programming language',
+    description: 'Typed foundation for safer interfaces and APIs',
     icon: <TypeScript />,
     hoverClass: 'hover:text-[#3178C6]',
   },
   {
     title: 'JavaScript',
-    description: 'Secondary programming language',
+    description: 'Runtime glue for interactive product details',
     icon: <JavaScript />,
     hoverClass: 'hover:text-[#F7DF1E]',
   },
   {
     title: 'PHP',
-    description: 'Backend development',
+    description: 'Reliable server-side work for business systems',
     icon: <PHP />,
     hoverClass: 'hover:text-[#777BB4]',
   },
   {
     title: 'Next.js',
-    description: 'Frontend development',
+    description: 'Full-stack React framework for web apps',
     icon: <NextJS />,
     hoverClass: 'dark:hover:text-white hover:text-black',
   },
   {
     title: 'React.js',
-    description: 'Frontend development',
+    description: 'Composable interfaces and client-side interactions',
     icon: <ReactJS />,
     hoverClass: 'hover:text-[#61DAFB]',
   },
   {
     title: 'CodeIgniter',
-    description: 'Backend development',
+    description: 'Pragmatic backend framework for fast delivery',
     icon: <CodeIgniter />,
     hoverClass: 'hover:text-[#EE4323]',
   },
   {
     title: 'Tailwind CSS',
-    description: 'Styling',
+    description: 'Design system styling without leaving markup',
     icon: <TailwindCSS />,
     hoverClass: 'hover:text-[#06B6D4]',
   },
@@ -67,6 +67,7 @@ export const CURRENT_TECH = [
 const CurrentTechStack = () => {
   const [activeTitle, setActiveTitle] = useState(CURRENT_TECH[0]?.title);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
+  const pausedUntilRef = useRef(0);
 
   const animation = {
     hide: { x: -8, opacity: 0 },
@@ -75,6 +76,27 @@ const CurrentTechStack = () => {
 
   const activeTech =
     CURRENT_TECH.find((tech) => tech.title === activeTitle) ?? CURRENT_TECH[0];
+
+  const pauseAutoRotate = () => {
+    pausedUntilRef.current = Date.now() + 4500;
+  };
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      if (Date.now() < pausedUntilRef.current || openTooltip) return;
+
+      setActiveTitle((current) => {
+        const currentIndex = CURRENT_TECH.findIndex(
+          (tech) => tech.title === current,
+        );
+        const nextIndex = (currentIndex + 1) % CURRENT_TECH.length;
+
+        return CURRENT_TECH[nextIndex]?.title;
+      });
+    }, 2800);
+
+    return () => window.clearInterval(timer);
+  }, [openTooltip]);
 
   return (
     <div className={cn('max-w-md')}>
@@ -110,12 +132,16 @@ const CurrentTechStack = () => {
                 aria-label={`${title}: ${description}`}
                 aria-pressed={isActive}
                 onClick={() => {
+                  pauseAutoRotate();
                   setActiveTitle(title);
                   setOpenTooltip((current) =>
                     current === title ? null : title,
                   );
                 }}
-                onMouseEnter={() => setActiveTitle(title)}
+                onMouseEnter={() => {
+                  pauseAutoRotate();
+                  setActiveTitle(title);
+                }}
                 className={cn(
                   'inline-flex size-8 cursor-pointer appearance-none items-center justify-center rounded-lg border border-transparent bg-transparent p-1.5 text-muted-foreground transition-[background-color,border-color,color,box-shadow] duration-200 ease-out',
                   'hover:border-border hover:bg-card hover:shadow-border',
