@@ -1,3 +1,7 @@
+'use client';
+
+import { motion } from 'motion/react';
+
 import { cn } from '@/lib/utils';
 
 interface MarqueeProps {
@@ -14,7 +18,6 @@ interface MarqueeProps {
 const Marquee = ({
   children,
   direction = 'left',
-  pauseOnHover = false,
   reverse = false,
   fade = false,
   className,
@@ -23,8 +26,10 @@ const Marquee = ({
 }: MarqueeProps) => {
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
-  const animationName =
-    direction === 'left' ? 'marquee-track-left' : 'marquee-track-up';
+  const animate =
+    direction === 'left'
+      ? { x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }
+      : { y: reverse ? ['-50%', '0%'] : ['0%', '-50%'] };
 
   return (
     <div
@@ -43,19 +48,17 @@ const Marquee = ({
           : undefined,
       } as React.CSSProperties}
     >
-      <div
+      <motion.div
         className={cn(
-          'marquee-track flex w-max shrink-0 gap-4 will-change-transform',
+          'flex w-max shrink-0 gap-4 will-change-transform',
           direction === 'left' ? 'flex-row' : 'flex-col',
-          pauseOnHover && 'group-hover:[animation-play-state:paused]',
         )}
-        style={{
-          animationDirection: reverse ? 'reverse' : 'normal',
-          animationDuration: `var(--duration, ${duration}s)`,
-          animationIterationCount: 'infinite',
-          animationName,
-          animationPlayState: 'running',
-          animationTimingFunction: 'linear',
+        animate={animate}
+        transition={{
+          duration,
+          ease: 'linear',
+          repeat: Infinity,
+          repeatType: 'loop',
         }}
       >
         {Array.from({ length: loopSize }, (_, index) => (
@@ -70,7 +73,7 @@ const Marquee = ({
             {children}
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
