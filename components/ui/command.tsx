@@ -24,10 +24,21 @@ Command.displayName = CommandPrimitive.displayName;
 
 interface CommandDialogProps extends DialogProps {}
 
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+const CommandDialog = ({
+  children,
+  onOpenAutoFocus,
+  ...props
+}: CommandDialogProps & {
+  onOpenAutoFocus?: React.ComponentProps<
+    typeof DialogContent
+  >['onOpenAutoFocus'];
+}) => {
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden rounded-2xl p-0 shadow-2xl">
+      <DialogContent
+        className="overflow-hidden rounded-2xl p-0 shadow-2xl"
+        onOpenAutoFocus={onOpenAutoFocus}
+      >
         <div
           aria-hidden
           className={cn(

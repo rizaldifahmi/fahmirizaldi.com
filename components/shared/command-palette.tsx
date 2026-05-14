@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 import { COMMAND_PAGES, COMMAND_SOCIAL_MEDIA } from '@/constants';
 import { cn } from '@/lib/utils';
@@ -27,7 +27,9 @@ const CommandPalette = () => {
   const { isOpen, setIsOpen } = useCommandPaletteContext();
   const pathname = usePathname();
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const { resolvedTheme: theme, setTheme } = useTheme();
 
   const placeholders = [
@@ -80,6 +82,28 @@ const CommandPalette = () => {
     };
   }, [placeholderIndex]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const updateIsMobile = () => setIsMobileViewport(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener('change', updateIsMobile);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updateIsMobile);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen || isMobileViewport) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [isMobileViewport, isOpen]);
+
   const groups: Array<{ title: string; options: CommandMenu[] }> = [
     {
       title: 'Pages',
@@ -116,8 +140,14 @@ const CommandPalette = () => {
         <span className="sr-only">Open command menu</span>
         <CommandIcon />
       </Button>
-      <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
-        <CommandInput placeholder={placeholder} />
+      <CommandDialog
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        onOpenAutoFocus={(event: Event) => {
+          event.preventDefault();
+        }}
+      >
+        <CommandInput ref={inputRef} placeholder={placeholder} />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           {groups.map(({ title, options }, index) => (
