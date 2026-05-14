@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -58,12 +59,12 @@ const AuthCard = ({
             <DialogTitle>
               Oops! Something went wrong while authenticating your account.
             </DialogTitle>
+            <DialogDescription>
+              An unexpected problem occurred while I&apos;m trying to log you
+              in. Please try with another provider.
+            </DialogDescription>
           </DialogHeader>
           <div className={cn('text-center')}>
-            <p className={cn('text-sm text-muted-foreground')}>
-              An unexpected problem occurred while I&apos;m trying to log you
-              in. Please try with another providers.
-            </p>
             <code className={cn('text-sm text-destructive')}>
               Error: {searchParams.get('error')}
             </code>
