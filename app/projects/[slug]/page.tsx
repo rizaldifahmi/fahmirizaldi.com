@@ -1,5 +1,5 @@
-import { ExternalLink } from 'lucide-react';
 import { ChevronLeft } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -10,10 +10,8 @@ import { GitHub } from '@/components/shared/icons';
 import Link from '@/components/shared/link';
 import Mdx from '@/components/shared/mdx';
 import RenderIf from '@/components/shared/render-if';
-import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { ROUTES } from '@/constants';
-import { STACKS } from '@/constants';
+import { ROUTES, STACKS } from '@/constants';
 import { allProjects } from '@/lib/content/generated';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
@@ -90,21 +88,29 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
           </RenderIf>
           
-          <div className={cn('flex flex-col gap-6 sm:flex-row sm:items-center')}>
-            <div className={cn('flex flex-wrap gap-4')}>
+          <div className={cn('flex flex-col gap-5 sm:flex-row sm:items-center')}>
+            <div className={cn('flex flex-wrap gap-2')}>
               <RenderIf isTrue={Boolean(project.url)}>
-                <Link href={project.url ?? ''}>
-                  <Button size="lg" variant="default">
-                    Visit Website <ExternalLink className={cn('ml-2 size-4')} />
-                  </Button>
+                <Link
+                  href={project.url ?? ''}
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-card-foreground shadow-border transition-colors duration-200',
+                    'hover:bg-accent hover:text-accent-foreground',
+                  )}
+                >
+                  Visit Website <ExternalLink className={cn('size-4')} />
                 </Link>
               </RenderIf>
               
               <RenderIf isTrue={Boolean(project.repositoryUrl)}>
-                <Link href={project.repositoryUrl ?? ''}>
-                  <Button size="lg" variant="outline">
-                    Source Code <GitHub className={cn('ml-2')} />
-                  </Button>
+                <Link
+                  href={project.repositoryUrl ?? ''}
+                  className={cn(
+                    'inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-muted-foreground shadow-border transition-colors duration-200',
+                    'hover:bg-card hover:text-foreground',
+                  )}
+                >
+                  Source Code <GitHub className={cn('size-4')} />
                 </Link>
               </RenderIf>
             </div>
@@ -125,7 +131,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                           <button
                             type="button"
                             className={cn(
-                              'group flex items-center gap-2 rounded-lg border bg-background p-2 transition-colors hover:bg-muted',
+                              'group flex items-center gap-2 rounded-lg border border-border bg-background px-2.5 py-2 text-muted-foreground shadow-border transition-colors hover:bg-card hover:text-foreground',
                               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                             )}
                             aria-label={stack}
