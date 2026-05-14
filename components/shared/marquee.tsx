@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useAnimationControls } from 'motion/react';
-import { useEffect, useMemo } from 'react';
+import { motion, useAnimationFrame, useMotionValue } from 'motion/react';
+import { useEffect, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -26,40 +26,50 @@ const Marquee = ({
   loopSize = 2,
   duration = 32,
 }: MarqueeProps) => {
-  const controls = useAnimationControls();
+  const x = useMotionValue(reverse ? '-50%' : '0%');
+  const y = useMotionValue(reverse ? '-50%' : '0%');
+  const progressRef = useRef(reverse ? 50 : 0);
+  const isPausedRef = useRef(false);
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
-  const animate = useMemo(
-    () =>
-      direction === 'left'
-        ? { x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }
-        : { y: reverse ? ['-50%', '0%'] : ['0%', '-50%'] },
-    [direction, reverse],
-  );
-  const transition = useMemo(
-    () => ({
-      duration,
-      ease: 'linear' as const,
-      repeat: Infinity,
-      repeatType: 'loop' as const,
-    }),
-    [duration],
-  );
 
   useEffect(() => {
-    controls.start({ ...animate, transition });
-  }, [animate, controls, transition]);
+    progressRef.current = reverse ? 50 : 0;
+    const value = reverse ? '-50%' : '0%';
+
+    x.set(value);
+    y.set(value);
+  }, [reverse, x, y]);
+
+  useAnimationFrame((_, delta) => {
+    if (isPausedRef.current) return;
+
+    const step = (delta / (duration * 1000)) * 50;
+    const nextProgress = reverse
+      ? (progressRef.current - step + 50) % 50
+      : (progressRef.current + step) % 50;
+    const value = reverse ? nextProgress - 50 : -nextProgress;
+
+    progressRef.current = nextProgress;
+
+    if (direction === 'left') {
+      x.set(`${value}%`);
+      return;
+    }
+
+    y.set(`${value}%`);
+  });
 
   const handleMouseEnter = () => {
     if (!pauseOnHover) return;
 
-    controls.stop();
+    isPausedRef.current = true;
   };
 
   const handleMouseLeave = () => {
     if (!pauseOnHover) return;
 
-    controls.start({ ...animate, transition });
+    isPausedRef.current = false;
   };
 
   return (
@@ -86,7 +96,7 @@ const Marquee = ({
           'flex w-max shrink-0 gap-4 will-change-transform',
           direction === 'left' ? 'flex-row' : 'flex-col',
         )}
-        animate={controls}
+        style={{ x, y }}
       >
         {Array.from({ length: loopSize }, (_, index) => (
           <div
