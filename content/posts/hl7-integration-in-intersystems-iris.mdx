@@ -1,0 +1,161 @@
+---
+title: "Panduan Integrasi HL7 di InterSystems IRIS for Health"
+excerpt: Memahami arsitektur produksi interoperabilitas InterSystems IRIS untuk memproses, mentransformasi, dan me-routing pesan HL7 v2 secara andal di lingkungan rumah sakit.
+date: 2026-10-29T00:00:00.000Z
+modifiedDate: 2026-10-29T00:00:00.000Z
+keywords:
+  [
+    intersystems,
+    iris,
+    hl7,
+    interoperability,
+    healthcare,
+    ensemble,
+    integration,
+    trakcare,
+    his,
+    adt,
+    orm,
+    oru,
+  ]
+tags: [healthcare, database, code]
+pinned: false
+image: hl7-integration-in-intersystems-iris/cover.png
+---
+
+## Pengantar
+
+Di ekosistem teknologi informasi kesehatan (Healthcare IT), standar **HL7 (Health Level Seven) v2** masih menjadi tulang punggung pertukaran data klinis dan administratif antar sistem rumah sakit. Mulai dari pendaftaran pasien (ADT), order laboratorium atau radiologi (ORM), hingga hasil pemeriksaan penunjang (ORU).
+
+Menghubungkan Electronic Medical Record (EMR) atau Hospital Information System (HIS) modern seperti TrakCare dengan sistem penunjang seperti LIS (Laboratory Information System) dan PACS (Picture Archiving and Communication System) menuntut platform integrasi yang memiliki performa tinggi, toleransi kesalahan (fault-tolerance), serta kemampuan audit trail pesan yang ketat.
+
+**InterSystems IRIS for Health** (dan pendahulunya, HealthShare / Ensemble) dirancang khusus untuk memecahkan tantangan integrasi skala enterprise ini melalui arsitektur interoperabilitas bawaan (*Production Engine*).
+
+<blockquote>Arsitektur Interoperabilitas InterSystems IRIS memisahkan konektivitas protokol, alur bisnis, dan transformasi data secara modular ke dalam Services, Processes, dan Operations.</blockquote>
+
+---
+
+## Tiga Pilar Arsitektur Integrasi IRIS
+
+Setiap integrasi data di InterSystems IRIS dibangun di atas sebuah **Production** yang tersusun dari tiga komponen utama:
+
+```
+[Inbound System] ──(TCP/MLLP)──> [Business Service]
+                                      │
+                                      ▼
+                               [Business Process] ──(Transformation/DTL)
+                                      │
+                                      ▼
+[Outbound System] <──(TCP/MLLP)── [Business Operation]
+```
+
+1. **Business Service (Inbound Adapter):** Menerima pesan mentah dari sistem luar (misal: TCP/IP via protokol MLLP, HTTP REST, SOAP, atau polling file flat) dan mengonversinya menjadi objek pesan IRIS internal (`EnsLib.HL7.Message`).
+2. **Business Process (Routing & Logic):** Mengatur alur logika bisnis, validasi, orkestrasi pesan, dan pemanggilan Data Transformation (*DTL*). Di sinilah keputusan routing dibuat, misalnya pesan ADT^A08 diteruskan ke LIS atau dibuang jika pasien bukan rawat inap.
+3. **Business Operation (Outbound Adapter):** Mengirimkan kembali pesan yang sudah diproses atau ditransformasi ke sistem target menggunakan protokol yang diminta (misal kirim balik via MLLP TCP client ke LIS analyzer).
+
+---
+
+## Memahami Protokol MLLP (Minimal Lower Layer Protocol)
+
+Sebagian besar pesan HL7 v2 dikirim melalui soket TCP mentah menggunakan pembungkus MLLP:
+
+- **Start Block:** `0x0B` (`<VT>`)
+- **HL7 Payload:** Karakter pesan teks HL7 (segmen dipisahkan oleh carriage return `\r`)
+- **End Block:** `0x1C` (`<FS>`) diikuti oleh `0x0D` (`<CR>`)
+
+InterSystems IRIS menyediakan adapter bawaan `EnsLib.HL7.Adapter.TCPInboundAdapter` dan `EnsLib.HL7.Adapter.TCPOutboundAdapter` yang secara otomatis menangani *framing* MLLP ini serta pengiriman sinyal *ACK (Acknowledgment)* kembali ke pengirim tanpa perlu menulis *socket handling* tingkat rendah.
+
+---
+
+## Anatomi Pesan HL7 v2
+
+Berikut contoh pesan pendaftaran pasien rawat jalan (**ADT^A04**):
+
+```text
+MSH|^~\&|TRAKCARE|BIH|LIS|LAB|20261029143000||ADT^A04|MSG0001001|P|2.4
+EVN|A04|20261029143000
+PID|1||HN00192837^^^BIH^MR||DOE^JOHN^^^^||19900515|M|||JL. BYPASS NGURAH RAI^^DENPASAR^BALI^80228||08123456789|||S
+PV1|1|O|CLINIC-INT^^^BIH||||101^DR. BUDI SANTOSO, SP.PD||||||||||1009281^OPD-VISIT
+```
+
+Pesan terdiri dari beberapa segmen penting:
+- **MSH (Message Header):** Delimiter, sistem pengirim/penerima, timestamp pesan, tipe pesan (`ADT^A04`), dan nomor kontrol pesan.
+- **PID (Patient Identification):** Nomor rekam medis (MRN), nama lengkap, tanggal lahir, jenis kelamin, alamat, dan nomor telepon.
+- **PV1 (Patient Visit):** Informasi kunjungan, seperti tipe perawatan (Inpatient/Outpatient/Emergency), klinik tujuan, dokter penanggung jawab, dan nomor registrasi/episode.
+
+---
+
+## Transformasi Pesan Menggunakan DTL (Data Transformation Language)
+
+Sering kali sistem penerima memiliki skema HL7 atau format segmentasi yang berbeda dengan sistem pengirim (misal: LIS membutuhkan nomor episode di field `PV1:19`, sedangkan HIS mengirimkannya di `PV1:50`).
+
+Di InterSystems IRIS, kita menggunakan **DTL Class**:
+
+```sql title="Custom.Transform.ADTtoLIS.cls"
+Class Custom.Transform.ADTtoLIS Extends Ens.DataTransformDTL [ DependsOn = EnsLib.HL7.Message ]
+{
+
+Parameter IGNOREMISSINGSOURCE = 1;
+Parameter REPORTERRORS = 1;
+Parameter TREATEMPTYREPEATINGFIELDASNULL = 0;
+
+XData DTL [ XMLNamespace = "http://www.intersystems.com/dtl" ]
+{
+<transform sourceClass='EnsLib.HL7.Message' targetClass='EnsLib.HL7.Message' 
+           sourceDocType='2.4:ADT_A01' targetDocType='2.4:ADT_A01' create='new' language='objectscript'>
+
+  <!-- Copy Header -->
+  <copy source='source.{MSH}' target='target.{MSH}' />
+  <assign value='"LIS_TARGET"' property='target.{MSH:ReceivingApplication}' action='set' />
+
+  <!-- Copy Patient Info -->
+  <copy source='source.{PID}' target='target.{PID}' />
+
+  <!-- Custom mapping field kunjungan -->
+  <copy source='source.{PV1}' target='target.{PV1}' />
+  <assign value='source.{PV1:VisitNumber}' property='target.{PV1:19}' action='set' />
+
+</transform>
+}
+
+}
+```
+
+DTL memungkinkan pemetaan grafis drag-and-drop maupun scripting ObjectScript langsung untuk manipulasi string, lookup database internal, atau sanitasi karakter spesial.
+
+---
+
+## Penanganan Respon dan ACK
+
+Setiap kali pesan HL7 diterima oleh Business Service, sistem pengirim mengharapkan pesan konfirmasi (**ACK**):
+
+```text
+MSH|^~\&|LIS|LAB|TRAKCARE|BIH|20261029143001||ACK|ACK0001001|P|2.4
+MSA|AA|MSG0001001|Message accepted successfully
+```
+
+Kode status di segmen `MSA:1`:
+- **AA (Application Accept):** Pesan valid dan berhasil diproses.
+- **AE (Application Error):** Terjadi kesalahan validasi data atau logika aplikasi.
+- **AR (Application Reject):** Pesan ditolak karena format tidak dikenali atau ditolak infrastruktur.
+
+Di konfigurasi Service IRIS, kita dapat mengatur parameter `Ack Mode` menjadi **Immediate** (kirim ACK begitu pesan masuk buffer) atau **Application** (kirim ACK setelah downstream process selesai memvalidasi).
+
+---
+
+## Message Trace dan Audit Trail
+
+Salah satu keunggulan terbesar InterSystems IRIS for Health adalah **Visual Message Trace**. Setiap pesan yang masuk ke sistem mendapatkan ID unik dan dicatat riwayat transaksinya secara real-time:
+
+- Waktu kedatangan pesan hingga fraksi milidetik.
+- Snapshot payload mentah sebelum dan sesudah transformasi.
+- Jalur routing dari Service -> Process -> Operation.
+- Status antrean (Queue length) dan log error jika koneksi target terputus.
+
+Jika sistem target mati (down), Business Operation secara otomatis menahan pesan di dalam antrean lokal (*Spooling/Retry Engine*) dan mengirimkannya kembali begitu koneksi TCP pulih, tanpa ada risiko pesan hilang.
+
+---
+
+## Kesimpulan
+
+Integrasi HL7 di InterSystems IRIS for Health memberikan keandalan tingkat tinggi bagi infrastruktur rumah sakit. Dengan memisahkan layer koneksi MLLP, routing bisnis, dan transformasi data, developer dapat membangun ekosistem pertukaran data medis yang stabil, mudah di-maintain, dan siap menghadapi integrasi skala besar.

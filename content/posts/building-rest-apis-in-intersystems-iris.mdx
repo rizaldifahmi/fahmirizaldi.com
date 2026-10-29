@@ -1,0 +1,217 @@
+---
+title: "Membangun REST API Modern Menggunakan InterSystems IRIS"
+excerpt: Panduan lengkap merancang, mengamankan, dan membangun RESTful API performa tinggi menggunakan %CSP.REST dan native JSON di InterSystems IRIS.
+date: 2026-10-29T00:00:00.000Z
+modifiedDate: 2026-10-29T00:00:00.000Z
+keywords:
+  [
+    intersystems,
+    iris,
+    rest,
+    api,
+    objectscript,
+    json,
+    csp,
+    web-service,
+    jwt,
+    fullstack,
+    backend,
+  ]
+tags: [code, database]
+pinned: false
+image: building-rest-apis-in-intersystems-iris/cover.png
+---
+
+## Pengantar
+
+Di era modern di mana aplikasi web, portal pasien, aplikasi mobile dokter, dan microservices mendominasi arsitektur rumah sakit, akses langsung ke database lewat ODBC/JDBC sering kali tidak lagi memadai atau aman. 
+
+Dibutuhkan layer pertukaran data yang ringan, aman, dan berstandar terbuka melalui **RESTful API**.
+
+**InterSystems IRIS** menyediakan framework bawaan `%CSP.REST` yang memungkinkan developer mengekspos endpoint HTTP REST langsung di dalam instance database, memanfaatkan kecepatan pemrosesan *in-memory* dan manipulasi JSON asli tanpa perantara backend terpisah.
+
+<blockquote>Dengan %CSP.REST, logika bisnis dan layer API berjalan langsung di atas kernel database IRIS, menghasilkan latensi respons di bawah satuan milidetik.</blockquote>
+
+---
+
+## Arsitektur %CSP.REST
+
+Setiap REST API di InterSystems IRIS dibangun menggunakan sebuah class turunan dari `%CSP.REST`. Komponen ini bertanggung jawab atas:
+
+1. **UrlMap (Routing Engine):** Memetakan metode HTTP (`GET`, `POST`, `PUT`, `DELETE`) dan pola path URL ke method ObjectScript terkait.
+2. **Request Dispatcher:** Menangani parsing header, query string, dan payload body JSON.
+3. **Response Formatter:** Mengatur HTTP status code (`200 OK`, `400 Bad Request`, `404 Not Found`, dsb.) dan encoding respons ke `application/json`.
+
+```
+[Client (Web/Mobile)] ──HTTP GET/POST──> [Web Gateway / Apache / Nginx]
+                                                    │
+                                                    ▼
+                                           [IRIS %CSP.REST Dispatcher]
+                                                    │
+                                                    ▼
+                                           [ClassMethod Handler]
+                                                    │
+                                                    ▼
+                                       [IRIS Global / Table Engine]
+```
+
+---
+
+## Merancang Endpoint REST Pertama
+
+Mari buat class REST sederhana untuk mengelola resource data master pasien:
+
+```sql title="Custom.API.PatientHandler.cls"
+Class Custom.API.PatientHandler Extends %CSP.REST
+{
+
+Parameter HandleCorsRequest = 1;
+Parameter CONTENTTYPE = "application/json";
+Parameter CHARSET = "utf-8";
+
+XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
+{
+<Routes>
+  <Route Url="/patients" Method="GET" Call="GetPatients"/>
+  <Route Url="/patients/:id" Method="GET" Call="GetPatientById"/>
+  <Route Url="/patients" Method="POST" Call="CreatePatient"/>
+</Routes>
+}
+
+/// Mengambil daftar ringkasan pasien
+ClassMethod GetPatients() As %Status
+{
+    Set %response.ContentType = ..#CONTENTTYPE
+    
+    // Inisialisasi JSON array
+    Set responseArray = []
+    
+    // Eksekusi SQL langsung di IRIS
+    Set sql = "SELECT ID, PAPMI_No As MRN, PAPMI_Name As FullName, PAPMI_DOB As DOB FROM PA_PatMas WHERE PAPMI_Active = 'Y'"
+    Set statement = ##class(%SQL.Statement).%New()
+    Set status = statement.%Prepare(sql)
+    If $$$ISERR(status) {
+        Set %response.Status = ..#HTTP500INTERNALSERVERERROR
+        Write {"error": "Query preparation failed"}.%ToJSON()
+        Quit $$$OK
+    }
+    
+    Set resultSet = statement.%Execute()
+    While resultSet.%Next() {
+        Set patientObj = {}
+        Set patientObj.id = resultSet.%Get("ID")
+        Set patientObj.mrn = resultSet.%Get("MRN")
+        Set patientObj.name = resultSet.%Get("FullName")
+        Set patientObj.dob = $ZDATE(resultSet.%Get("DOB"), 3) // Format YYYY-MM-DD
+        Do responseArray.%Push(patientObj)
+    }
+    
+    // Render JSON ke output stream
+    Write responseArray.%ToJSON()
+    Quit $$$OK
+}
+
+/// Mengambil satu pasien berdasarkan ID
+ClassMethod GetPatientById(id As %String) As %Status
+{
+    Set %response.ContentType = ..#CONTENTTYPE
+    
+    If id = "" {
+        Set %response.Status = ..#HTTP400BADREQUEST
+        Write {"message": "Invalid patient ID"}.%ToJSON()
+        Quit $$$OK
+    }
+    
+    // Menggunakan Direct Global Access untuk kecepatan maksimum
+    If '$DATA(^PAPER(id)) {
+        Set %response.Status = ..#HTTP404NOTFOUND
+        Write {"message": "Patient not found"}.%ToJSON()
+        Quit $$$OK
+    }
+    
+    Set patient = {}
+    Set patient.id = id
+    Set patient.mrn = $PIECE($GET(^PAPER(id, "PAT", 1)), "^", 1)
+    Set patient.name = $PIECE($GET(^PAPER(id, "ALL")), "^", 1)
+    
+    Write patient.%ToJSON()
+    Quit $$$OK
+}
+
+/// Menambah pasien baru dari JSON Body
+ClassMethod CreatePatient() As %Status
+{
+    Set %response.ContentType = ..#CONTENTTYPE
+    
+    // Parse JSON payload dari request body stream
+    Try {
+        Set payload = ##class(%DynamicAbstractObject).%FromJSON(%request.Content)
+    } Catch ex {
+        Set %response.Status = ..#HTTP400BADREQUEST
+        Write {"error": "Malformed JSON body"}.%ToJSON()
+        Quit $$$OK
+    }
+    
+    Set name = payload.name
+    If name = "" {
+        Set %response.Status = ..#HTTP422UNPROCESSABLEENTITY
+        Write {"error": "Field 'name' is required"}.%ToJSON()
+        Quit $$$OK
+    }
+    
+    // Simpan data dan kirim respons 201 Created
+    Set %response.Status = ..#HTTP201CREATED
+    Write {"status": "success", "message": "Patient created successfully"}.%ToJSON()
+    Quit $$$OK
+}
+
+}
+```
+
+---
+
+## Native Dynamic JSON di IRIS
+
+Sejak versi IRIS (dan Cache versi baru), manipulasi JSON menjadi *first-class citizen*:
+- **Dynamic Object (`{}`):** Membuat objek key-value.
+- **Dynamic Array (`[]`):** Membuat list/array.
+- **`%FromJSON()`:** Parsing string/stream JSON menjadi object memory.
+- **`%ToJSON()`:** Serialize object kembali menjadi string JSON berkecepatan tinggi.
+
+Hal ini mengeliminasi kebutuhan parser pihak ketiga atau manipulasi string manual yang rentan terhadap SQL injection dan syntax error.
+
+---
+
+## Konfigurasi Web Application di Management Portal
+
+Agar class handler dapat diakses via URL publik:
+
+1. Buka **InterSystems Management Portal**.
+2. Navigasi ke **System Administration** -> **Security** -> **Applications** -> **Web Applications**.
+3. Buat Web Application baru (misal: `/api/v1`).
+4. Konfigurasikan:
+   - **Namespace:** Target namespace database (misal: `USER` atau `TRAKCARE`).
+   - **Dispatch Class:** Tentukan class handler yang dibuat, misal: `Custom.API.PatientHandler`.
+   - **Allowed Authentication:** Aktifkan `Password` (HTTP Basic Auth) atau `Delegated/Token` untuk integrasi JWT.
+
+Setelah disimpan, endpoint dapat langsung diuji menggunakan `curl`:
+
+```bash
+curl -i -u "username:password" https://server-hospital.id/api/v1/patients
+```
+
+---
+
+## Keamanan dan Proteksi Endpoint
+
+Mengekspos endpoint database ke jaringan membutuhkan perlindungan ekstra:
+
+1. **CORS (Cross-Origin Resource Sharing):** Atur parameter `HandleCorsRequest = 1` pada class `%CSP.REST` untuk mengizinkan panggilan frontend web modern (React/Next.js/Vue).
+2. **Bearer Token & JWT:** Verifikasi token JWT pada callback method `OnPreDispatch()` sebelum rute dieksekusi. Jika token tidak valid atau expired, return `401 Unauthorized` seketika.
+3. **Rate Limiting:** Terapkan caching atau counter pada global temporary IRIS (`^IRIS.Temp.RateLimit`) untuk mencegah serangan denial-of-service.
+
+---
+
+## Kesimpulan
+
+InterSystems IRIS memberikan platform yang sangat tangguh untuk membangun RESTful API modern. Kemampuan untuk mengakses data secara langsung (baik melalui SQL maupun direct globals), didukung oleh routing native dan dynamic JSON, menjadikan IRIS solusi tepat untuk integrasi aplikasi generasi baru di lingkungan enterprise dan fasilitas kesehatan.
