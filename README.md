@@ -2,14 +2,6 @@
 
 My personal website built with Next.js, TypeScript, and Tailwind CSS.
 
-<div align="center">
-  <a href="https://fahmirizaldi.com" target="_blank">![View Demo](https://img.shields.io/badge/View%20Demo-8865ff?style=for-the-badge)</a> 
-  <a href="https://github.com/rizaldifahmi/portfolio/issues/new?assignees=&labels=bug&template=bug_report.md&title=" target="_blank">![Report Bug](https://img.shields.io/badge/Report%20Bug-ff5432?style=for-the-badge)</a> 
-  <a href="https://github.com/rizaldifahmi/portfolio/issues/new?assignees=&labels=&template=feature_request.md&title=" target="_blank">![Request Feature](https://img.shields.io/badge/Request%20Feature-96d117?style=for-the-badge)</a>
-  <a href="https://github.com/rizaldifahmi/portfolio/fork" target="_blank">![Forks](https://img.shields.io/github/forks/rizaldifahmi/portfolio?color=8865ff&style=for-the-badge)</a>
-  <a href="https://github.com/rizaldifahmi/portfolio/stargazers" target="_blank">![Stars](https://img.shields.io/github/stars/rizaldifahmi/portfolio?color=8865ff&style=for-the-badge)</a>
-</div>
-
 ## Running Locally
 
 1. Clone this repository
